@@ -1,20 +1,19 @@
 import axios from 'axios';
 
-export default function apiAxios(url, callback) {
+export default function apiAxios(url, callback, info) {
     axios(
         {
-            url: '/api' + url,
-            method: 'post',
+            url: '/api/' + url,
+            method: 'post', // 나중에 post
             data: {
-                name: "김나연",
-                age: "25"
+                id: info.id,
+                password: info.password
             },
-            //baseURL: 'http://hminsu.net/',
+            // baseURL: 'https://608c26ef9f42b20017c3d801.mockapi.io',
             withCredentials: false,
         }
     ).then(function (response){
-        // console.log(response.data);
-        // callback(response.data);
-        callback("OK")
+        console.log(response.data);
+        callback(response.data);
     })
 }

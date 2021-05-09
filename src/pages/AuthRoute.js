@@ -1,5 +1,6 @@
 import React from "react"
 import { Route, Redirect } from "react-router-dom"
+import Base from "./Base";
 
 function AuthRoute({ authenticated, component: Component, render, ...rest }) {
     return (
@@ -10,7 +11,7 @@ function AuthRoute({ authenticated, component: Component, render, ...rest }) {
                     render ? (
                         render(props)
                     ) : (
-                        <Component {...props} />
+                        <Base {...props} />
                     )
                 ) : (
                     <Redirect
