@@ -50,9 +50,14 @@ a {
 .tmp {
   float: left;
   position: relative;
+  z-index: 10;
   display: inline-block;
-  width: 67%;
+  width: 87%;
+  align-content: center;
+  height: 100%;
+  horiz-align: center;
   background-color: aquamarine;
+  margin: auto;
 }
 
 /* -------------
@@ -60,23 +65,18 @@ Sidebar
 ----------------*/
 .sidebar {
   position: relative;
-  width: 33%;
-  //width: 17em;
+  width: 13%;
+  //width: 16em;
   height: 100%;
   top: 0;
   float: left;
   overflow: hidden;
+  padding: 0;
+  margin: 0;
   //background-color: #19222a;
   -webkit-transform: translateZ(0);
   visibility: visible;
   -webkit-backface-visibility: hidden;
-
-  header {
-    background-color: #09f;
-    width: 100%;
-    display: block;
-    padding: 0.75em 1em;
-  }
 }
 
 /* -------------
@@ -84,7 +84,6 @@ Sidebar Nav
 ----------------*/
 .sidebar-nav {
   position: fixed;
-  width: 13em;
   background-color: #19222a;
   //background-color: #002967;
   height: 100%;
@@ -133,7 +132,6 @@ Sidebar Nav
         width: 9em;
         display: inline;
         vertical-align: middle;
-
       }
     }
   }
