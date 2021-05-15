@@ -46,5 +46,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://hminsu.net/"
+  "proxy": "http://hminsu.net/",
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
 }
