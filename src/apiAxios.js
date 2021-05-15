@@ -21,6 +21,8 @@ export default function apiAxios(url, callback, info) {
             console.log(error.response.data);
             console.log(error.response.status);
             console.log(error.response.headers);
+
+            callback(0);
         }
         else if (error.request) {
             // 요청이 이루어 졌으나 응답을 받지 못했습니다.

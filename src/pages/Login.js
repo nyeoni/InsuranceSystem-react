@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import '../css/Login.css';
-import {Route, Redirect, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import apiAxios from "../apiAxios";
-import Base from "./Base";
 
 const Login = () => {
     const [user, setUser] = useState({
@@ -13,12 +12,11 @@ const Login = () => {
         id: '',
         password: ''
     });
-    const authenticated = user.name != ''
+
     const {id, password} = info;
     const history = useHistory();
 
     //functions
-
     const onChange = e => {
         const {name, value} = e.target;
         setInfo({
@@ -29,7 +27,7 @@ const Login = () => {
 
     function validateUser(data) {
         console.log("vlidate");
-        if (!(data.error)) {
+        if (data) {
             setUser(
                 {
                     name: data.name,
@@ -42,6 +40,10 @@ const Login = () => {
             history.replace("/");
         } else {
             alert("아이디 혹은 비밀번호가 잘못되었습니다!");
+            setInfo({
+                id: '',
+                password: ''
+            })
         }
     }
     const login = () => {

@@ -11,9 +11,7 @@ function App() {
         <BrowserRouter>
             <main className="App">
                 <Switch>
-                    <Route path="/login" exact={true} render={props => <Login />} />
-                    {/*<Route path="/" exact={true} render={props => true ? <Login /> : (<Redirect*/}
-                    {/*    to={{ pathname: "/login"}} />) } />*/}
+                    <Route path="/login" render={props => <Login />} />
                     <Route paht="/home" exact={true} render={() => <Base />} />
                 </Switch>
             </main>
