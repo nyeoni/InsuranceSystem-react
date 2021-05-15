@@ -141,15 +141,17 @@ input[type=text]:focus, input[type=password]:focus {
     outline: none;
 }
 .login-div #login {width: 150px; font-weight: 500; margin-top: 30px}
-.login-div #login:hover {background: #0086D1; color:  #F8FCFF; border:none; box-shadow: 5px 12px 16px 0 rgba(0, 0, 0, 0.24); border-radius:6px; padding:0; overflow:visible; cursor:pointer}
+.login-div #login:hover {background: #0086D1; color:  #F8FCFF; border:none; box-shadow: 5px 12px 16px 0 rgba(0, 0, 0, 0.24); border-radius:6px; padding:0; overflow:visible; cursor:pointer;}
 .login-div #login:focus {background: #0086D1; color:  #F8FCFF; border:none; box-shadow: 5px 12px 16px 0 rgba(0, 0, 0, 0.24); border-radius:6px; padding:0; overflow:visible; cursor:pointer; outline: none}
 
-#forget-pass {
+.forget-pass {
     display: block;
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 20px;
     color: #EAF5FD;
+    text-decoration: none;
 }
-#forget-pass:hover, a:hover{
+.forget-pass:hover, a:hover{
     cursor: pointer;
+    text-decoration: none;
 }

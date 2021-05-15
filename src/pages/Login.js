@@ -1,10 +1,11 @@
 import React, {useState} from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import '../css/Login.css';
-import {useHistory} from "react-router-dom";
+import {Link, NavLink, useHistory} from "react-router-dom";
 import apiAxios from "../apiAxios";
 
 const Login = () => {
+    //state & variables
     const [user, setUser] = useState({
         name: '', department: '', phoneNumber: '', role: '', email: ''
     });
@@ -24,8 +25,7 @@ const Login = () => {
             [name]: value
         });
     };
-
-    function validateUser(data) {
+    const validateUser = (data) => {
         console.log("vlidate");
         if (data) {
             setUser(
@@ -37,7 +37,7 @@ const Login = () => {
                     email: data.email
                 }
             )
-            history.replace("/");
+            history.replace("/home");
         } else {
             alert("아이디 혹은 비밀번호가 잘못되었습니다!");
             setInfo({
@@ -80,7 +80,7 @@ const Login = () => {
                         <button onClick={login} className="square" id="login">로그인</button>
                     </div>
                     <div>
-                        <a id="forget-pass">비밀번호를 잊으셨습니까?</a>
+                        <Link className="forget-pass" to="/login/forget">비밀번호를 잊으셨습니까?</Link>
                     </div>
                 </div>
             </div>
