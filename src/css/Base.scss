@@ -42,21 +42,23 @@ a {
 }
 
 .userbar {
+  position: fixed;
   width: 100%;
-  height: 6%;
+  height: 55px;
+  z-index: 12;
   background-color: #F8FCFF;
 }
 
-.tmp {
-  float: left;
+.router {
+  float: right;
+  top: 55px;
   position: relative;
   z-index: 10;
   display: inline-block;
   width: 87%;
   align-content: center;
   height: 100%;
-  horiz-align: center;
-  background-color: aquamarine;
+  background-color: white;
   margin: auto;
 }
 
@@ -64,16 +66,15 @@ a {
 Sidebar
 ----------------*/
 .sidebar {
-  position: relative;
+  position: fixed;
   width: 13%;
   //width: 16em;
   height: 100%;
-  top: 0;
+  top: 55px;
   float: left;
   overflow: hidden;
   padding: 0;
   margin: 0;
-  //background-color: #19222a;
   -webkit-transform: translateZ(0);
   visibility: visible;
   -webkit-backface-visibility: hidden;
@@ -154,7 +155,7 @@ Sidebar Nav
   Nav-Flyout
   ----------------*/
   & .nav-flyout {
-    position: absolute;
+    position: fixed;
     background-color: #080D11;
     z-index: 9;
     left: 2.5em;

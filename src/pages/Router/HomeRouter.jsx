@@ -1,16 +1,14 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom"
+import { Route } from "react-router-dom"
 import Board from "../Home/Board";
-import HMinsu from "../Home/Himinsu";
-import Department from "../Home/Department";
+import Home from "../Home/Home";
 
 // TODO : props 뭐 받을지 생각
 const HomeRouter = (props) => {
     return (
         <>
-            <Route to="/home/board" render={props => <Board />} />
-            <Route to="/home/department" render={props => <Department />} />
-            <Route to="/home/hminsu" render={props => <HMinsu />} />
+            <Route path="/home" exact={true} render={props => <Home />} />
+            <Route path="/home/board" exact={true} render={props => <Board />} />
         </>
     )
 }

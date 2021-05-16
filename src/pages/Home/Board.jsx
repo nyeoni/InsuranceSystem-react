@@ -1,10 +1,14 @@
 import React from "react";
+import styled from "styled-components";
+import {Wrapper} from "../../components/Wrapper";
+import '../../css/Detail.css';
+import DataTable from "../../components/Table";
 
 const Board = () => {
     return (
-        <div>
-            <h1>Home</h1>
-        </div>
+        <Wrapper title="공지사항">
+            <DataTable />
+        </Wrapper>
     )
 }
 

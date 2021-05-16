@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom"
+import { Route } from "react-router-dom"
 import Create from "../RD/Create";
 import Support from "../RD/Support";
 import Manage from "../RD/Manage";
@@ -8,9 +8,9 @@ import Manage from "../RD/Manage";
 const RdRouter = (props) => {
     return (
         <>
-            <Route to="/rd/create" render={props => <Create />} />
-            <Route to="/rd/support" render={props => <Support />} />
-            <Route to="/rd/manage" render={props => <Manage />} />
+            <Route path="/rd/create" exact={true} render={props => <Create />} />
+            <Route path="/rd/support" exact={true} render={props => <Support />} />
+            <Route path="/rd/manage" exact={true} render={props => <Manage />} />
         </>
     )
 }

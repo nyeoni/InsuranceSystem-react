@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import '../css/Login.css';
-import {Link, NavLink, useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import apiAxios from "../apiAxios";
+import {Wrapper} from "../components/Wrapper";
 
 const Login = () => {
     //state & variables
@@ -51,7 +52,7 @@ const Login = () => {
     };
     const logout = () => setUser(null);
     return (
-        <div className="wrap">
+        <Wrapper>
             <div className="panel left-side">
                 <div className="left-logo">
                 </div>
@@ -84,7 +85,7 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </Wrapper>
     );
 }
 

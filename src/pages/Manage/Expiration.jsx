@@ -1,10 +1,9 @@
 import React from "react";
+import {Wrapper} from "../../components/Wrapper";
 
 const Expiration = () => {
     return (
-        <div>
-            <h1>Expiration</h1>
-        </div>
+        <Wrapper title="만기계약 관리"></Wrapper>
     )
 }
 

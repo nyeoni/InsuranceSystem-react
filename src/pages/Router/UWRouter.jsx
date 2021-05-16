@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom"
+import {Route} from "react-router-dom"
 import UWPolicy from "../UW/UWPolicy";
 import Lossmanage from "../UW/Lossmanage";
 import Underwriting from "../UW/Underwriting";
@@ -8,9 +8,9 @@ import Underwriting from "../UW/Underwriting";
 const UWRouter = (props) => {
     return (
         <>
-            <Route to="/uw/underwriting" render={props => <Underwriting />} />
-            <Route to="/uw/policy" render={props => <UWPolicy />} />
-            <Route to="/uw/lossmanage" render={props => <Lossmanage />} />
+            <Route path="/uw/underwriting" exact={true} render={props => <Underwriting />} />
+            <Route path="/uw/policy" exact={true} render={props => <UWPolicy />} />
+            <Route path="/uw/lossmanage" exact={true} render={props => <Lossmanage />} />
         </>
     )
 }

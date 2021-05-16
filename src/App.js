@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter, Switch, Route, Redirect, withRouter} from "react-router-dom";
+import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
 import {default as Login} from "./pages/Login";
 
 import Base from "./pages/Base";

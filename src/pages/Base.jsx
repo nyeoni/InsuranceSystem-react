@@ -1,6 +1,6 @@
 import React from "react";
 import '../css/Base.scss';
-import {BrowserRouter, Switch, Route, Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 import HomeRouter from "./Router/HomeRouter";
 import RdRouter from "./Router/RdRouter";
 import SalesRouter from "./Router/SalesRouter";
@@ -9,6 +9,7 @@ import UWRouter from "./Router/UWRouter";
 import ManageRouter from "./Router/ManageRouter";
 
 const Base = () => {
+    // TODO : Link 저거 더러운거 컴포넌트로 바꿔버리기
     return (
         <>
             <div className="userbar shadow-sm">
@@ -19,18 +20,10 @@ const Base = () => {
                     <nav className="sidebar-nav">
                         <ul>
                             <li>
-                                <Link style={{ textDecoration: 'none' }} to="/home"><i></i><span>홈</span></Link>
-                                <ul className="nav-flyout">
-                                    <li>
-                                        <Link style={{ textDecoration: 'none' }} to="/home/board"><i></i>공지사항</Link>
-                                    </li>
-                                    <li>
-                                        <Link style={{ textDecoration: 'none' }} to="/home/department"><i></i>부서소개</Link>
-                                    </li>
-                                    <li>
-                                        <Link style={{ textDecoration: 'none' }} to="/home/hminsu"><i></i>회사소개</Link>
-                                    </li>
-                                </ul>
+                                <Link style={{ textDecoration: 'none' }} to="/home"><i></i><span>HOME</span></Link>
+                            </li>
+                            <li>
+                                <Link style={{ textDecoration: 'none' }} to="/home/board"><i></i><span>공지사항</span></Link>
                             </li>
                             <li>
                                 <Link style={{ textDecoration: 'none' }} to="/rd"><i></i><span>상품개발</span></Link>
@@ -61,7 +54,7 @@ const Base = () => {
                                 </ul>
                             </li>
                             <li>
-                                <Link style={{ textDecoration: 'none' }} to="/uw"><i></i> <span className="">UW</span></Link>
+                                <Link style={{ textDecoration: 'none' }} to="/uw"><i></i> <span className="">인수심사</span></Link>
                                 <ul className="nav-flyout">
                                     <li>
                                         <Link style={{ textDecoration: 'none' }} to="/uw/underwriting"><i></i>인수심사</Link>
@@ -118,13 +111,13 @@ const Base = () => {
                         </ul>
                     </nav>
                 </aside>
-                <div className="tmp">
-                    <Route path="/home" exact={true} render={props => <HomeRouter />} />
-                    <Route path="/rd" exact={true} render={props => <RdRouter />} />
-                    <Route path="/sales" exact={true} render={props => <SalesRouter />} />
-                    <Route path="/uw" exact={true} render={props => <UWRouter />} />
-                    <Route path="/uw" exact={true} render={props => <SupportRouter />} />
-                    <Route path="/manage" exact={true} render={props => <ManageRouter />} />
+                <div className="router">
+                    <HomeRouter />
+                    <RdRouter />
+                    <SalesRouter />
+                    <UWRouter />
+                    <SupportRouter />
+                    <ManageRouter />
                 </div>
             </section>
         </>
