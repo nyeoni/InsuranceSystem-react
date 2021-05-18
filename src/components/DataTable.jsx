@@ -40,7 +40,7 @@ const rows = [
     { id: 15, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
 
-export default function DataTable() {
+export const DataTable = () => {
     return (
         <div style={{ height: '90%', width: '98%', marginTop: '20px', margin: 'auto 0', backgroundColor: '#F8FCFF', border: 0, borderTop: '1px'}}>
             <DataGrid rows={rows} columns={columns} pageSize={11} checkboxSelection />

@@ -52,7 +52,7 @@ const Login = () => {
     };
     const logout = () => setUser(null);
     return (
-        <Wrapper>
+        <div className="wrap">
             <div className="panel left-side">
                 <div className="left-logo">
                 </div>
@@ -85,7 +85,7 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-        </Wrapper>
+        </div>
     );
 }
 

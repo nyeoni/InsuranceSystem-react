@@ -2,13 +2,12 @@ import React from "react";
 
 import {Wrapper} from "../../components/Wrapper";
 import {Dropdown, DropdownButton, FormControl, InputGroup} from "react-bootstrap";
-import DataTable from "../../components/Table";
+import {DataTable} from "../../components/DataTable";
 import "../../css/Detail.css";
 
 const Evaluation = () => {
     return (
-            <Wrapper title = "보상평가관리">
-                    <hr/>
+            <Wrapper title="보상평가관리" underline={true}>
                     <DropdownButton className="d-inline-block" id="dropdown-basic-button" title="조회 기간 설정" variant = "secondary">
                         <Dropdown.Item href="#/action-1">1개월</Dropdown.Item>
                         <Dropdown.Item href="#/action-2">3개월</Dropdown.Item>

@@ -7,6 +7,8 @@ import SalesRouter from "../Router/SalesRouter";
 import SupportRouter from "../Router/SupportRouter";
 import UWRouter from "../Router/UWRouter";
 import ManageRouter from "../Router/ManageRouter";
+import styled from "styled-components";
+import {MyLink} from "../../components/MyLink";
 
 const Base = () => {
     const StyledLink = styled(Link)`
@@ -15,98 +17,97 @@ const Base = () => {
     return (
         <>
             <div className="userbar shadow-sm">
-                <div className="left-logo"></div>
+                <StyledLink to="/home"><div className="left-logo"></div></StyledLink>
             </div>
             <section className="app">
                 <aside className="sidebar">
                     <nav className="sidebar-nav">
                         <ul>
                             <li>
-                                <StyledLink to="/home"><i></i><span>HOME</span></StyledLink>
+                                <MyLink to="/home"><span>HOME</span></MyLink>
                             </li>
                             <li>
-                                <StyledLink to="/home/board"><i></i><span>공지사항</span></StyledLink>
+                                <MyLink to="/home/board"><span>공지사항</span></MyLink>
                             </li>
                             <li>
-                                <StyledLink to="/rd"><i></i><span>상품개발</span></StyledLink>
+                                <MyLink>상품개발</MyLink>
                                 <ul className="nav-flyout">
                                     <li>
-                                        <StyledLink to="/rd/create"><i></i>상품개발</StyledLink>
+                                        <MyLink to="/rd/create">상품개발</MyLink>
                                     </li>
                                     <li>
-                                        <StyledLink to="/rd/support"><i></i>상품지원</StyledLink>
+                                        <MyLink to="/rd/support">상품지원</MyLink>
                                     </li>
                                     <li>
-                                        <StyledLink to="/rd/manage"><i></i>상품관리</StyledLink>
+                                        <MyLink to="/rd/manage">상품관리</MyLink>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <StyledLink to="/sales"><i></i> <span className="">영업관리</span></StyledLink>
+                                <MyLink>영업관리</MyLink>
                                 <ul className="nav-flyout">
                                     <li>
-                                        <StyledLink to="/sales/contract"><i></i>계약관리</StyledLink>
+                                        <MyLink to="/sales/contract">계약관리</MyLink>
                                     </li>
                                     <li>
-                                        <StyledLink to="/sales/client"><i></i>고객관리</StyledLink>
+                                        <MyLink to="/sales/client">고객관리</MyLink>
                                     </li>
                                     <li>
-                                        <StyledLink to="/sales/apply"><i></i>상품가입</StyledLink>
+                                        <MyLink to="/sales/apply">상품가입</MyLink>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <StyledLink to="/uw"><i></i> <span className="">인수심사</span></StyledLink>
+                                <MyLink>인수심사</MyLink>
                                 <ul className="nav-flyout">
                                     <li>
-                                        <StyledLink to="/uw/underwriting"><i></i>인수심사</StyledLink>
+                                        <MyLink to="/uw/underwriting">인수심사</MyLink>
                                     </li>
                                     <li>
-                                        <StyledLink to="/uw/policy"><i></i>인수정책</StyledLink>
+                                        <MyLink to="/uw/policy">인수정책</MyLink>
                                     </li>
                                     <li>
-                                        <StyledLink to="/uw/lossmanage"><i></i>손해율관리</StyledLink>
+                                        <MyLink to="/uw/lossmanage">손해율관리</MyLink>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <StyledLink style={{ textDecoration: 'none' }} to="support"><i></i> <span className="">보상지원</span></StyledLink>
+                                <MyLink>보상지원</MyLink>
                                 <ul className="nav-flyout">
                                     <li>
-                                        <StyledLink to="/support/accident"><i></i>사고접수</StyledLink>
+                                        <MyLink to="/support/accident">사고접수</MyLink>
                                     </li>
                                     <li>
-                                        <StyledLink to="/support/compensate"><i></i>보상처리</StyledLink>
+                                        <MyLink to="/support/compensate">보상처리</MyLink>
                                     </li>
                                     <li>
-                                        <StyledLink to="/support/cooperation"><i></i>협력업체관리</StyledLink>
+                                        <MyLink to="/support/cooperation">협력업체관리</MyLink>
                                     </li>
                                     <li>
-                                        <StyledLink to="/support/evalution"><i></i>보상평가관리</StyledLink>
+                                        <MyLink to="/support/evalution">보상평가관리</MyLink>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <StyledLink to="manage"><i></i> <span
-                                    className="">통합관리</span></StyledLink>
+                                <MyLink>통합관리</MyLink>
                                 <ul className="nav-flyout">
                                     <li>
-                                        <StyledLink to="/manage/payment"><i></i>수금관리</StyledLink>
+                                        <MyLink to="/manage/payment">수금관리</MyLink>
                                     </li>
                                     <li>
-                                        <StyledLink to="/manage/expiration"><i></i>만기계약관리</StyledLink>
+                                        <MyLink to="/manage/expiration">만기계약관리</MyLink>
                                     </li>
                                     <li>
-                                        <StyledLink to="/manage/reimbursement"><i></i>제지급관리</StyledLink>
+                                        <MyLink to="/manage/reimbursement">제지급관리</MyLink>
                                     </li>
                                     <li>
-                                        <StyledLink to="/manage/termination"><i></i>부활관리</StyledLink>
+                                        <MyLink to="/manage/termination">부활관리</MyLink>
                                     </li>
                                     <li>
-                                        <StyledLink to="/manage/terms"><i></i>배서관리</StyledLink>
+                                        <MyLink to="/manage/terms">배서관리</MyLink>
                                     </li>
                                    <li>
-                                        <StyledLink to="/manage/policy"><i></i>관리지침수립</StyledLink>
+                                        <MyLink to="/manage/policy">관리지침수립</MyLink>
                                     </li>
                                 </ul>
                             </li>
