@@ -1,12 +1,12 @@
 import React from "react";
-import '../css/Base.scss';
+import '../../css/Base.scss';
 import {Link} from "react-router-dom";
-import HomeRouter from "./Router/HomeRouter";
-import RdRouter from "./Router/RdRouter";
-import SalesRouter from "./Router/SalesRouter";
-import SupportRouter from "./Router/SupportRouter";
-import UWRouter from "./Router/UWRouter";
-import ManageRouter from "./Router/ManageRouter";
+import HomeRouter from "../Router/HomeRouter";
+import RdRouter from "../Router/RdRouter";
+import SalesRouter from "../Router/SalesRouter";
+import SupportRouter from "../Router/SupportRouter";
+import UWRouter from "../Router/UWRouter";
+import ManageRouter from "../Router/ManageRouter";
 
 const Base = () => {
     // TODO : Link 저거 더러운거 컴포넌트로 바꿔버리기

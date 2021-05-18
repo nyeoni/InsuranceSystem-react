@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import {Wrapper} from "../../components/Wrapper";
 import '../../css/Detail.css';
 import DataTable from "../../components/Table";

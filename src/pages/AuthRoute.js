@@ -1,6 +1,6 @@
 import React from "react"
 import { Route, Redirect } from "react-router-dom"
-import Base from "./Base";
+import Base from "./Base/Base";
 
 function AuthRoute({ authenticated, component: Component, render, ...rest }) {
     return (

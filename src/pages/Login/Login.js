@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import 'bootstrap/dist/css/bootstrap.css';
-import '../css/Login.css';
+import '../../css/Login.css';
 import {Link, useHistory} from "react-router-dom";
-import apiAxios from "../apiAxios";
-import {Wrapper} from "../components/Wrapper";
+import apiAxios from "../../apiAxios";
+import {Wrapper} from "../../components/Wrapper";
 
 const Login = () => {
     //state & variables

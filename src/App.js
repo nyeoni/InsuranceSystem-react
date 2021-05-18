@@ -1,8 +1,8 @@
 import React from "react";
 import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
-import {default as Login} from "./pages/Login";
+import {default as Login} from "./pages/Login/Login";
 
-import Base from "./pages/Base";
+import Base from "./pages/Base/Base";
 
 // TODO : 나중에 redux 로 auth 확인후 / 로 redirect 지금은 임시로 /home 해놓은 것
 function App() {
