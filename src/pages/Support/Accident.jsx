@@ -1,9 +1,13 @@
 import React from "react";
+import {Wrapper} from "../../components/Wrapper";
+import {render} from "react-dom";
 
 const Accident = () => {
     return (
         <div>
-            <h1>Accident</h1>
+            <Wrapper title = "사고접수" underline = {true}>
+
+            </Wrapper>
         </div>
     )
 }

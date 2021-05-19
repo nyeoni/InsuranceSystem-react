@@ -1,9 +1,13 @@
 import React from "react";
+import {Wrapper} from "../../components/Wrapper";
+
 
 const Compensate = () => {
     return (
         <div>
-            <h1>Compensate</h1>
+            <Wrapper title = "보상처리" underline = {true}>
+
+            </Wrapper>
         </div>
     )
 }

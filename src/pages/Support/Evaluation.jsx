@@ -1,13 +1,16 @@
 import React from "react";
 
 import {Wrapper} from "../../components/Wrapper";
-import {Dropdown, DropdownButton, FormControl, InputGroup} from "react-bootstrap";
+import {Dropdown, DropdownButton, Button} from "react-bootstrap";
 import {DataTable} from "../../components/DataTable";
 import "../../css/Detail.css";
+import Popup from "../../components/Popup"
 
 const Evaluation = () => {
+    const [modalShow, setModalShow] = React.useState(false);
+    const title = "보상평가관리";
     return (
-            <Wrapper title="보상평가관리" underline={true}>
+            <Wrapper title={title} underline={true}>
                     <DropdownButton className="d-inline-block" id="dropdown-basic-button" title="조회 기간 설정" variant = "secondary">
                         <Dropdown.Item href="#/action-1">1개월</Dropdown.Item>
                         <Dropdown.Item href="#/action-2">3개월</Dropdown.Item>
@@ -24,8 +27,17 @@ const Evaluation = () => {
                         <Dropdown.Item eventKey="4">전체 조회</Dropdown.Item>
                     </DropdownButton>
 
+                <Button style={{float:'right'}} variant="outline-primary" onClick={() => {setModalShow(true)}}>조회하기</Button>
+                <div className="form-group">
+                    <input type="text" placeholder="검색할 직원의 성명을 입력해주세요" className="form-control" id="employeeNameInput"/>
+                </div>
 
-                <DataTable />
+                <Popup
+                    title ={title}
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+                />
+                <DataTable withCheckBox = {true}/>
             </Wrapper>
 
     )
