@@ -1,0 +1,4 @@
+/* GeneralTable */
+.ant-table-row:hover {
+    cursor: pointer;
+}

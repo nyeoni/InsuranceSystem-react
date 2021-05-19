@@ -5,7 +5,7 @@ export const MyLink = ({children, to}) => {
     return(
         <Link to={to} style={{textDecoration: 'none'}}>
             <i></i>
-            {to ? children : <span>{children}</span>}
+            {to || false ? children : <span>{children}</span>}
         </Link>
     )
 }

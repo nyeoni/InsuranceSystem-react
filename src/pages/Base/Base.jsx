@@ -11,13 +11,10 @@ import styled from "styled-components";
 import {MyLink} from "../../components/MyLink";
 
 const Base = () => {
-    const StyledLink = styled(Link)`
-        text-decoration: none;
-    `
     return (
         <>
             <div className="userbar shadow-sm">
-                <StyledLink to="/home"><div className="left-logo"></div></StyledLink>
+                <Link to="/home"><div className="left-logo"></div></Link>
             </div>
             <section className="app">
                 <aside className="sidebar">
