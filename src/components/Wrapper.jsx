@@ -25,7 +25,7 @@ export const Wrapper = (props) => {
         <Container>
             <Content>
                 {props.title ? <Title>{props.title}</Title> : <></>}
-                {props.underline || false ? <hr/> : <div></div>}
+                {props.underline || true ? <hr/> : null}
                 {props.children}
             </Content>
         </Container>

@@ -5,6 +5,7 @@ import DataTable from "../../components/DataTable";
 import {GeneralTable} from "../../components/GeneralTable";
 
 const Board = () => {
+    
     return (
         <Wrapper title="공지사항" underline={true}>
             <GeneralTable />
