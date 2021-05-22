@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
 import {render} from "react-dom";
 import {Button, Dropdown, DropdownButton} from "react-bootstrap";
 import {DataTable} from "../../components/DataTable";
+import Popup from "../../components/Popup";
 
 const Accident = () => {
     const title = "사고접수처리";
@@ -21,7 +22,6 @@ const Accident = () => {
         { id: 4, clientID: '60100004', clientName: 'Kim go geck', date : '2021.04.20', status : '재심사 요청'},
     ];
 
-
     return (
         <Wrapper title = {title}>
             <DropdownButton className="d-inline-block" id="dropdown-basic-button" title="조회 기간 설정" variant = "secondary">
@@ -32,7 +32,9 @@ const Accident = () => {
                 <Dropdown.Item href="#/action-4">전체 조회</Dropdown.Item>
             </DropdownButton>
             <Button style={{float:'right'}} variant="outline-primary" >조회하기</Button>
-            <DataTable rows = {rows} columns = {columns}/>
+
+            <DataTable rows = {rows} columns = {columns}title = {title}/>
+
         </Wrapper>
 
     )

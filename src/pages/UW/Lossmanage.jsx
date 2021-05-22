@@ -1,10 +1,11 @@
 import React from "react";
+import {Wrapper} from "../../components/Wrapper";
 
 const Lossmanage = () => {
     return (
-        <div>
-            <h1>Lossmanage</h1>
-        </div>
+        <Wrapper>
+
+        </Wrapper>
     )
 }
 

@@ -1,10 +1,11 @@
 import React from "react";
+import {Wrapper} from "../../components/Wrapper";
 
 const UWPolicy = () => {
     return (
-        <div>
-            <h1>UWPolicy</h1>
-        </div>
+        <Wrapper>
+
+        </Wrapper>
     )
 }
 

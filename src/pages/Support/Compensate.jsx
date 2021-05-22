@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
 import {Button, Dropdown, DropdownButton, Form, Col} from "react-bootstrap";
 import {DataTable} from "../../components/DataTable";
+import Popup from "../../components/Popup";
 
 const Compensate = () => {
     const title = "보상처리";
+
     const columns = [
         { field: 'id', headerName: 'ID', flex: 0.5 },
         { field: 'clientId', headerName: 'Client ID', flex : 1},
@@ -20,7 +22,6 @@ const Compensate = () => {
     ];
     return (
         <Wrapper title = {title}>
-
             <DropdownButton className="d-inline-block" id="dropdown-basic-button" title="보험 선택" variant = "secondary">
                 <Dropdown.Item eventKey="1">보험번호 : 보험이름</Dropdown.Item>
                 <Dropdown.Item eventKey="2">보험번호 : 보험이름</Dropdown.Item>
@@ -41,8 +42,10 @@ const Compensate = () => {
                 </Form.Row>
             </Form>
 
-            <DataTable rows = {rows} columns = {columns}/>
-                </Wrapper>
+            <DataTable rows = {rows} columns = {columns}title = {title}/>
+
+
+        </Wrapper>
     )
 }
 

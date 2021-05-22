@@ -1,16 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
 import {DataTable} from "../../components/DataTable";
 import {Button, Dropdown, DropdownButton} from "react-bootstrap";
+import Popup from "../../components/Popup";
 
 const Cooperation = () => {
-    // const [modalShow, setModalShow] = React.useState(false);
     const title = "협력업체관리";
 
     const columns = [
         { field: 'id', headerName: 'ID', flex: 0.5 },
-        { field: 'partnerID', headerName: 'ID', flex: 1 },
-        { field: 'partnerCategory', headerName: '업체 분류', flex : 1 },
+        { field: 'partnerID', headerName: 'Partner ID', flex: 1 },
+        { field: 'partnerCategory', headerName: '업체 분류', flex : 0.5 },
         { field: 'partnerName', headerName: '업체명', type: 'number', flex : 0.5,},
         { field: 'contact', headerName: '연락처', description: 'This column has a value getter and is not sortable.', sortable: false, flex : 1,},
     ];
@@ -33,8 +33,7 @@ const Cooperation = () => {
                     <input type="text" placeholder="검색할 협력업체의 이름을 입력해주세요" className="form-control" id="employeeNameInput"/>
                 </div>
 
-                <DataTable rows = {rows} columns = {columns}/>
-                {/*<Popup title ={title} show={modalShow} onHide={() => setModalShow(false)}/>*/}
+                <DataTable rows = {rows} columns = {columns}title = {title}/>
             </Wrapper>
     )
 }
