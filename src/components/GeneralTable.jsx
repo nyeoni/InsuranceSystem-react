@@ -2,29 +2,29 @@ import 'antd/dist/antd.css';
 import React, {useState} from "react";
 import {Table, Space } from 'antd';
 import styled from "styled-components";
-import {Link, Redirect, useHistory} from "react-router-dom";
+import {Link, Redirect, useHistory, Route} from "react-router-dom";
 const {Column} = Table;
 
-const data = [
-    {
-        key: '1',
-        title : '인수심사 정책 수정 ver1.0',
-        author : '관리자',
-        date : '2021.04.08'
-    },
-    {
-        key: '2',
-        title : '관리 정책 수정 ver1.0',
-        author : '관리자',
-        date : '2021.04.08'
-    },
-    {
-        key: '3',
-        title : '영업관리 정책 수정 ver1.0',
-        author : '관리자',
-        date : '2021.04.08'
-    },
-];
+// const data = [
+//     {
+//         key: '1',
+//         title : '인수심사 정책 수정 ver1.0',
+//         author : '관리자',
+//         date : '2021.04.08'
+//     },
+//     {
+//         key: '2',
+//         title : '관리 정책 수정 ver1.0',
+//         author : '관리자',
+//         date : '2021.04.08'
+//     },
+//     {
+//         key: '3',
+//         title : '영업관리 정책 수정 ver1.0',
+//         author : '관리자',
+//         date : '2021.04.08'
+//     },
+// ];
 
 const StyledLink = styled(Link)`
     color: black;
@@ -62,9 +62,9 @@ const StyledLink = styled(Link)`
 //     )
 // }
 
-export const GeneralTable = (props) => {
-    const [state, setState] = useState(props.state);
-    const [loading, setLoading] = useState(false);
+export const GeneralTable = ({dataSource, onRow, loading, match}) => {
+    // const [state, setState] = useState(props.state);
+    // const [loading, setLoading] = useState(false);
     //나중에 넘겨받을 state
     // const state = {
     //     dataSource: data,
@@ -74,20 +74,20 @@ export const GeneralTable = (props) => {
     const history = useHistory();
 
 
-    const onRow = (record, rowIndex) => {
-        return {
-            onClick: () => {
-                history.replace("/home/board/"+record.key);
-            },
-        };
-    };
+    // const onRow = (record, rowIndex) => {
+    //     return {
+    //         onClick: () => {
+    //             history.replace("/home/board/"+record.key);
+    //         },
+    //     };
+    // };
     // TODO : 나중에 Table 데이터 api 불러올 동안 loading true 로 설정하
     return(
-        <Table loading={false} dataSource={data} sortDirections={["descend"]} onRow={onRow} pagination={{position: ["bottomCenter"]}}>
-            <Column title="No" dataIndex="key" key="key" width="10%"/>
+        <Table rowKey={(record) => record.id } loading={loading} dataSource={dataSource} sortDirections={["descend"]} onRow={onRow} pagination={{position: ["bottomCenter"]}}>
+            <Column title="No" dataIndex="id" key="id" width="10%"/>
             <Column title="내용" key="title" render={(text, record) => {
                 return (
-                    <StyledLink to={`/home/board/${record.key}`}>
+                    <StyledLink to={`${match.url}/${record.id}`}>
                         {record.title}
                     </StyledLink>
                 )

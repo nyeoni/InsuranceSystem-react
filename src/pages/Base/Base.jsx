@@ -9,12 +9,33 @@ import UWRouter from "../Router/UWRouter";
 import ManageRouter from "../Router/ManageRouter";
 import styled from "styled-components";
 import {MyLink} from "../../components/MyLink";
+import {AccountCircle} from "@material-ui/icons";
+import {IconButton} from "@material-ui/core";
+import Badge from '@material-ui/core/Badge';
+import MailIcon from '@material-ui/icons/Mail';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const Base = () => {
     return (
         <>
             <div className="userbar shadow-sm">
                 <Link to="/home"><div className="left-logo"></div></Link>
+
+                <IconButton className="user" color="inherit">
+                    <AccountCircle />
+                </IconButton>
+
+                <IconButton className="user" color="inherit">
+                    <Badge badgeContent={11} color="secondary">
+                        <NotificationsIcon />
+                    </Badge>
+                </IconButton>
+
+                <IconButton className="user" color="inherit">
+                    <Badge badgeContent={4} color="primary">
+                        <MailIcon />
+                    </Badge>
+                </IconButton>
             </div>
             <section className="app">
                 <aside className="sidebar">
