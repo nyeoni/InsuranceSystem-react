@@ -41,7 +41,7 @@ const Base = () => {
                                 </ul>
                             </li>
                             <li>
-                                <MyLink>영업관리</MyLink>
+                                <MyLink to="#">영업관리</MyLink>
                                 <ul className="nav-flyout">
                                     <li>
                                         <MyLink to="/sales/contract">계약관리</MyLink>
@@ -55,7 +55,7 @@ const Base = () => {
                                 </ul>
                             </li>
                             <li>
-                                <MyLink>인수심사</MyLink>
+                                <MyLink to="#">인수심사</MyLink>
                                 <ul className="nav-flyout">
                                     <li>
                                         <MyLink to="/uw/underwriting">인수심사</MyLink>
@@ -69,7 +69,7 @@ const Base = () => {
                                 </ul>
                             </li>
                             <li>
-                                <MyLink>보상지원</MyLink>
+                                <MyLink to="#">보상지원</MyLink>
                                 <ul className="nav-flyout">
                                     <li>
                                         <MyLink to="/support/accident">사고접수</MyLink>
@@ -86,7 +86,7 @@ const Base = () => {
                                 </ul>
                             </li>
                             <li>
-                                <MyLink>통합관리</MyLink>
+                                <MyLink to="#">통합관리</MyLink>
                                 <ul className="nav-flyout">
                                     <li>
                                         <MyLink to="/manage/payment">수금관리</MyLink>
