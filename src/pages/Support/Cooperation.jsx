@@ -19,23 +19,18 @@ const Cooperation = () => {
         { id: 2, partnerID:'3011002', partnerCategory: '병원', partnerName: 'A 병원', contact: '02-0000-0000'},
         { id: 3, partnerID:'3011003',partnerCategory: '병원', partnerName: 'B 병원', contact: '02-0000-0000'},
     ];
-
     return (
-            <Wrapper title = {title}>
-                <DropdownButton className="d-inline-block" id="dropdown-basic-button" title="업체 분류" variant = "secondary">
-                    <Dropdown.Item eventKey="1">병원</Dropdown.Item>
-                    <Dropdown.Item eventKey="2">사고현장업체</Dropdown.Item>
-
-                </DropdownButton>
-
-                <Button style={{float:'right'}} variant="outline-primary">조회하기</Button>
-                <div className="form-group">
-                    <input type="text" placeholder="검색할 협력업체의 이름을 입력해주세요" className="form-control" id="employeeNameInput"/>
-                </div>
-
-                <DataTable rows = {rows} columns = {columns}title = {title}/>
-            </Wrapper>
+        <Wrapper title = {title}>
+            <DropdownButton className="d-inline-block" id="dropdown-basic-button" title="업체 분류" variant = "secondary">
+                <Dropdown.Item eventKey="1">병원</Dropdown.Item>
+                <Dropdown.Item eventKey="2">사고현장업체</Dropdown.Item>
+            </DropdownButton>
+            <Button style={{float:'right'}} variant="outline-primary">조회하기</Button>
+            <div className="form-group">
+                <input type="text" placeholder="검색할 협력업체의 이름을 입력해주세요" className="form-control" id="employeeNameInput"/>
+            </div>
+            <DataTable rows = {rows} columns = {columns}title = {title}/>
+        </Wrapper>
     )
 }
-
 export default Cooperation;

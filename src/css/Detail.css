@@ -9,3 +9,8 @@ h1 {
     padding-inline-end: 5px;
     margin-bottom: 10px;
 }
+
+/* Detail.jsx */
+div.ant-page-header {
+    background-color: #fafafa;
+}

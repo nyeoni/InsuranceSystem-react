@@ -29,7 +29,6 @@ const Compensate = () => {
                 <Dropdown.Divider />
                 <Dropdown.Item eventKey="4">전체 조회</Dropdown.Item>
             </DropdownButton>
-
             <Button style={{float:'right'}} variant="outline-primary">조회하기</Button>
             <Form>
                 <Form.Row>
@@ -41,7 +40,6 @@ const Compensate = () => {
                     </Col>
                 </Form.Row>
             </Form>
-
             <DataTable rows = {rows} columns = {columns}title = {title}/>
 
 

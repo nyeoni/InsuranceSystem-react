@@ -9,12 +9,33 @@ import UWRouter from "../Router/UWRouter";
 import ManageRouter from "../Router/ManageRouter";
 import styled from "styled-components";
 import {MyLink} from "../../components/MyLink";
+import {AccountCircle} from "@material-ui/icons";
+import {IconButton} from "@material-ui/core";
+import Badge from '@material-ui/core/Badge';
+import MailIcon from '@material-ui/icons/Mail';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const Base = () => {
     return (
         <>
             <div className="userbar shadow-sm">
                 <Link to="/home"><div className="left-logo"></div></Link>
+
+                <IconButton className="user" color="inherit">
+                    <AccountCircle />
+                </IconButton>
+
+                <IconButton className="user" color="inherit">
+                    <Badge badgeContent={11} color="secondary">
+                        <NotificationsIcon />
+                    </Badge>
+                </IconButton>
+
+                <IconButton className="user" color="inherit">
+                    <Badge badgeContent={4} color="primary">
+                        <MailIcon />
+                    </Badge>
+                </IconButton>
             </div>
             <section className="app">
                 <aside className="sidebar">
@@ -41,7 +62,7 @@ const Base = () => {
                                 </ul>
                             </li>
                             <li>
-                                <MyLink>영업관리</MyLink>
+                                <MyLink to="#">영업관리</MyLink>
                                 <ul className="nav-flyout">
                                     <li>
                                         <MyLink to="/sales/contract">계약관리</MyLink>
@@ -55,7 +76,7 @@ const Base = () => {
                                 </ul>
                             </li>
                             <li>
-                                <MyLink>인수심사</MyLink>
+                                <MyLink to="#">인수심사</MyLink>
                                 <ul className="nav-flyout">
                                     <li>
                                         <MyLink to="/uw/underwriting">인수심사</MyLink>
@@ -69,7 +90,7 @@ const Base = () => {
                                 </ul>
                             </li>
                             <li>
-                                <MyLink>보상지원</MyLink>
+                                <MyLink to="#">보상지원</MyLink>
                                 <ul className="nav-flyout">
                                     <li>
                                         <MyLink to="/support/accident">사고접수</MyLink>
@@ -86,7 +107,7 @@ const Base = () => {
                                 </ul>
                             </li>
                             <li>
-                                <MyLink>통합관리</MyLink>
+                                <MyLink to="#">통합관리</MyLink>
                                 <ul className="nav-flyout">
                                     <li>
                                         <MyLink to="/manage/payment">수금관리</MyLink>
