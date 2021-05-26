@@ -17,7 +17,7 @@ async function getInsurances() {
     return response.data;
 }
 
-const Manage = () => {
+const Manage = ({match, history}) => {
     const title = "상품관리"
     const subtitle = "HM 보험회사의 상품들을 수정하고 삭제할 수 있는 페이지 입니다"
     const [data, setData] = useState([]);
@@ -35,7 +35,6 @@ const Manage = () => {
     }
     const [initialState, refetch] = useAsync(getInsurances, settingData, [getInsurances], skip);
     const { loading, error } = initialState;
-
 
     function handleMenuClick(e) {
         if (e.key === '1')
@@ -62,6 +61,7 @@ const Manage = () => {
             title: '보험명',
             dataIndex: 'name',
             key: 'name',
+            render: text => <a>{text}</a>,
         },
         {
             title: '보험분류',
@@ -140,6 +140,14 @@ const Manage = () => {
         );
     }
 
+    const onRow = (record, rowIndex) => {
+        return {
+            onClick: () => {
+                history.push(`${match.url}/${record.id}`)
+            },
+        };
+    };
+
     const onSearch = value => {
         let name;
         console.log(typeof(value));
@@ -179,7 +187,7 @@ const Manage = () => {
                 </Dropdown>
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
-            <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
+            <DataTable2 onRow={onRow} loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
         </Wrapper>
     )
 }

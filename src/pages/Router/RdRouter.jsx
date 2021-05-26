@@ -8,9 +8,9 @@ import Manage from "../RD/Manage";
 const RdRouter = (props) => {
     return (
         <>
-            <Route path="/rd/create" exact={true} render={props => <Create />} />
-            <Route path="/rd/support" exact={true} render={props => <Support />} />
-            <Route path="/rd/manage" exact={true} render={props => <Manage />} />
+            <Route path="/rd/create" exact={true} render={props => <Create {...props} />} />
+            <Route path="/rd/support" exact={true} render={props => <Support {...props} />} />
+            <Route path="/rd/manage" exact={true} render={props => <Manage {...props} />} />
         </>
     )
 }

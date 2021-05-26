@@ -38,7 +38,8 @@ export const useAsync = (callback, setData, deps = [], skip = false) => {
         try {
             const data = await callback();
             dispatch({ type: 'SUCCESS', data });
-            setData(data);
+            if (setData != null)
+                setData(data);
         } catch (e) {
             dispatch({ type: 'ERROR', error: e });
         }

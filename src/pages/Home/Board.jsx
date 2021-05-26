@@ -13,15 +13,14 @@ async function getBoards() {
     return response.data;
 }
 
-const Board = ({match}) => {
-    const [state, refetch] = useAsync(getBoards, [getBoards]);
+const Board = ({match, history}) => {
+    const [state, refetch] = useAsync(getBoards, null, [getBoards]);
     const { loading, data, error } = state;
-    const history = useHistory();
 
     const onRow = (record, rowIndex) => {
         return {
             onClick: () => {
-                history.replace("/home/board/"+record.id);
+                history.push(`${match.url}/${record.id}`)
             },
         };
     };

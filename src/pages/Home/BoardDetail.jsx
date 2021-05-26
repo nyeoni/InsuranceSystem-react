@@ -17,7 +17,7 @@ async function getBoard(id) {
 
 const BoardDetail = ({ match }) => {
     const { id } = match.params;
-    const [state] = useAsync(() => getBoard(id), [id]);
+    const [state] = useAsync(() => getBoard(id), null,[id]);
     const { loading, data: board, error } = state;
     const history = useHistory();
 

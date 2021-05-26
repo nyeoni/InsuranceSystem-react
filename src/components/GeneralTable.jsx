@@ -5,7 +5,7 @@ import styled from "styled-components";
 import {Link, useHistory} from "react-router-dom";
 const {Column} = Table;
 
-const StyledLink = styled(Link)`
+const StyledA = styled.a`
     color: black;
     text-decoration: none;
     &:hover {
@@ -20,9 +20,9 @@ export const GeneralTable = ({dataSource, onRow, loading, match}) => {
             <Column title="No" dataIndex="id" key="id" width="10%"/>
             <Column title="내용" key="title" render={(text, record) => {
                 return (
-                    <StyledLink to={`${match.url}/${record.id}`}>
+                    <StyledA>
                         {record.title}
-                    </StyledLink>
+                    </StyledA>
                 )
             }}/>
             <Column title="작성자" dataIndex="author" key="author" width="10%" fixed={false}/>
