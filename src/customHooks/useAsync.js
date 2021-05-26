@@ -33,6 +33,7 @@ export const useAsync = (callback, setData, deps = [], skip = false) => {
     });
 
     const fetchData = async () => {
+        console.log("fetch !!!!! what the fuck");
         dispatch({ type: 'LOADING' });
         try {
             const data = await callback();
@@ -44,11 +45,16 @@ export const useAsync = (callback, setData, deps = [], skip = false) => {
     };
 
     useEffect(() => {
-        if (skip) return;
+        if (skip)
+        {
+            console.log("i skip well!");
+            return;
+        }
         fetchData();
         // eslint 설정을 다음 줄에서만 비활성화
         // eslint-disable-next-line
     }, deps);
+
     console.log(state);
 
     return [state, fetchData];

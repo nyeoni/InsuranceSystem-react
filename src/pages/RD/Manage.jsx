@@ -1,11 +1,11 @@
-import React, {useCallback, useEffect, useMemo, useReducer, useState} from "react";
+import React, {useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
 import {DataTable2} from "../../components/DataTable2";
 import {DataTable} from "../../components/DataTable";
 import {Button, Dropdown, Input, Menu, message, Space, Tag} from "antd";
 import axios from "axios";
 import useAsync from "../../customHooks/useAsync";
-import {AudioOutlined, DownOutlined} from "@ant-design/icons";
+import {DownOutlined} from "@ant-design/icons";
 import Search from "antd/es/input/Search";
 import 'antd/dist/antd.css';
 import '../../css/Detail.css'
@@ -17,37 +17,33 @@ async function getInsurances() {
     return response.data;
 }
 
-function init(initialState) {
-    return initialState;
-}
-
 const Manage = () => {
     const title = "상품관리"
     const subtitle = "HM 보험회사의 상품들을 수정하고 삭제할 수 있는 페이지 입니다"
     const [data, setData] = useState([]);
     const [option, setOption] = useState("보험명");
     const [searchData, setSearchData] = useState([]);
-
+    const [skip, setSkip] = useState(false);
     const settingData = (data) => {
         if (data) {
             setData(data);
             setSearchData(data);
+            setSkip(true);
         } else {
             console.log("데이터 설정 실패");
         }
     }
-    const [initialState, refetch] = useAsync(getInsurances, settingData, [getInsurances]);
+    const [initialState, refetch] = useAsync(getInsurances, settingData, [getInsurances], skip);
     const { loading, error } = initialState;
+
+
     function handleMenuClick(e) {
-        // message.info('Click on menu item.');
-        if (e.key == 1)
+        if (e.key === '1')
         {
             console.log('click', e.key);
             setOption("보험명");
-            console.log(data);
-            console.log(searchData);
         }
-        else if (e.key == 2)
+        else if (e.key === '2')
         {
             console.log('click', e.key);
             setOption("보험번호");
@@ -146,7 +142,13 @@ const Manage = () => {
 
     const onSearch = value => {
         let name;
-        if (option == "보험번호")
+        console.log(typeof(value));
+        console.log(value);
+        if (value == "")
+        {
+            setSearchData(data);
+        }
+        else if (option == "보험번호")
         {
             console.log("number");
             console.log(value);
@@ -158,9 +160,12 @@ const Manage = () => {
         {
             console.log("name");
             console.log(value);
-            setSearchData(
-                data.filter(d => d.name === value)
-            )
+            let res = [];
+            data.forEach(function (d){
+                if (d.name.includes(value))
+                    res.push(d);
+            })
+            setSearchData(res);
         }
     };
 

@@ -1,8 +1,8 @@
 import 'antd/dist/antd.css';
-import React, {useState} from "react";
-import {Table, Space } from 'antd';
+import React from "react";
+import {Table} from 'antd';
 import styled from "styled-components";
-import {Link, Redirect, useHistory, Route} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 const {Column} = Table;
 
 const StyledLink = styled(Link)`
@@ -15,8 +15,6 @@ const StyledLink = styled(Link)`
 `;
 
 export const GeneralTable = ({dataSource, onRow, loading, match}) => {
-    const history = useHistory();
-
     return(
         <Table rowKey={(record) => record.id } loading={loading} dataSource={dataSource} sortDirections={["descend"]} onRow={onRow} pagination={{position: ["bottomCenter"]}}>
             <Column title="No" dataIndex="id" key="id" width="10%"/>
