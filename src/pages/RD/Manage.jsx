@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useReducer, useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
 import {DataTable2} from "../../components/DataTable2";
 import {DataTable} from "../../components/DataTable";
@@ -17,37 +17,35 @@ async function getInsurances() {
     return response.data;
 }
 
+function init(initialState) {
+    return initialState;
+}
+
 const Manage = () => {
     const title = "상품관리"
     const subtitle = "HM 보험회사의 상품들을 수정하고 삭제할 수 있는 페이지 입니다"
-    const [state, refetch] = useAsync(getInsurances, [getInsurances]);
-    const { loading, data, error } = state;
+    const [data, setData] = useState([]);
     const [option, setOption] = useState("보험명");
-    const [showdata, setShowdata] = useState([]);
+    const [searchData, setSearchData] = useState([]);
 
-    const dataFilter = (data) => {
-        setShowdata(data);
+    const settingData = (data) => {
+        if (data) {
+            setData(data);
+            setSearchData(data);
+        } else {
+            console.log("데이터 설정 실패");
+        }
     }
-
-    if (data)
-    {
-        // data.forEach(
-        //     (value) => {
-        //         showdata.push()
-        //     }
-        // )
-        console.log(data);
-        // useMemo(data => dataFilter(data), [data]);
-        // setShowdata(data);
-        // console.log(showdata);
-    }
-
+    const [initialState, refetch] = useAsync(getInsurances, settingData, [getInsurances]);
+    const { loading, error } = initialState;
     function handleMenuClick(e) {
         // message.info('Click on menu item.');
         if (e.key == 1)
         {
             console.log('click', e.key);
             setOption("보험명");
+            console.log(data);
+            console.log(searchData);
         }
         else if (e.key == 2)
         {
@@ -62,7 +60,6 @@ const Manage = () => {
             dataIndex: 'id',
             key: 'id',
             width: '10%',
-            filteredValue: ["1"],
             render: text => <a>{text}</a>,
         },
         {
@@ -148,16 +145,22 @@ const Manage = () => {
     }
 
     const onSearch = value => {
+        let name;
         if (option == "보험번호")
         {
             console.log("number");
-            // data = data.filter(x => {
-            //     x == value
-            // });
+            console.log(value);
+            setSearchData(
+                data.filter(d => d.id === value)
+            )
         }
         else if (option == "보험명")
         {
             console.log("name");
+            console.log(value);
+            setSearchData(
+                data.filter(d => d.name === value)
+            )
         }
     };
 
@@ -165,13 +168,13 @@ const Manage = () => {
         <Wrapper title={title} subtitle={subtitle} underline={true}>
             <Space>
                 <Dropdown overlay={menu}>
-                    <Button>
+                    <Button style={{ width: 95 }}>
                         {option} <DownOutlined />
                     </Button>
                 </Dropdown>
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
-            <DataTable2 loading={loading} dataSource={data} columns = {columns} title = {title}/>
+            <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
         </Wrapper>
     )
 }
