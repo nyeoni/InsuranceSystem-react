@@ -11,8 +11,9 @@ export const DataTable = (props) => {
         setPopUpShow(true);
         setRowData(rowSelected);
     }
+
     return (
-        <div style={{ height: '90%',  marginTop: '20px', backgroundColor: '#F8FCFF'}}>
+        <div style={{ height: '90%',  marginTop: '20px', backgroundColor: 'white'}}>
             <DataGrid rows={props.rows} columns={props.columns} pageSize={10} onRowSelected={(e) => {showPopUp(e.data);}}/>
             <Popup show={popUpShow} rowData={rowData} title = {props.title} onHide={() => setPopUpShow(false)}/>
         </div>

@@ -34,9 +34,6 @@ const BoardDetail = ({ match }) => {
         <Wrapper>
             <Detail board={board}/>
         </Wrapper>
-        // <Wrapper title={board.title} underline={true}>
-        //     <GeneralTable />
-        // </Wrapper>
     )
 }
 

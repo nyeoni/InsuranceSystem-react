@@ -1,10 +1,12 @@
 import React from "react";
+import {Wrapper} from "../../components/Wrapper";
 
 const Create = () => {
+    const title = "상품개발"
     return (
-        <div>
-            <h1>Create</h1>
-        </div>
+        <Wrapper title={title} underline={true}>
+
+        </Wrapper>
     )
 }
 

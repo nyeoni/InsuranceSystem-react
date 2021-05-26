@@ -3,6 +3,7 @@
 h1 {
     font-family: 'NanumSquare','Noto Sans KR', sans-serif;
     font-weight: bold;
+
     text-align: center;
 }
 .d-inline-block{
@@ -13,4 +14,27 @@ h1 {
 /* Detail.jsx */
 div.ant-page-header {
     background-color: #fafafa;
+}
+
+/*span.ant-input-affix-wrapper:hover{*/
+/*    font-size: inherit;*/
+/*    height: inherit;*/
+/*    width: inherit;*/
+/*}*/
+/*span.ant-input-affix-wrapper:focus{*/
+/*    font-size: inherit;*/
+/*    height: inherit;*/
+/*    width: inherit;*/
+/*}*/
+
+/*input.ant-input{*/
+/*    font-size: inherit;*/
+/*    height: inherit;*/
+/*    width: inherit;*/
+/*}*/
+
+input.ant-input:focus{
+    font-size: inherit;
+    height: inherit;
+    width: inherit;
 }

@@ -17,16 +17,30 @@ const Title = styled.h3`
     font-weight: bold;
     text-align: left;
     margin-left: 20px;
+    display: inline-block;
     margin-top: 40px;
+    margin-bottom: 0;
 `;
 
-export const Wrapper = (props) => {
+const Subtitle = styled.h4`
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: lighter;
+    display: inline-block;
+    font-size: 15px;
+    text-align: left;
+    margin-left: 20px;
+    vertical-align: middle;
+    margin-bottom : 0;
+`;
+
+export const Wrapper = ({title= false, underline = false, children = null, subtitle=false}) => {
     return(
         <Container>
             <Content>
-                {props.title ? <Title>{props.title}</Title> : <></>}
-                {props.underline || true ? <hr/> : null}
-                {props.children}
+                {title ? <Title>{title}</Title> : <></>}
+                {subtitle ? <Subtitle>{subtitle}</Subtitle> : <></>}
+                {underline ? <hr /> : null}
+                {children}
             </Content>
         </Container>
     )
