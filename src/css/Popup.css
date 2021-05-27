@@ -1,0 +1,29 @@
+.popupTable{
+    vertical-align: center;
+    horiz-align: center;
+    border-collapse: collapse;
+    margin: 2px;
+    font-size: 1.3em;
+    font-family: sans-serif;
+}
+
+.popupTable thead tr{
+    background-color: #002967;
+    color: #ffffff;
+    text-align: left;
+}
+.popupTable th,
+.popupTable td {
+    padding: 12px 15px;
+}
+.popupTable tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.popupTable tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.popupTable tbody tr:last-of-type {
+    border-bottom: 2px solid #002967;
+}

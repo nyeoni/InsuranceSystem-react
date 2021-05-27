@@ -1,56 +1,144 @@
 import React, {useState} from "react";
 
 import {Wrapper} from "../../components/Wrapper";
-import {Dropdown, DropdownButton, Button} from "react-bootstrap";
-import {DataTable} from "../../components/DataTable";
 import "../../css/Detail.css";
-import Popup from "../../components/Popup";
-// valueGetter: (params) =>
-//     `${params.getValue('firstName') || ''} ${params.getValue('lastName') || ''}`,
+import axios from "axios";
+import useAsync from "../../customHooks/useAsync";
+import {Button, Dropdown, Menu, Space, Tag} from "antd";
+import {DataTable2} from "../../components/DataTable2";
+import {DownOutlined} from "@ant-design/icons";
+import Search from "antd/es/input/Search";
+
+async function getTables() {
+    const response = await axios.get(
+        'https://60aba7e95a4de40017cca8e4.mockapi.io/compensation'
+    );
+    return response.data;
+}
 
 const Evaluation = () => {
     const title = "보상평가관리";
+    const subtitle = "HM 보험회사의 고객에게 처리된 보상들과 그 상세 내용을 보여주는 페이지입니다."
 
+    const [data, setData] = useState([]);
+    const [option, setOption] = useState("보험명");
+    const [searchData, setSearchData] = useState([]);
+    const [skip, setSkip] = useState(false);
+    const settingData = (data) => {
+        if (data) {
+            setData(data);
+            setSearchData(data);
+            setSkip(true);
+        } else {
+            console.log("데이터 설정 실패");
+        }
+    }
+    const [initialState, refetch] = useAsync(getTables, settingData, [getTables], skip);
+    const { loading, error } = initialState;
+
+
+    function handleMenuClick(e) {
+        if (e.key === '1') {
+            console.log('click', e.key);
+            setOption("보험명");
+        }
+        else if (e.key === '2') {
+            console.log('click', e.key);
+            setOption("보험번호");
+        }
+    }
     const columns = [
-        { field: 'id', headerName: 'ID', flex: 0.5 },
-        { field: 'compensationID', headerName: 'Compensation ID', flex: 0.7 },
-        { field: 'employeeID', headerName: 'Employee ID', flex : 0.7},
-        { field: 'employeeName', headerName: 'Employee Name', flex : 0.7 },
-        { field: 'amount', headerName: 'Amount', type: 'number', flex : 0.7},
-        { field: 'clientName', headerName: 'Client Name', sortable: false, flex : 1,},
-        { field: 'date', headerName: 'Date',type: 'Date', flex : 1},
-    ];
-    const rows = [
-        { id: 1, compensationID : 1234, employeeID: '60100001', employeeName: 'Jaime Lann', amount: '3,500,000', clientName: 'Kim go geck', date : '2021.04.28' },
-        { id: 2, compensationID : 1235, employeeID: '60100002', employeeName: 'Park Empl', amount: '500,000,000', clientName: 'Kim go geck', date : '2021.04.28' },
-        { id: 3, compensationID : 1236, employeeID: '60100003', employeeName: 'Lee Employee', amount: '10,000,0000', clientName: 'Kim go geck', date : '2021.04.28' },
-    ];
-    // const selections = ["1개월", "3개월", "6개월", "1년", "전체 조회"]
-    const [selectedRow, setSelectedRow] = useState(rows.indexOf(0));
+        {
+            title: 'No',
+            dataIndex: 'compensationId',
+            key: 'compensationId',
+            width: '10%',
+            render: text => <a>{text}</a>,
+        },
+        {
+            title: '보상처리 직원 ID',
+            dataIndex: 'employeeId',
+            key: 'employeeId',
+            render: text => <a>{text}</a>,
+        },
+        {
+            title: '직원 성명',
+            dataIndex: 'employeeName',
+            key: 'employeeName',
+            render: text => <a>{text}</a>,
+        },
+        {
+            title: '보상액',
+            dataIndex: 'amount',
+            key: 'amount',
+            render: text => <a>{text}</a>,
+        },
+        {
+            title: '보험 가입자 성명',
+            dataIndex: 'clientName',
+            key: 'clientName',
+            render: text => <a>{text}</a>,
+        },
+        {
+            title: '처리 마감일자',
+            dataIndex: 'dateReceipt',
+            key: 'dateReceipt',
+            render: text => <a>{text}</a>,
+        },
 
+        {
+            title: 'Action',
+            key: 'action',
+            width: '10%',
+            render: (text, record) => (
+                <Space size="middle">
+                    <a style={{color:'blueviolet'}}>Modify</a>
+                </Space>
+            ),
+        },
+    ];
+    const menu = (
+        <Menu onClick={handleMenuClick}>
+            <Menu.Item key="1">보험명</Menu.Item>
+            <Menu.Item key="2">보험번호</Menu.Item>
+        </Menu>
+    );
+
+    const onSearch = value => {
+        console.log(typeof(value));
+        console.log(value);
+        if (value == "") {setSearchData(data);}
+
+        else if (option == "보험번호") {
+            console.log("number");
+            console.log(value);
+            setSearchData(
+                data.filter(d => d.id === value)
+            )
+        }
+        else if (option == "보험명"){
+            console.log("name");
+            console.log(value);
+            let res = [];
+            data.forEach(function (d){
+                if (d.name.includes(value)) res.push(d);})
+            setSearchData(res);
+        }
+    };
+    if (error) {
+        return (<div>에러가 발생하였습니다.</div>);
+    }
     return (
-        <Wrapper title={title}>
-            <DropdownButton className="d-inline-block" id="dropdown-basic-button" title="조회 기간 설정" variant = "secondary">
-                {/*{selections.map(() => {})}*/}
-                <Dropdown.Item href="#/action-1">1개월</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">3개월</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">1년</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item href="#/action-4">전체 조회</Dropdown.Item>
-            </DropdownButton>
-            <DropdownButton className="d-inline-block" id="dropdown-basic-button" title="보험 선택" variant = "secondary">
-                <Dropdown.Item eventKey="1">보험번호 : 보험이름</Dropdown.Item>
-                <Dropdown.Item eventKey="2">보험번호 : 보험이름</Dropdown.Item>
-                <Dropdown.Item eventKey="3">보험번호 : 보험이름</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item eventKey="4">전체 조회</Dropdown.Item>
-            </DropdownButton>
-            <Button style={{float:'right'}} variant="outline-primary" >조회하기</Button>
-            <div className="form-group">
-                <input type="text" placeholder="검색할 직원의 성명을 입력해주세요" className="form-control" id="employeeNameInput"/>
-            </div>
-
-            <DataTable rows = {rows} columns = {columns} title = {title}/>
+        <Wrapper title={title} subtitle={subtitle} underline={true}>
+            <Space>
+                <Dropdown overlay={menu}>
+                    <Button style={{ width: 95 }}>
+                        {option} <DownOutlined />
+                    </Button>
+                </Dropdown>
+                <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
+            </Space>
+            <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
         </Wrapper>
 
     )
