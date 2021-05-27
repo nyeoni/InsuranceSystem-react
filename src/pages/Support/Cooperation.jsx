@@ -1,36 +1,157 @@
 import React, {useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
-import {DataTable} from "../../components/DataTable";
-import {Button, Dropdown, DropdownButton} from "react-bootstrap";
-import Popup from "../../components/Popup";
+import axios from "axios";
+import useAsync from "../../customHooks/useAsync";
+import {Button, Dropdown, Menu, Space, Tag} from "antd";
+import {DataTable2} from "../../components/DataTable2";
+import {DownOutlined} from "@ant-design/icons";
+import Search from "antd/es/input/Search";
 
+async function getInsurances() {
+    const response = await axios.get(
+        'https://60aba7e95a4de40017cca8e4.mockapi.io/partner'
+    );
+    return response.data;
+}
 const Cooperation = () => {
     const title = "협력업체관리";
+    const subtitle = "HM 보험회사와 협력 관계를 가지는 업체들을 조회하고, 관리할 수 있는 페이지 입니다"
+
+    const [data, setData] = useState([]);
+    const [option, setOption] = useState("업체 이름");
+    const [searchData, setSearchData] = useState([]);
+    const [skip, setSkip] = useState(false);
+
+    const settingData = (data) => {
+        if (data) {
+            setData(data);
+            setSearchData(data);
+            setSkip(true);
+        } else {
+            console.log("데이터 설정 실패");
+        }
+    }
+    const [initialState, refetch] = useAsync(getInsurances, settingData, [getInsurances], skip);
+    const { loading, error } = initialState;
+    if (error) {
+        return (<div>에러가 발생하였습니다.</div>
+        );
+    }
+    function handleMenuClick(e) {
+        if (e.key === '1')
+        {
+            console.log('click', e.key);
+            setOption("업체 이름");
+        }
+        else if (e.key === '2')
+        {
+            console.log('click', e.key);
+            setOption("업체 주소");
+        }
+    }
 
     const columns = [
-        { field: 'id', headerName: 'ID', flex: 0.5 },
-        { field: 'partnerID', headerName: 'Partner ID', flex: 1 },
-        { field: 'partnerCategory', headerName: '업체 분류', flex : 0.5 },
-        { field: 'partnerName', headerName: '업체명', type: 'number', flex : 0.5,},
-        { field: 'contact', headerName: '연락처', description: 'This column has a value getter and is not sortable.', sortable: false, flex : 1,},
+        {
+            title: '협력업체 번호',
+            dataIndex: 'id',
+            key: 'id',
+            width: '10%',
+            render: text => <a>{text}</a>,
+        },
+        {
+            title: '업체 이름',
+            dataIndex: 'partnerName',
+            key: 'partnerName',
+            render: text => <a>{text}</a>,
+        },
+        {
+            title: '업체 주소',
+            dataIndex: 'partnerAddress',
+            key: 'partnerAddress',
+            width: '20%',
+            render: text => <a>{text}</a>,
+        },
+        {
+            title: '업체 분류',
+            key: 'partnerCategory',
+            width: '15%',
+            dataIndex: 'partnerCategory',
+            filters: [
+                {
+                    text: '병원',
+                    value: 'Hospital',
+                },
+                {
+                    text: '사고 현장관리',
+                    value: 'Anycar',
+                },
+            ],
+            onFilter: (value, record) => record.type.indexOf(value) === 0,
+            render: partnerCategory => {
+                let color;
+                let value;
+                if (partnerCategory === '병원') {
+                    value = "병원";
+                    color = 'geekblue';
+                } else if (partnerCategory === '사고 현장관리') {
+                    value = "사고 현장관리";
+                    color = 'green';
+                }
+                return (
+                    <Tag color={color} key={partnerCategory}>{value}</Tag>
+                );
+            }
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            width: '10%',
+            render: (text, record) => (
+                <Space size="middle">
+                    <a style={{color:'blueviolet'}}>Modify</a>
+                </Space>
+            ),
+        },
     ];
-    const rows = [
-        { id: 1, partnerID:'3011001',partnerCategory: '사고처리', partnerName: '살려조 사고', contact: '02-0000-0000'},
-        { id: 2, partnerID:'3011002', partnerCategory: '병원', partnerName: 'A 병원', contact: '02-0000-0000'},
-        { id: 3, partnerID:'3011003',partnerCategory: '병원', partnerName: 'B 병원', contact: '02-0000-0000'},
-    ];
+    const menu = (
+        <Menu onClick={handleMenuClick}>
+            <Menu.Item key="1">업체 이름</Menu.Item>
+            <Menu.Item key="2">업체 주소</Menu.Item>
+        </Menu>
+    );
+    const onSearch = value => {
+        console.log(typeof(value));
+        console.log(value);
+        if (value == "") {setSearchData(data);}
+
+        else if (option == "업체 이름") {
+            console.log("number");
+            console.log(value);
+            setSearchData(data.filter(d => d.id === value))
+        }
+
+        else if (option == "업체 주소"){
+            console.log("name");
+            console.log(value);
+            let res = [];
+            data.forEach(function (d){if (d.name.includes(value)) res.push(d);})
+            setSearchData(res);
+        }
+    };
     return (
-        <Wrapper title = {title}>
-            <DropdownButton className="d-inline-block" id="dropdown-basic-button" title="업체 분류" variant = "secondary">
-                <Dropdown.Item eventKey="1">병원</Dropdown.Item>
-                <Dropdown.Item eventKey="2">사고현장업체</Dropdown.Item>
-            </DropdownButton>
-            <Button style={{float:'right'}} variant="outline-primary">조회하기</Button>
-            <div className="form-group">
-                <input type="text" placeholder="검색할 협력업체의 이름을 입력해주세요" className="form-control" id="employeeNameInput"/>
-            </div>
-            <DataTable rows = {rows} columns = {columns}title = {title}/>
+        <Wrapper title={title} subtitle={subtitle} underline={true}>
+            <Space>
+                <Dropdown overlay={menu}>
+                    <Button style={{ width: 95 }}>
+                        {option}<DownOutlined />
+                    </Button>
+                </Dropdown>
+                <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
+            </Space>
+            <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
+
         </Wrapper>
+
     )
 }
 export default Cooperation;

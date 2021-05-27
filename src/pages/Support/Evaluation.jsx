@@ -36,6 +36,9 @@ const Evaluation = () => {
     const [initialState, refetch] = useAsync(getTables, settingData, [getTables], skip);
     const { loading, error } = initialState;
 
+    if (error) {
+        return (<div>에러가 발생하였습니다.</div>);
+    }
 
     function handleMenuClick(e) {
         if (e.key === '1') {
@@ -99,11 +102,19 @@ const Evaluation = () => {
     ];
     const menu = (
         <Menu onClick={handleMenuClick}>
-            <Menu.Item key="1">보험명</Menu.Item>
-            <Menu.Item key="2">보험번호</Menu.Item>
+            <Menu.Item key="1">보험상품 이름</Menu.Item>
+            <Menu.Item key="2">보험 번호</Menu.Item>
         </Menu>
     );
-
+    const menuRange = (
+        <Menu onClick={handleMenuClick}>
+            <Menu.Item key="1">1개월</Menu.Item>
+            <Menu.Item key="2">3개월</Menu.Item>
+            <Menu.Item key="3">6개월</Menu.Item>
+            <Menu.Item key="4">1년</Menu.Item>
+            <Menu.Item key="5">전체 조회</Menu.Item>
+        </Menu>
+    );
     const onSearch = value => {
         console.log(typeof(value));
         console.log(value);
@@ -120,27 +131,28 @@ const Evaluation = () => {
             console.log("name");
             console.log(value);
             let res = [];
-            data.forEach(function (d){
-                if (d.name.includes(value)) res.push(d);})
+            data.forEach(function (d){if (d.name.includes(value)) res.push(d);})
             setSearchData(res);
         }
     };
-    if (error) {
-        return (<div>에러가 발생하였습니다.</div>);
-    }
+
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>
             <Space>
                 <Dropdown overlay={menu}>
                     <Button style={{ width: 95 }}>
-                        {option} <DownOutlined />
+                        {option}<DownOutlined />
+                    </Button>
+                </Dropdown>
+                <Dropdown overlay={menuRange}>
+                    <Button style={{ width: 95 }}>
+                        {option}<DownOutlined />
                     </Button>
                 </Dropdown>
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
             <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
         </Wrapper>
-
     )
 }
 export default Evaluation;
