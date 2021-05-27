@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button } from 'antd';
+import {Modal} from 'antd';
 import "../css/Popup.css"
 
 function Popup(props) {

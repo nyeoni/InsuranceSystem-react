@@ -1,8 +1,7 @@
 .popupTable{
-    vertical-align: center;
-    horiz-align: center;
-    border-collapse: collapse;
-    margin: 2px;
+    width: 100%;
+    /*border-collapse: collapse;*/
+    /*margin: 2px;*/
     font-size: 1.3em;
     font-family: sans-serif;
 }
@@ -10,11 +9,12 @@
 .popupTable thead tr{
     background-color: #002967;
     color: #ffffff;
+    /*border-bottom:  1px solid #444444;*/
     text-align: left;
 }
 .popupTable th,
 .popupTable td {
-    padding: 12px 15px;
+    padding: 10px 15px;
 }
 .popupTable tbody tr {
     border-bottom: 1px solid #dddddd;
