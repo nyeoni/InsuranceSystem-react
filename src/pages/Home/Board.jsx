@@ -1,10 +1,9 @@
-import React, { useEffect, useReducer } from "react";
+import React from "react";
 import axios from "axios";
 import {Wrapper} from "../../components/Wrapper";
 import '../../css/Detail.css';
 import {GeneralTable} from "../../components/GeneralTable";
 import useAsync from "../../customHooks/useAsync";
-import {useHistory} from "react-router-dom";
 
 async function getBoards() {
     const response = await axios.get(

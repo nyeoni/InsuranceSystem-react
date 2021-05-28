@@ -1,9 +1,7 @@
 import React from "react";
 import {Wrapper} from "../../components/Wrapper";
 import '../../css/Detail.css';
-import {GeneralTable} from "../../components/GeneralTable";
 import useAsync from "../../customHooks/useAsync";
-import {useHistory} from "react-router-dom";
 import axios from "axios";
 import { Spin } from 'antd';
 import {Detail} from "../../components/Detail";
@@ -19,7 +17,6 @@ const BoardDetail = ({ match }) => {
     const { id } = match.params;
     const [state] = useAsync(() => getBoard(id), null,[id]);
     const { loading, data: board, error } = state;
-    const history = useHistory();
 
     if (error) return <div>에러가 발생했습니다</div>;
     if (!board || loading) {

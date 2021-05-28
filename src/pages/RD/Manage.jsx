@@ -143,7 +143,7 @@ const Manage = ({match, history}) => {
     const onRow = (record, rowIndex) => {
         return {
             onClick: () => {
-                history.push(`${match.url}/${record.id}`)
+                history.push(`${match.url}/${record.id}`);
             },
         };
     };
