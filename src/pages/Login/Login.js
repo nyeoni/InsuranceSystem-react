@@ -4,18 +4,15 @@ import '../../css/Login.css';
 import {Link, useHistory} from "react-router-dom";
 import apiAxios from "../../apiAxios";
 import {Wrapper} from "../../components/Wrapper";
+import axios from "axios";
 
-const Login = () => {
+const Login = ({onSetUser}) => {
     //state & variables
-    const [user, setUser] = useState({
-        name: '', department: '', phoneNumber: '', role: '', email: ''
-    });
     const [info, setInfo] = useState({
-        id: '',
+        loginId: '',
         password: ''
     });
-
-    const {id, password} = info;
+    const {loginId, password} = info;
     const history = useHistory();
 
     //functions
@@ -26,31 +23,45 @@ const Login = () => {
             [name]: value
         });
     };
-    const validateUser = (data) => {
-        console.log("vlidate");
-        if (data) {
-            setUser(
-                {
-                    name: data.name,
-                    department: data.department,
-                    phoneNumber: data.phoneNumber,
-                    role: data.role,
-                    email: data.email
-                }
-            )
+    async function getUser(info) {
+        const response = await axios(
+            {
+                url: '/api/employee/login',
+                method: 'post', // 나중에 post
+                data: {
+                    loginId: info.loginId,
+                    password: info.password
+                },
+                withCredentials: true
+            }
+        )
+        return response.data;
+    }
+    const login = async () => {
+        try {
+            const data = await getUser(info);
+            console.log("login method");
+            onSetUser(data);
             history.replace("/home");
-        } else {
-            alert("아이디 혹은 비밀번호가 잘못되었습니다!");
+        } catch (error) {
+            console.log('error', error.response);
+            onSetUser({
+                status: 500,
+                data: null,
+                result: 'FAIL'
+            })
+            alert("아이디 혹은 비밀번호를 잘못입력하셨습니다.");
             setInfo({
-                id: '',
+                loginId: '',
                 password: ''
             })
         }
-    }
-    const login = () => {
-        apiAxios('employee/login', validateUser, info)
     };
-    const logout = () => setUser(null);
+    const logout = () => onSetUser({
+        status: false,
+        data: null,
+        result: null
+    });
     return (
         <div className="wrap">
             <div className="panel left-side">
@@ -68,7 +79,7 @@ const Login = () => {
                             <div className="square-img">
                                 <div className="id-img"></div>
                             </div>
-                            <input onChange={onChange} value={id} name="id" className="id-input" type="text" id="userid"
+                            <input onChange={onChange} value={loginId} name="loginId" className="id-input" type="text" id="userid"
                                    placeholder="ID"></input>
                         </div>
                         <div className="square-box">

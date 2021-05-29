@@ -16,9 +16,9 @@ const Title = styled.h3`
     font-family: 'NanumSquare','Noto Sans KR', sans-serif;
     font-weight: bold;
     text-align: left;
-    margin-left: 20px;
+    margin-left: 6px;
     display: inline-block;
-    margin-top: 40px;
+    margin-top: 50px;
     margin-bottom: 0;
 `;
 

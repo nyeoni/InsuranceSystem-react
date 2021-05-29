@@ -149,14 +149,11 @@ const Manage = ({match, history}) => {
     };
 
     const onSearch = value => {
-        let name;
-        console.log(typeof(value));
-        console.log(value);
-        if (value == "")
+        if (value === "")
         {
             setSearchData(data);
         }
-        else if (option == "보험번호")
+        else if (option === "보험번호")
         {
             console.log("number");
             console.log(value);
@@ -164,7 +161,7 @@ const Manage = ({match, history}) => {
                 data.filter(d => d.id === value)
             )
         }
-        else if (option == "보험명")
+        else if (option === "보험명")
         {
             console.log("name");
             console.log(value);

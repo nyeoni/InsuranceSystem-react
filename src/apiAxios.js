@@ -6,14 +6,14 @@ export default function apiAxios(url, callback, info) {
             url: '/api/' + url,
             method: 'post', // 나중에 post
             data: {
-                id: info.id,
+                loginId: info.loginId,
                 password: info.password
             },
             // baseURL: 'https://608c26ef9f42b20017c3d801.mockapi.io',
             withCredentials: false,
         }
     ).then(function (response){
-        console.log(response.data);
+        console.log(response.data.data);
         callback(response.data);
     }).catch(function (error) {
         if (error.response) {

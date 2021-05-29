@@ -31,17 +31,8 @@ const props = {
             status: 'done',
             url: 'http://www.baidu.com/yyy.png',
         },
-        // {
-        //     uid: '3',
-        //     name: 'zzz.png',
-        //     status: 'done',
-        //     response: 'Server Error 500', // custom error message to show
-        //     url: 'http://www.baidu.com/zzz.png',
-        // },
     ],
 };
-
-// TODO : https://ant.design/components/upload/
 
 export const Detail = ({board}) => {
     return(

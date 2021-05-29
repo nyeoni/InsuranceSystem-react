@@ -19,7 +19,7 @@ const Base = () => {
     return (
         <>
             <div className="userbar shadow-sm">
-                <Link to="/home"><div className="left-logo"></div></Link>
+                <Link to="/"><div className="left-logo"></div></Link>
 
                 <IconButton className="user" color="inherit">
                     <AccountCircle />
@@ -42,10 +42,10 @@ const Base = () => {
                     <nav className="sidebar-nav">
                         <ul>
                             <li>
-                                <MyLink to="/home"><span>HOME</span></MyLink>
+                                <MyLink to="/"><span>HOME</span></MyLink>
                             </li>
                             <li>
-                                <MyLink to="/home/board"><span>공지사항</span></MyLink>
+                                <MyLink to="/board"><span>공지사항</span></MyLink>
                             </li>
                             <li>
                                 <MyLink>상품개발</MyLink>
