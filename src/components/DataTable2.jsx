@@ -1,9 +1,7 @@
 import React from 'react';
 import {useState} from "react";
 import {Space, Table, } from "antd";
-import Popup from "./Popup";
-
-
+import InfoModal from "./InfoModal";
 export const DataTable2 = ({onRow, columns, dataSource, loading}) => {
     return (
         <div style={{marginTop: '1rem'}}>

@@ -7,6 +7,8 @@ import Search from "antd/es/input/Search";
 import useAsync from "../../customHooks/useAsync";
 import axios from "axios";
 import {render} from "react-dom";
+import InfoModal from "../../components/InfoModal";
+import AccidentModal from "../../components/AccidentModal";
 //고객들의 리스트(고객명, 고객번호, 상품이름, 전화번호, 접수사유, 접수 상태)
 //고객번호 또는 성명으로 검색
 async function getAccident() {
@@ -19,6 +21,9 @@ async function getAccident() {
 const Accident = () => {
     const title = "사고접수처리";
     const subtitle  = "고객의 사고 접수에 따른 보상을 위해 추가적인 정보를 입력하여 사고접수 처리하는 페이지입니다"
+    const [visible, setVisible] = React.useState(false);
+    const [clickedRecord, setClickedRecord] = React.useState([]);
+
     const [data, setData] = useState([]);
     const [option, setOption] = useState("고객 성명");
     const [searchData, setSearchData] = useState([]);
@@ -98,9 +103,15 @@ const Accident = () => {
             title: 'Action',
             key: 'action',
             width: '10%',
-            render: (text, record) => (<Space size="middle"><a style={{color:'red'}}>Delete</a></Space>),
+            render: (text, record) => (<Space size="middle"><a onClick={() => onRow(record)} style={{color:'orangered'}}>사고 접수</a></Space>),
         },
     ];
+    const onRow = (record) => {
+        console.log('a', record.id)
+        setClickedRecord(searchData.find(r => r.id === record.id))
+        setVisible(true);
+
+    };
     const menu = (
         <Menu onClick={handleMenuClick}>
             <Menu.Item key="1">고객 ID</Menu.Item>
@@ -139,7 +150,8 @@ const Accident = () => {
                 </Dropdown>
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
-            <DataTable2  loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
+            <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
+            <AccidentModal clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>
         </Wrapper>
     )
 }

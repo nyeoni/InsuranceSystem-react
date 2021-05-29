@@ -1,11 +1,10 @@
-import React from "react";
-import {Modal} from 'antd';
-import "../css/Popup.css"
+import React, {useState} from "react";
+import {Modal} from "antd"
 
-function Popup(props) {
-    return (
-        <Modal title="세부 내용" visible={props.visible} onOk={() => props.setVisible(false)} width={1000}>
-            <table className="popupTable">
+const AccidentModal = (props) => {
+    return(
+        <Modal title="사고 접수처리" visible={props.visible} okText={"Submit"} onOk={() => props.setVisible(false)} width={850}>
+            <table className="ModalTable">
                 <thead><tr>
                     <th>세부 항목</th>
                     <th>내용</th>
@@ -18,9 +17,10 @@ function Popup(props) {
                         </tr>
                     )
                 })}
+                <tr><td><input/></td></tr>
                 </tbody>
             </table>
         </Modal>
-    );
+        )
 }
-export default Popup;
+export default AccidentModal;
