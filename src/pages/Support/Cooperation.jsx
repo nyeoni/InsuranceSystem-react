@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
 import axios from "axios";
 import useAsync from "../../customHooks/useAsync";
-import {Button, Dropdown, Menu, Space, Tag} from "antd";
+import {Button, Dropdown, Menu, Space, Tag, Typography} from "antd";
 import {DataTable2} from "../../components/DataTable2";
 import {DownOutlined} from "@ant-design/icons";
 import Search from "antd/es/input/Search";
@@ -106,13 +106,13 @@ const Cooperation = () => {
             title: 'Action',
             key: 'action',
             width: '10%',
-            render: (text, record) => (
-                <Space size="middle">
-                    <a style={{color:'blueviolet'}}>Modify</a>
-                </Space>
-            ),
+            render: (text, record) =>(<Space size="middle"><a onClick = {(event) => onRow(record, event)}style={{color:'blueviolet'}}>Modify</a></Space>)
         },
     ];
+    const onRow = (record, e) => {
+        e.preventDefault();
+        console.log(record.key)
+    }
     const menu = (
         <Menu onClick={handleMenuClick}>
             <Menu.Item key="1">업체 이름</Menu.Item>
@@ -125,16 +125,14 @@ const Cooperation = () => {
         if (value == "") {setSearchData(data);}
 
         else if (option == "업체 이름") {
-            console.log("number");
             console.log(value);
-            setSearchData(data.filter(d => d.id === value))
+            setSearchData(data.filter(d => d.partnerName === value))
         }
 
         else if (option == "업체 주소"){
-            console.log("name");
             console.log(value);
             let res = [];
-            data.forEach(function (d){if (d.name.includes(value)) res.push(d);})
+            data.forEach(function (d){if (d.partnerAddress.includes(value)) res.push(d);})
             setSearchData(res);
         }
     };

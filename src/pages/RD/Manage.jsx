@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
 import {DataTable2} from "../../components/DataTable2";
-import {DataTable} from "../../components/DataTable";
 import {Button, Dropdown, Input, Menu, message, Space, Tag} from "antd";
 import axios from "axios";
 import useAsync from "../../customHooks/useAsync";
@@ -133,10 +132,7 @@ const Manage = ({match, history}) => {
     );
 
     if (error) {
-        return (
-            <div>
-                에러가 발생하였습니다.
-            </div>
+        return (<div>에러가 발생하였습니다.</div>
         );
     }
 

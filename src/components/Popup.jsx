@@ -14,7 +14,7 @@ function Popup(props) {
                 {Object.entries(props.clickedRecord).map(([key, value])=>{
                     return(
                         <tr>
-                            <td>{key}</td><td>{value}</td>
+                            <td key={key}>{key}</td><td>{value}</td>
                         </tr>
                     )
                 })}
