@@ -22,13 +22,13 @@ const AccidentModal = (props) => {
                     return(
                         <tr>
                             <td key={key}>{key}</td>
-                            <td><Form.Item required={true}><Input bordered={false} readOnly={true} value={value}/></Form.Item></td>
+                            <td><Form.Item required={true}><Input style={{width: '100%'}} bordered={false} readOnly={true} value={value}/></Form.Item></td>
                         </tr>
                     )
                 })}
                 <tr>
                     <td>사고일시</td>
-                    <td><Form.Item required={true}><DatePicker bordered={false}onChange={onChange}/></Form.Item></td>
+                    <td><Form.Item required={true}><DatePicker style={{width: '100%'}} bordered={false}onChange={onChange}/></Form.Item></td>
                 </tr>
                 <tr>
                     <td>장소</td>
@@ -56,7 +56,7 @@ const AccidentModal = (props) => {
                 </tr>
                 <tr>
                     <td>사고 현장파견 직원</td>
-                    <td><Form.Item required={false}><Input className={"accidentInput"} onChange={handleChange} bordered={false} placeholder="현장에 파견된 직원의 ID를 입력해주세요"/></Form.Item></td>
+                    <td><Form.Item required={false}><Input style={{width: '100%'}} onChange={handleChange} bordered={false} placeholder="현장에 파견된 직원의 ID를 입력해주세요"/></Form.Item></td>
                 </tr>
                 </tbody>
             </table>
