@@ -92,8 +92,8 @@ const Evaluation = () => {
         },
         {
             title: '처리 마감일자',
-            dataIndex: 'dateReceipt',
-            key: 'dateReceipt',
+            dataIndex: 'dateHandled',
+            key: 'dateHandled',
             render: text => <a>{text}</a>,
         },
     ];

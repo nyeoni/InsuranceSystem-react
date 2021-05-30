@@ -2,10 +2,11 @@ import React, {useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
 import axios from "axios";
 import useAsync from "../../customHooks/useAsync";
-import {Button, Dropdown, Menu, Space, Tag, Typography} from "antd";
+import {Button, Dropdown, Menu, Space, Tag} from "antd";
 import {DataTable2} from "../../components/DataTable2";
 import {DownOutlined} from "@ant-design/icons";
 import Search from "antd/es/input/Search";
+import AccidentModal from "../../components/AccidentModal";
 
 async function getInsurances() {
     const response = await axios.get(
@@ -16,6 +17,8 @@ async function getInsurances() {
 const Cooperation = () => {
     const title = "협력업체관리";
     const subtitle = "HM 보험회사와 협력 관계를 가지는 업체들을 조회하고, 관리할 수 있는 페이지 입니다"
+    const [visible, setVisible] = React.useState(false);
+    const [clickedRecord, setClickedRecord] = React.useState([]);
 
     const [data, setData] = useState([]);
     const [option, setOption] = useState("업체 이름");
@@ -106,13 +109,15 @@ const Cooperation = () => {
             title: 'Action',
             key: 'action',
             width: '10%',
-            render: (text, record) =>(<Space size="middle"><a onClick = {(event) => onRow(record, event)}style={{color:'blueviolet'}}>Modify</a></Space>)
+            render: (text, record) =>(<Space size="middle"><a onClick={() => onRow(record)} style={{color:'blueviolet'}}>Modify</a></Space>)
         },
     ];
-    const onRow = (record, e) => {
-        e.preventDefault();
-        console.log(record.key)
-    }
+    const onRow = (record) => {
+        console.log('a', record.id)
+        setClickedRecord(searchData.find(r => r.id === record.id))
+        setVisible(true);
+
+    };
     const menu = (
         <Menu onClick={handleMenuClick}>
             <Menu.Item key="1">업체 이름</Menu.Item>
@@ -147,7 +152,7 @@ const Cooperation = () => {
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
             <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
-
+            <AccidentModal clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>
         </Wrapper>
 
     )

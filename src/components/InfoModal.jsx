@@ -2,7 +2,7 @@ import React from "react";
 import {Modal} from 'antd';
 import "../css/Modal.css"
 
-function InfoModal(clickedRecord) {
+function InfoModal(clickedRecord, columns) {
     return(
         Modal.info({
             title: "세부 내용",
