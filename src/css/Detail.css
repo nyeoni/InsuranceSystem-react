@@ -16,25 +16,13 @@ div.ant-page-header {
     background-color: #fafafa;
 }
 
-/*span.ant-input-affix-wrapper:hover{*/
-/*    font-size: inherit;*/
-/*    height: inherit;*/
-/*    width: inherit;*/
-/*}*/
-/*span.ant-input-affix-wrapper:focus{*/
-/*    font-size: inherit;*/
-/*    height: inherit;*/
-/*    width: inherit;*/
-/*}*/
+input.ant-input:focus {
+    font-size: inherit !important;
+    height: inherit !important;
+    width: inherit !important;
+}
 
-/*input.ant-input{*/
-/*    font-size: inherit;*/
-/*    height: inherit;*/
-/*    width: inherit;*/
-/*}*/
-
-input.ant-input:focus{
-    font-size: inherit;
-    height: inherit;
-    width: inherit;
+/* Create.jsx */
+.create-input {
+    width: 300px;
 }

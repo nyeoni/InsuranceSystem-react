@@ -6,7 +6,7 @@ import {Button, Form, Input, InputNumber, Select, Spin, Tabs} from "antd";
 
 async function getInsurance(id) {
     const response = await axios.get(
-        `https://608c26ef9f42b20017c3d801.mockapi.io/api/v1/insurance/${id}`
+        `https://608c26ef9f42b20017c3d801.mockapi.io/api/v1/newinsurance/${id}`
     );
     return response.data;
 }

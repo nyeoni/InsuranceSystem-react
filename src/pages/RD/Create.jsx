@@ -2,9 +2,10 @@ import React, {useState} from "react";
 import {Form, Input, Button, Select,InputNumber} from 'antd';
 import axios from "axios";
 import {Wrapper} from "../../components/Wrapper";
-
+import "../../css/Detail.css";
 //특약 종류, 보험료, 위험률 ??
 //     "status": 1
+//todo: 최저 연령, 최고 연령, 기초 보험요율 api
 
 const Create = () => {
     const title = "상품개발"
@@ -18,7 +19,6 @@ const Create = () => {
         accidentDocuments: [],
         status : '1'
     })
-
     const handleChange = (event) =>{
         const target = event.target;
         const name = target.name;
@@ -49,14 +49,14 @@ const Create = () => {
         }).then(r => console.log(r));
     }
     const handleSubmit = () => {
-        postInsurance();
+        postInsurance().then((response) => {console.log('response, ', response.data)})
     }
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>
             <Form labelCol={{span: 3,}} wrapperCol={{span: 10,}} layout="vertical" scrollToFirstError={true} onFinish={handleSubmit}>
 
-                <Form.Item required={true} label="보험상품 이름" ><Input name="name" value={state.name} onChange={handleChange} placeholder="예시) XX 자동차 보험"/></Form.Item>
-                <Form.Item required={true} label="보험상품 ID번호" ><Input name="id" value={state.id} onChange={handleChange} placeholder="예시) xxxx-xxxx"/></Form.Item>
+                <Form.Item required={true} label="보험상품 이름" ><Input className="create-input" name="name" value={state.name} onChange={handleChange} placeholder="예시) XX 자동차 보험"/></Form.Item>
+                <Form.Item required={true} label="보험상품 ID번호" ><Input className="create-input" name="id" value={state.id} onChange={handleChange} placeholder="예시) xxxx-xxxx"/></Form.Item>
                 <Form.Item required={true} label="상품 항목">
 
                     <Select value={state.type} onChange={(val)=>{handleChange({target: {name: 'type', value: val}})}}>
@@ -67,11 +67,9 @@ const Create = () => {
                     </Select>
                 </Form.Item>
                 <Form.Item label="가입 연령대" style={{ marginBottom: 0 }}>
-                    <Form.Item style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}>
-                        <Input name="minimum"placeholder="가입 최저 연령을 입력해주세요" />
-                    </Form.Item>
-                    <Form.Item style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}>
-                        <Input name="maximum" placeholder="가입 최고 연령을 입력해주세요" />
+                    <Form.Item >
+                        <Input style={{ display: 'inline-block', width: 'calc(50% - 4px)', marginInlineEnd:'8px'}}name="minimum" placeholder="가입 최저 연령을 입력해주세요"/>
+                        <Input style={{ display: 'inline-block', width: 'calc(50% - 4px)'}} name="maximum" placeholder="가입 최고 연령을 입력해주세요" />
                     </Form.Item>
                 </Form.Item>
 
@@ -96,9 +94,9 @@ const Create = () => {
                     </Select>
                 </Form.Item>
 
-                <Form.Item  required={true} label="보험상품 개요"><Input.TextArea name="description" value={state.description} onChange={handleChange}/></Form.Item>
+                <Form.Item required={true} label="보험상품 개요"><Input.TextArea name="description" value={state.description} onChange={handleChange}/></Form.Item>
                 <Form.Item required={true} label="기초 보험요율"><InputNumber defaultValue={1.23} min={0} max={100.00} step="0.01" formatter={value => `${value}%`} parser={value => value.replace('%', '')}
-                                                                        // onChange={this.handleChange}
+                    // onChange={this.handleChange}
                 /></Form.Item>
 
                 <Form.Item><Button type="primary" htmlType="submit" value="Submit">Submit</Button></Form.Item>

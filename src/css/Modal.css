@@ -1,0 +1,28 @@
+.ModalTable{
+    border-collapse: collapse;
+    text-align: left;
+    font-size: medium;
+    line-height: 1.5;
+}
+
+.ModalTable thead th{
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #369;
+    border-bottom: 3px solid #036;
+}
+.ModalTable tbody th{
+    width: 300px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #f3f6f7;
+}
+.ModalTable td {
+    width: 400px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}

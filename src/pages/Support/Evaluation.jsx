@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 import {Wrapper} from "../../components/Wrapper";
 import "../../css/Detail.css";
@@ -8,6 +8,7 @@ import {Button, Dropdown, Menu, Space, Tag} from "antd";
 import {DataTable2} from "../../components/DataTable2";
 import {DownOutlined} from "@ant-design/icons";
 import Search from "antd/es/input/Search";
+import InfoModal from "../../components/InfoModal";
 
 async function getTables() {
     const response = await axios.get(
@@ -19,6 +20,13 @@ async function getTables() {
 const Evaluation = () => {
     const title = "보상평가관리";
     const subtitle = "HM 보험회사의 고객에게 처리된 보상들과 그 상세 내용을 보여주는 페이지입니다."
+
+    const [clickedRecord, setClickedRecord] = React.useState([]);
+    const mounted = useRef(false);
+    useEffect(() => {
+        if(!mounted.current){mounted.current = true;}
+        else{InfoModal(clickedRecord);}
+    }, [clickedRecord])
 
     const [data, setData] = useState([]);
     const [option, setOption] = useState("보험명");
@@ -88,17 +96,6 @@ const Evaluation = () => {
             key: 'dateReceipt',
             render: text => <a>{text}</a>,
         },
-
-        {
-            title: 'Action',
-            key: 'action',
-            width: '10%',
-            render: (text, record) => (
-                <Space size="middle">
-                    <a style={{color:'blueviolet'}}>Modify</a>
-                </Space>
-            ),
-        },
     ];
     const menu = (
         <Menu onClick={handleMenuClick}>
@@ -135,7 +132,13 @@ const Evaluation = () => {
             setSearchData(res);
         }
     };
-
+    const onRow = (record, rowIndex) => {
+        return {onClick: (record) => {
+            console.log('before', clickedRecord);
+            setClickedRecord(searchData[rowIndex]);
+            }
+        };
+    }
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>
             <Space>
@@ -151,7 +154,7 @@ const Evaluation = () => {
                 </Dropdown>
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
-            <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
+            <DataTable2 onRow={onRow} loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
         </Wrapper>
     )
 }

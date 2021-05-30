@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
 import {DataTable2} from "../../components/DataTable2";
-import {DataTable} from "../../components/DataTable";
 import {Button, Dropdown, Input, Menu, message, Space, Tag} from "antd";
 import axios from "axios";
 import useAsync from "../../customHooks/useAsync";
@@ -12,7 +11,7 @@ import '../../css/Detail.css'
 
 async function getInsurances() {
     const response = await axios.get(
-        'https://608c26ef9f42b20017c3d801.mockapi.io/api/v1/insurance'
+        'https://608c26ef9f42b20017c3d801.mockapi.io/api/v1/newinsurance'
     );
     return response.data;
 }
@@ -65,9 +64,9 @@ const Manage = ({match, history}) => {
         },
         {
             title: '보험분류',
-            key: 'type',
+            key: 'category',
             width: '15%',
-            dataIndex: 'type',
+            dataIndex: 'category',
             filters: [
                 {
                     text: '자동차보험',
@@ -86,17 +85,17 @@ const Manage = ({match, history}) => {
                     value: 'Traveller',
                 }
             ],
-            onFilter: (value, record) => record.type.indexOf(value) === 0,
-            render: type => {
+            onFilter: (value, record) => record.category.indexOf(value) === 0,
+            render: category => {
                 let color;
                 let value;
-                if (type === 'Car') {
+                if (category === "자동차") {
                     value = "자동차보험";
                     color = 'geekblue';
-                } else if (type === 'Driver') {
+                } else if (category === "운전자") {
                     value = "운전자보험";
                     color = 'green';
-                } else if (type === 'Fire') {
+                } else if (category === "화재") {
                     value = "화재보험";
                     color = 'volcano';
                 } else {
@@ -104,7 +103,7 @@ const Manage = ({match, history}) => {
                     color = 'yellow';
                 }
                 return (
-                    <Tag color={color} key={type}>
+                    <Tag color={color} key={category}>
                         {value}
                     </Tag>
                 );
