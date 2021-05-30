@@ -48,7 +48,7 @@ const Base = () => {
                                 <MyLink to="/board"><span>공지사항</span></MyLink>
                             </li>
                             <li>
-                                <MyLink>상품개발</MyLink>
+                                <MyLink to="#">상품개발</MyLink>
                                 <ul className="nav-flyout">
                                     <li>
                                         <MyLink to="/rd/create">상품개발</MyLink>

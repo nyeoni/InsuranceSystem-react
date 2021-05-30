@@ -42,7 +42,7 @@ const Login = ({onSetUser}) => {
             const data = await getUser(info);
             console.log("login method");
             onSetUser(data);
-            history.replace("/home");
+            history.replace("/");
         } catch (error) {
             console.log('error', error.response);
             onSetUser({
