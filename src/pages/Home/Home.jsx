@@ -12,26 +12,38 @@ import img from "../../images/company.jpeg";
 const HomeWrapper = styled.div`
     width: 100%;
     height: 100%;
-    padding: 15px;
+    padding: 15px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-content: space-around;
+    align: center;
+    background-color: rgba(0, 0, 0, 0.075);
 `
 const Welcome = styled.div`
     font-family: 'NanumSquare','Noto Sans KR', sans-serif;
     font-size: 20px;
-    height: 300px;
     width: 97%;
+    height: 300px;
     border-radius: 1em;
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+    margin: 0 auto;
     padding: 1rem 2rem;
     background: linear-gradient(
             to right,
-            rgba(225, 225, 225, 1) 10%,
-            rgba(225, 225, 225, 1) 50%,
-            rgba(225, 225, 225, 0.5) 55%,
-            rgba(225, 225, 225, 0.2) 60%,
-            rgba(20, 20, 20, 0.1) 65%,
-            rgba(20, 20, 20, 0.2) 70%,
-            rgba(20, 20, 20, 0.5) 75%,
-            rgba(20, 20, 20, 0.65) 100%
+            rgba(255, 255, 255, 1) 10%,
+            rgba(255, 255, 255, 1) 50%,
+            rgba(255, 255, 255, 1) 55%,
+            rgba(255, 255, 255, 0.9) 60%,
+            rgba(255, 255, 255, 0.8) 60%,
+            rgba(255, 255, 255, 0.7) 61%,
+            rgba(255, 255, 255, 0.6) 63%,
+            rgba(255, 255, 255, 0.5) 65%,
+            rgba(255, 255, 255, 0.4) 68%,
+            rgba(255, 255, 255, 0.3) 70%,
+            rgba(255, 255, 255, 0.2) 73%,
+            rgba(255, 255, 255, 0.1) 75%,
+            rgba(255, 255, 255, 0) 100%
           ), url(${img}) no-repeat right;
     background-position: 100% 30%;
 `
@@ -53,10 +65,11 @@ const SmallContainer = styled.div`
     min-width: 280px;
     height: 400px;
     border-radius: 1em;
-    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
     padding-top: 10px;
     padding-right: 3px;
     padding-left: 3px;
+    background-color: white;
 `
 
 const Plus = styled.span`
@@ -77,12 +90,9 @@ const Home = () => {
     // const userName = useSelector(state => (state.user.data.name));
     return (
         <HomeWrapper>
-            <LargeContainer>
-                <Welcome>
-                    Welcome, 김나연님 !
-                </Welcome>
-            </LargeContainer>
-
+            <Welcome>
+                Welcome, 김나연님 !
+            </Welcome>
             <LargeContainer>
                 <SmallContainer>
                     <MyCalendar/>
