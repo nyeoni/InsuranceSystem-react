@@ -151,7 +151,7 @@ const Accident = () => {
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
             <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
-            <AccidentModal clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>
+            <AccidentModal clickedRecord = {clickedRecord} columns={columns} visible = {visible} setVisible = {setVisible}/>
         </Wrapper>
     )
 }

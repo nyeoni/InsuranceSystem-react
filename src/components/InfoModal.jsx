@@ -2,6 +2,7 @@ import React from "react";
 import {Modal} from 'antd';
 import "../css/Modal.css"
 
+
 function InfoModal(clickedRecord) {
     return(
         Modal.info({

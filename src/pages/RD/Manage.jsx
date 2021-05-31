@@ -132,10 +132,7 @@ const Manage = ({match, history}) => {
     );
 
     if (error) {
-        return (
-            <div>
-                에러가 발생하였습니다.
-            </div>
+        return (<div>에러가 발생하였습니다.</div>
         );
     }
 

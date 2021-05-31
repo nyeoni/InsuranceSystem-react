@@ -54,9 +54,9 @@ const Create = () => {
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>
             <Form labelCol={{span: 3,}} wrapperCol={{span: 10,}} layout="vertical" scrollToFirstError={true} onFinish={handleSubmit}>
+                <Form.Item required={true} label="보험상품 이름" ><Input style={{width: '100%'}} name="name" value={state.name} onChange={handleChange} placeholder="예시) XX 자동차 보험"/></Form.Item>
+                <Form.Item required={true} label="보험상품 ID번호" ><Input style={{width: '100%'}} name="id" value={state.id} onChange={handleChange} placeholder="예시) xxxx-xxxx"/></Form.Item>
 
-                <Form.Item required={true} label="보험상품 이름" ><Input className="create-input" name="name" value={state.name} onChange={handleChange} placeholder="예시) XX 자동차 보험"/></Form.Item>
-                <Form.Item required={true} label="보험상품 ID번호" ><Input className="create-input" name="id" value={state.id} onChange={handleChange} placeholder="예시) xxxx-xxxx"/></Form.Item>
                 <Form.Item required={true} label="상품 항목">
 
                     <Select value={state.type} onChange={(val)=>{handleChange({target: {name: 'type', value: val}})}}>
