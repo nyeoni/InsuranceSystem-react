@@ -14,6 +14,7 @@ async function getInsurances() {
     );
     return response.data;
 }
+//id, name, address, contactNumber, PartnerCategory(guswkdcnfehddjqcp , quddnjs wkehd), employee_id,
 const Cooperation = () => {
     const title = "협력업체관리";
     const subtitle = "HM 보험회사와 협력 관계를 가지는 업체들을 조회하고, 관리할 수 있는 페이지 입니다"
@@ -154,7 +155,7 @@ const Cooperation = () => {
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
             <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
-            <AccidentModal clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>
+            {/*<AccidentModal clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>*/}
         </Wrapper>
 
     )

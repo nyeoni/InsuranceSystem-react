@@ -1,113 +1,110 @@
 
 import React, {useEffect, useState} from "react";
-import {Drawer, Button, DatePicker, Form, Row, Col, Input, InputNumber, Divider} from "antd"
+import {Drawer, Button, DatePicker, Form, Row, Col, Input, InputNumber, Divider, Select} from "antd"
 import '../css/Detail.css'
 import axios from "axios";
+import useAsync from "../customHooks/useAsync";
+
+async function getPartner() {
+    const response = await axios.get(
+        'https://60aba7e95a4de40017cca8e4.mockapi.io/partner'
+    );
+    return response.data;
+}
 
 const AccidentModal = (props) => {
-    const [confirmLoading, setConfirmLoading] = React.useState(false);
-    const style = {width:'80%'};
-    useEffect(() => {
-        getDate();
-    }, [])
+    const style = {width:'90%', marginLeft: '4%'};
+
+    useEffect(() => {getDate();}, [])
     const getDate = () => {
         var getDate = new Date().toLocaleDateString();
         setState({dateHandled: getDate});
     }
     const [state, setState] = useState({
-        //todo later: 치료 병원명, 장소, (가입 상품 종류가 아니라 상품의 ID)
-        compensationId: '', //보상 id
-        employeeId: '', //보상 id
-        employeeName: '',//직원 이름
-        amount:'', // 보상액
-        clientName : '', //고객성명
-        type: '', //보험 종류
-        dateReceipt: {}, //접수 일자
-        dateHandled:'', //todo: 처리 일자
-        detail:'', // todo: 사고내용
-        partner:'', // todo: 협력업체 직원id
-        damage: '', //todo: 손해액
-        negligence: '', //todo: 과실 비율
+        //todo: (가입 상품 종류가 아니라 상품의 ID)
+        // claimId: '',
+        // employeeName: '',
+        // clientName : '',
+        // contractId : '',
+        // employeeId : '',
+        // accidentDate: '',
+        // receiptDate: '',
+        // hospitalStatement: '',
+        // damageCost: '',
+        // claimPartner: [],
+        // negligence: '', //todo: 과실 비율
+        // status: '보상심사중',
     })
-
+    //partner
+    const [data, setData] = useState([]);
+    const settingData = (data) => {
+        if (data) {setData(data);}
+        else {console.log("데이터 설정 실패");}
+    }
+    const [initialState, refetch] = useAsync(getPartner, settingData, [getPartner]);
+    const { loading, error } = initialState;
+    if (error) {return (<div>에러가 발생하였습니다.</div>);}
+    //
     function handleChange(event){
-        // console.log(event)
         const target = event.target;
         const name = target.name;
         const value = target.value;
-        setState({
-            ...state,
-            [name]: value});
+        console.log('val ', value)
+        setState({...state, [name]: value});
     }
     function handleSubmit(){
         postAccident()
-            // .then((response) => {console.log('response, ', response.data)})
     }
     const postAccident = () => {
-        // const url = 'https://60aba7e95a4de40017cca8e4.mockapi.io/compensation';
-        // axios.post(url, {
-        //     // compensationId: state.compensationId,
-        //     employeeId: state.employeeId,
-        //     employeeName: state.employeeName,
-        //     // amount: state.amount,
-        //     clientName: state.clientName,
-        //     dateReceipt: state.dateReceipt,
-        //     dateHandled: state.dateHandled,
-        //     detail: state.detail,
-        //     partner: state.partner,
-        //     damage: state.damage,
-        //     negligence: state.negligence,
-        // }).then((r) => {console.log(r);
-        //     setConfirmLoading(false);
-        //     alert("API 보내기 성공")
-        // }); todo: 사고 장소는 없애도록
+        const url = 'https://60aba7e95a4de40017cca8e4.mockapi.io/compensation';
+        axios.post(url, {
+            // compensationId: state.compensationId,
+            employeeId: state.employeeId,
+            employeeName: state.employeeName,
+            // amount: state.amount,
+            clientName: state.clientName,
+            dateReceipt: state.dateReceipt,
+            receiptDate: state.dateHandled,
+            hospitalStatement: state.hospitalStatement,
+            damageCost: state.damageCost,
+            claimPartner: state.claimPartner,
+            negligence: state.negligence,
+            status: state.status,
+        }).then((r) => {console.log(r);
+            alert("API 보내기 성공")
+        });
     }
-    const onClose = () =>{
-        props.setVisible(false);
-    }
+    const onClose = () =>{props.setVisible(false)}
     return(
-        <Drawer title="사고 접수처리" visible={props.visible} width={850} onClose={onClose} footer={
+        <Drawer title="사고 접수처리" visible={props.visible} width={700} onClose={onClose} footer={
             <div style={{textAlign: 'right',}}>
                 <Button onClick={onClose} style={{ marginRight: 8 }}>Cancel</Button>
 
-                <Button  type="primary">Submit</Button>
+                <Button htmlType="submit" value="Submit" type="primary">Submit</Button>
             </div>
         }>
-         {/*<Modal  confirmLoading={confirmLoading} okText={"Submit"}  onCancel={() => props.setVisible(false)} onOk={() => {handleSubmit(); setConfirmLoading(true);}} >*/}
+            <Form layout="vertical" onFinish={handleSubmit}>
                 {Object.entries(props.clickedRecord).map(([key, value])=>{
                     return(
-                        <Row>
-                            <Col span={12}>
-                                <Form.Item required={true} label={props.columns.find((d) => d.key===key).title}>
-                                    <Input name={key} readOnly={true} value={value} disabled={true}
+                        <Row gutter={[8,8]}>
+                            <Col span={24}>
+                                <Form.Item labelCol={{span: 4}} wrapperCol={{span: 20}} required={true} label={props.columns.find((d) => d.key===key).title}>
+                                    <Input size={'small'} name={key} readOnly={true} value={value} disabled={true}
                                            onInput={(val)=>{handleChange({target: {name: '${key}', value: val}})}}/>
                                 </Form.Item>
                             </Col>
                         </Row>
                     )
                 })}
-                <Divider orientation="center">접수를 위해 정보를 입력해주세요</Divider>
-            <Form layout="vertical" hideRequiredMark>
+                <Divider orientation="center">접수를 위해 추가적인 정보를 입력해주세요</Divider>
                 <Row>
                     <Col span={12}>
-                        <Form.Item name="name" label="사고 일자" rules={[{required: true, message: '사고가 발생한 날짜를 선택해주세요'}]}>
-                            <DatePicker format={"M/DD/YYYY"} name = "dateReceipt" style={style}
-                                        onChange={(val)=>{if(val !== null){handleChange({target: {name: 'dateReceipt', value: val.toLocaleDateString}})}}}/>
-                        </Form.Item></Col>
-                    <Col span={12}>
-                        <Form.Item label={'접수된 날짜'} rules={[{required: true}]}>
+                        <Form.Item label={'접수 처리된 날짜'} required={true}>
                             <Input style={style} readOnly={true} name="dateHandled" value={state.dateHandled} onInput={handleChange}/></Form.Item>
                     </Col>
-                </Row>
-
-                <Row>
                     <Col span={12}>
-                        <Form.Item label={'사고 장소'} rules={[{required: true, message: '장소를 입력해주세요'}]}>
-                            <Input style={style} placeholder="예시) 서울시 서대문구 거북골로 34"/></Form.Item>
-                    </Col>
-                    <Col span={12}>
-                        <Form.Item label={'치료 병원'} rules={[{required: false}]}>
-                            <Input style={style} placeholder="치료 병원의 상호명을 입력해주세요"/></Form.Item>
+                        <Form.Item label={'병원 진단내용'} required={false}>
+                            <Input style={style} placeholder="병원의 진단 내용을 입력해주세요"/></Form.Item>
                     </Col>
                 </Row>
                 <Row>
@@ -122,26 +119,16 @@ const AccidentModal = (props) => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col span={12}>
-                        <Form.Item label={'과실 비율'} required={false}>
-                            <InputNumber defaultValue={50} min={0} max={100} style={style}
-                                         formatter={value => `${value}%`} parser={value => value.replace('%', '')}
-                                         onChange={(val)=>{handleChange({target: {name: 'negligence', value: val}})}}
-                                         placeholder="접수한 고객의 과실 비율을 입력해주세요"/></Form.Item>
-                    </Col>
-                    <Col span={12}>
-                        <Form.Item label={'손해액'} rules={[{required: true, message: '보상 청구를 위해 손해액을 입력해주세요'}]}>
-                            <InputNumber placeholder="손해의 가치를 입력해주세요." style={style}
-                                         defaultValue={1000000} min={0} formatter={value => `${value}원`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} step={10000}
-                                         parser={value => value.replace('원'+/\$\s?|(,*)/g, '')}
-                                         onChange={(val)=>{handleChange({target: {name: 'damage', value: val}})}}/>
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row>
                     <Col span={24}>
-                        <Form.Item label={'사고 내용'} rules={[{required: true, message: '사고의 정확한 내용을 기술해주세요'}]}>
-                            <Input.TextArea style={{width:'100%'}} name="detail" value={state.detail} onChange={handleChange} placeholder="자세한 사고 내용을 입력해주세요"/></Form.Item>
+                        <Form.Item label="협력 업체" required={false}>
+                            <Select mode={"multiple"} value={state.type} style={{marginLeft:'2%', width:'95%'}} onChange={(val)=>{handleChange({target: {name: 'type', value: val}})}}>
+                                {data.map((v) => {
+                                    return(
+                                        <Select.Option key={v.id} value={v.id}>{v.partnerName}</Select.Option>
+                                    )
+                                })}
+                            </Select>
+                        </Form.Item>
                     </Col>
                 </Row>
             </Form>

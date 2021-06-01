@@ -3,7 +3,7 @@ import {Form, Input, Button, Select,InputNumber} from 'antd';
 import axios from "axios";
 import {Wrapper} from "../../components/Wrapper";
 import "../../css/Detail.css";
-//특약 종류, 보험료, 위험률 ??
+
 //     "status": 1
 //todo: 최저 연령, 최고 연령, 기초 보험요율 api
 

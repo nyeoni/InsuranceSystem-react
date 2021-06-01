@@ -8,7 +8,7 @@ const Compensate = () => {
     const subtitle = "HM 보험에 접수된 고객의 사고들을 보여주며, 보상처리와 보상금 지급 여부를 결정하는 페이지입니다"
 
     const columns = [
-        // { field: 'id', headerName: 'ID', flex: 0.5 },
+        // { field: 'id', headerName: 'ID', flex: 0.5 },보상액, 보상일자, [보상완료 보상대기], 클레임아이디, 계약아이디, 직원아이디,
         // { field: 'clientId', headerName: 'Client ID', flex : 1},
         // { field: 'clientName', headerName: 'Client Name', flex : 1 },
         // { field: 'insuranceName', headerName: 'Insurance Name', flex : 1 },

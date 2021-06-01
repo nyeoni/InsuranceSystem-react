@@ -6,19 +6,16 @@ import {DownOutlined} from "@ant-design/icons";
 import Search from "antd/es/input/Search";
 import useAsync from "../../customHooks/useAsync";
 import axios from "axios";
-import {render} from "react-dom";
-import InfoModal from "../../components/InfoModal";
 import AccidentModal from "../../components/AccidentModal";
-//고객들의 리스트(고객명, 고객번호, 상품이름, 전화번호, 접수사유, 접수 상태)
-//고객번호 또는 성명으로 검색
+
 async function getAccident() {
     const response = await axios.get(
-        'https://60aba7e95a4de40017cca8e4.mockapi.io/accident'
+        'https://60aba7e95a4de40017cca8e4.mockapi.io/claim'
     );
     return response.data;
 }
 
-const Accident = () => {
+const Claim = ({match, history}) => {
     const title = "사고접수처리";
     const subtitle  = "고객의 사고 접수에 따른 보상을 위해 추가적인 정보를 입력하여 사고접수 처리하는 페이지입니다"
     const [visible, setVisible] = React.useState(false);
@@ -53,7 +50,7 @@ const Accident = () => {
             setOption("고객 ID");
         }
     }
-    const columns = [
+    const columns = [//todo: 고객 ID, 고객 성명, 가입 상품 ID/name
         {
             title: 'No',
             dataIndex: 'id',
@@ -62,35 +59,50 @@ const Accident = () => {
             render: text => <a>{text}</a>,
         },
         {
-            title: '고객 성명',
-            dataIndex: 'clientName',
-            key: 'clientName',
+            title: '담당 직원 ID',
+            dataIndex: 'employeeId',
+            key: 'employeeId',
             width: '10%',
             render: text => <a>{text}</a>,
         },
         {
-            title: '고객 ID번호',
-            dataIndex: 'clientId',
-            key: 'clientId',
+            title: '계약 번호',
+            dataIndex: 'contractId',
+            key: 'contractId',
             width: '10%',
             render: text => <a>{text}</a>,
         },
         {
-            title: '가입된 상품',
-            dataIndex: 'registeredInsuranceId',
-            key: 'registeredInsuranceId',
+            title: '손해액',
+            dataIndex: 'damageCost',
+            key: 'damageCost',
+            width: '10%',
             render: text => <a>{text}</a>,
         },
         {
-            title: '전화번호',
-            dataIndex: 'phoneNum',
-            key: 'phoneNum',
+            title: '상세 내용',
+            dataIndex: 'claimDetail',
+            key: 'claimDetail',
+            width: '10%',
             render: text => <a>{text}</a>,
         },
         {
-            title: '접수 사유',
+            title: '과실 비율',
+            dataIndex: 'claimRate',
+            key: 'claimRate',
+            width: '10%',
+            render: text => <a>{text}</a>,
+        },
+        {
+            title: '사고 원인',
             dataIndex: 'reason',
             key: 'reason',
+            render: text => <a>{text}</a>,
+        },
+        {
+            title: '사고일자',
+            dataIndex: 'accidentDate',
+            key: 'accidentDate',
             render: text => <a>{text}</a>,
         },
         {
@@ -103,7 +115,7 @@ const Accident = () => {
             title: 'Action',
             key: 'action',
             width: '10%',
-            render: (text, record) => (<Space size="middle"><a onClick={() => onRow(record)} style={{color:'orangered'}}>사고 접수</a></Space>),
+            render: (text, record) => (<Space size="middle"><a onClick={() => onRow(record)} style={{color:'orangered'}}>보상 심사요청</a></Space>),
         },
     ];
     const onRow = (record) => {
@@ -139,9 +151,11 @@ const Accident = () => {
             setSearchData(data.filter(d => d.id === value))
         }
     };
-
+    const onClick = () =>{
+        history.push(`${match.url}/addclaim`)
+    }
     return (
-        <Wrapper title={title} subtitle={subtitle} underline={true}>
+        <Wrapper title={title} subtitle={subtitle}underline={true}>
             <Space>
                 <Dropdown overlay={menu}>
                     <Button style={{ width: 95 }}>
@@ -150,10 +164,12 @@ const Accident = () => {
                 </Dropdown>
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
-            <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
+            <Button variant="contained" style={{float: 'right'}} color="primary" onClick={onClick}>Add Claim</Button>
+
+            <DataTable2 loading={loading} dataSource={searchData} columns = {columns.filter(col => col.dataIndex !== 'claimDetail'&&col.dataIndex !=='damageCost'&&col.dataIndex !=='claimRate')} title = {title}/>
             <AccidentModal clickedRecord = {clickedRecord} columns={columns} visible = {visible} setVisible = {setVisible}/>
         </Wrapper>
     )
 }
 
-export default Accident;
+export default Claim;
