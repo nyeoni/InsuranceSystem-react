@@ -6,7 +6,7 @@ import {Button, Dropdown, Menu, Space, Tag, Typography} from "antd";
 import {DataTable2} from "../../components/DataTable2";
 import {DownOutlined} from "@ant-design/icons";
 import Search from "antd/es/input/Search";
-import AccidentModal from "../../components/AccidentModal";
+import ClaimDetail from "./ClaimDetail";
 
 async function getInsurances() {
     const response = await axios.get(
@@ -155,7 +155,7 @@ const Cooperation = () => {
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
             <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
-            {/*<AccidentModal clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>*/}
+            {/*<ClaimDetail clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>*/}
         </Wrapper>
 
     )

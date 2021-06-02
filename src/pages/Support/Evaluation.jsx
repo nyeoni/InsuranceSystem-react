@@ -12,7 +12,7 @@ import InfoModal from "../../components/InfoModal";
 
 async function getTables() {
     const response = await axios.get(
-        'https://60aba7e95a4de40017cca8e4.mockapi.io/compensation'
+        'https://60aba7e95a4de40017cca8e4.mockapi.io/claim'//compensation api 사용해야함
     );
     return response.data;
 }

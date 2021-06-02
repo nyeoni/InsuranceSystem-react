@@ -6,7 +6,8 @@ import {DownOutlined} from "@ant-design/icons";
 import Search from "antd/es/input/Search";
 import useAsync from "../../customHooks/useAsync";
 import axios from "axios";
-import AccidentModal from "../../components/AccidentModal";
+import ClaimDetail from "./ClaimDetail";
+import {Route} from "react-router-dom";
 
 async function getAccident() {
     const response = await axios.get(
@@ -119,10 +120,12 @@ const Claim = ({match, history}) => {
         },
     ];
     const onRow = (record) => {
-        console.log('a', record.id)
+        let clickedRecord = searchData.find(r => r.id === record.id)
+        // history.push(`${match.url}/detail/${clickedRecord.id}`)
+        // history.push(`${match.url}/${record.id}`)
+        //
         setClickedRecord(searchData.find(r => r.id === record.id))
         setVisible(true);
-
     };
     const menu = (
         <Menu onClick={handleMenuClick}>
@@ -165,9 +168,8 @@ const Claim = ({match, history}) => {
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
             <Button variant="contained" style={{float: 'right'}} color="primary" onClick={onClick}>Add Claim</Button>
-
             <DataTable2 loading={loading} dataSource={searchData} columns = {columns.filter(col => col.dataIndex !== 'claimDetail'&&col.dataIndex !=='damageCost'&&col.dataIndex !=='claimRate')} title = {title}/>
-            <AccidentModal clickedRecord = {clickedRecord} columns={columns} visible = {visible} setVisible = {setVisible}/>
+            <ClaimDetail visible = {visible} setVisible={setVisible} clickedRecord = {clickedRecord}/>
         </Wrapper>
     )
 }
