@@ -1,14 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-const Container = styled.div`
-  width: 100%;
-  height: 95%;
-`;
-
 const Content = styled.div`
   width: 90%;
-  height: 90%;
+  height: 100%;
   margin: auto;
 `;
 
@@ -35,13 +30,11 @@ const Subtitle = styled.h4`
 
 export const Wrapper = ({title= false, underline = false, children = null, subtitle=false}) => {
     return(
-        <Container>
             <Content>
                 {title ? <Title>{title}</Title> : <></>}
                 {subtitle ? <Subtitle>{subtitle}</Subtitle> : <></>}
                 {underline ? <hr /> : null}
                 {children}
             </Content>
-        </Container>
     )
 }

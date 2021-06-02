@@ -19,7 +19,6 @@ div.ant-page-header {
 input.ant-input:focus {
     font-size: inherit !important;
     height: inherit !important;
-    width: inherit !important;
 }
 
 /* Create.jsx */

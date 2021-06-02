@@ -1,0 +1,138 @@
+{
+  "compensation" : [
+    {
+      "id": 1,
+      "cost": 30000000,
+      "status": "보상대기",
+      "claim": 1,
+      "contract": {
+        "id": 1,
+        "insurancePremium": 1,
+        "accumulatedPremium": 1,
+        "premiumRate": 0.2,
+        "status": "계약신청",
+        "channel": "온라인",
+        "contractDate": {
+          "registerDate": "2021-05-28T01:07:02.0886271",
+          "startDate": "2021-05-28T01:07:02.0886271",
+          "endDate": "2021-05-28T01:07:02.0886271"
+        }
+      },
+      "employee": "1"
+    },
+    {
+      "id": "2",
+      "cost": 50000000,
+      "status": "보상대기",
+      "claim": "2",
+      "contract": "2",
+      "employee": "1"
+    },
+    {
+      "id": "3",
+      "cost": 30000000,
+      "status": "보상대기",
+      "claim": "3",
+      "contract": "2",
+      "employee": "1"
+    },
+    {
+      "id": "4",
+      "cost": 30000000,
+      "status": "보상대기",
+      "claim": "4",
+      "contract": "1",
+      "employee": "1"
+    },
+    {
+      "id": "5",
+      "cost": 30000000,
+      "status": "보상대기",
+      "claim": "5",
+      "contract": "1",
+      "employee": "1"
+    }
+  ],
+  "contract": [
+    {
+      "id": 1,
+      "insurancePremium": 1,
+      "accumulatedPremium": 1,
+      "premiumRate": 0.2,
+      "status": "계약신청",
+      "channel": "온라인",
+      "contractDate": {
+        "registerDate": "2021-05-28T01:07:02.0886271",
+        "startDate": "2021-05-28T01:07:02.0886271",
+        "endDate": "2021-05-28T01:07:02.0886271"
+      },
+      "client": {
+        "id": 1,
+        "name": "이름",
+        "age": 20,
+        "rrn": {
+          "rrnFront": 210527,
+          "rrnBack": 11111111
+        },
+        "gender": "MALE",
+        "address": "대한민국",
+        "phoneNumber": "010-0000-000",
+        "email": "naver.com"
+      },
+      "insurance": {
+        "id": 1,
+        "name": "HM 운전자 보험",
+        "description": "HM보험사에서 내놓는 최초의 보험",
+        "category": "운전자"
+      },
+      "employee": {
+        "id": 1,
+        "name": "김나연",
+        "phoneNumber": "010-000-000",
+        "email": "abcd",
+        "department": "영업",
+        "role": "과장"
+      }
+    },
+    {
+      "id": 2,
+      "insurancePremium": 1,
+      "accumulatedPremium": 1,
+      "premiumRate": 0.2,
+      "status": "계약신청",
+      "channel": "온라인",
+      "contractDate": {
+        "registerDate": "2021-05-28T01:07:02.0886271",
+        "startDate": "2021-05-28T01:07:02.0886271",
+        "endDate": "2021-05-28T01:07:02.0886271"
+      },
+      "client": {
+        "id": 2,
+        "name": "이름",
+        "age": 20,
+        "rrn": {
+          "rrnFront": 210527,
+          "rrnBack": 11111111
+        },
+        "gender": "MALE",
+        "address": "대한민국",
+        "phoneNumber": "010-0000-000",
+        "email": "naver.com"
+      },
+      "insurance": {
+        "id": 1,
+        "name": "HM 운전자 보험",
+        "description": "HM보험사에서 내놓는 최초의 보험",
+        "category": "운전자"
+      },
+      "employee": {
+        "id": 1,
+        "name": "최윤식",
+        "phoneNumber": "010-000-000",
+        "email": "abcd",
+        "department": "개발",
+        "role": "과장"
+      }
+    }
+  ]
+}

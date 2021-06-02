@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
 import useAsync from "../../customHooks/useAsync";
 import axios from "axios";
-import {Button, Form, Input, InputNumber, Select, Spin, Tabs} from "antd";
+import {Button, Row, Col, Form, Input, InputNumber, Select, Spin, Statistic, Tabs} from "antd";
 
 async function getInsurance(id) {
     const response = await axios.get(
@@ -71,7 +71,30 @@ const ManageDetail = ({match}) => {
             {/*<div style={{marginTop: '1rem'}}>{insurance.description}</div>*/}
             <Tabs style={{marginTop: '1rem'}} defaultActiveKey="1" onChange={callback}>
                 <TabPane tab="상품분석" key="1">
-                    Content of Tab Pane 1
+                    <div style={{marginTop: '1rem'}}>
+                        <Row gutter={8}>
+                            <Col span={8}>
+                                <Statistic title="전체 계약 수" value={112893} />
+                            </Col>
+                            <Col span={8}>
+                                <Statistic title="보상지급 계약 수" value={112893} precision={2} />
+                            </Col>
+                            <Col span={8}>
+                                <Statistic title="중도해지 계약 " value={112893} precision={2} />
+                            </Col>
+                        </Row>
+                        <Row style={{marginTop:'1rem'}} gutter={8}>
+                            <Col span={8}>
+                                <Statistic title="위험률" value="13%" />
+                            </Col>
+                            <Col span={8}>
+                                <Statistic title="보상지급 계약 수" value={112893} precision={2} />
+                            </Col>
+                            <Col span={8}>
+                                <Statistic title="중도해지 계약 " value={112893} precision={2} />
+                            </Col>
+                        </Row>
+                    </div>
                 </TabPane>
                 <TabPane tab="상품수정" key="2">
                     <Form labelCol={{span: 3,}} wrapperCol={{span: 10,}} layout="vertical" scrollToFirstError={true} onFinish={handleSubmit}>
