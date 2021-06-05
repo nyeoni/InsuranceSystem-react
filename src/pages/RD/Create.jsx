@@ -21,8 +21,8 @@ const Create = () => {
         endAge: '',
         creditRating: '',
         category: '',
-        createEmployeeId : '1234',
-        managementEmployeeId : ''
+        createEmployeeId : '1',
+        managementEmployeeId : '1'
     })
 
     const handleChange = (event) =>{
@@ -46,7 +46,7 @@ const Create = () => {
     }, [state])
 
     const postInsurance = () => {
-        const url = 'http://hminsu.net//api/insurance/create';
+        const url = '/api/insurance/create';
         const {name, description,coverages, registerDocuments, accidentDocuments,basePremiumRate,category,
             startAge, endAge, creditRating,createEmployeeId,managementEmployeeId }= state;
         axios.post(url, {

@@ -12,11 +12,10 @@ import InfoModal from "../../components/InfoModal";
 
 async function getTables() {
     const response = await axios.get(
-        'https://60aba7e95a4de40017cca8e4.mockapi.io/claim'//compensation api 사용해야함
+        'https://60aba7e95a4de40017cca8e4.mockapi.io/compensation'
     );
     return response.data;
 }
-
 const Evaluation = () => {
     const title = "보상평가관리";
     const subtitle = "HM 보험회사의 고객에게 처리된 보상들과 그 상세 내용을 보여주는 페이지입니다."
@@ -61,39 +60,35 @@ const Evaluation = () => {
     const columns = [
         {
             title: 'No',
-            dataIndex: 'compensationId',
-            key: 'compensationId',
+            dataIndex: 'id',
+            key: 'id',
             width: '10%',
             render: text => <a>{text}</a>,
         },
         {
             title: '보상처리 직원 ID',
-            dataIndex: 'employeeId',
-            key: 'employeeId',
-            render: text => <a>{text}</a>,
-        },
-        {
-            title: '직원 성명',
-            dataIndex: 'employeeName',
-            key: 'employeeName',
-            render: text => <a>{text}</a>,
+            render: (record) => record.employee.id,
         },
         {
             title: '보상액',
-            dataIndex: 'amount',
-            key: 'amount',
+            dataIndex: 'cost',
+            key: 'cost',
             render: text => <a>{text}</a>,
         },
         {
-            title: '보험 가입자 성명',
-            dataIndex: 'clientName',
-            key: 'clientName',
+            title: 'Claim ID',
+            render: (record) => record.claim.id
+        },
+        {
+            title: '보상 처리일자',
+            dataIndex: 'dateTime',
+            key: 'dateTime',
             render: text => <a>{text}</a>,
         },
         {
-            title: '처리 마감일자',
-            dataIndex: 'dateHandled',
-            key: 'dateHandled',
+            title: '보상 상태',
+            dataIndex: 'status',
+            key: 'status',
             render: text => <a>{text}</a>,
         },
     ];

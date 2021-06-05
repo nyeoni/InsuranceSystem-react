@@ -11,7 +11,7 @@ import {Route} from "react-router-dom";
 
 async function getAccident() {
     const response = await axios.get(
-        'hminsu.net/api/claim'
+        'https://60aba7e95a4de40017cca8e4.mockapi.io/claim'
     );
     return response.data;
 }
@@ -110,14 +110,14 @@ const Claim = ({match, history}) => {
             title: '접수 상태',
             dataIndex: 'status',
             key: 'status',
-            render: text => <a>{text}</a>,
+            render: (text, record) => <a onClick={() => onRow(record)} style={{color: 'orangered'}}>{text}(변경하기)</a>,
         },
         {
             title: 'Action',
             key: 'action',
             width: '10%',
             render: (text, record) => (
-                <Space size="middle"><a onClick={() => onRow(record)} style={{color: 'orangered'}}>보상 심사요청</a></Space>),
+                <Space size="middle"><a onClick={() => evaluatePartner(record)} style={{color: 'blue'}}>업체 평가하기</a></Space>),
         },
     ];
     const onRow = (record) => {
@@ -125,6 +125,11 @@ const Claim = ({match, history}) => {
         setClickedRecord(searchData.find(r => r.id === record.id))
         setVisible(true);
     };
+    const evaluatePartner = (record) => {
+        let clickedRecord = searchData.find(r => r.id === record.id)
+        setClickedRecord(searchData.find(r => r.id === record.id))
+        alert("보상 대기중일때 업체 등록과 평가가 가능합니다.")
+    }
     const menu = (
         <Menu onClick={handleMenuClick}>
             <Menu.Item key="1">고객 ID</Menu.Item>

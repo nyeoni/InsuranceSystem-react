@@ -32,7 +32,7 @@ const AddClaim = (history) => {
     }, [state])
 
     const postInsurance = () => {
-        const url = 'http://hminsu.net/api/claim/create';
+        const url = '/api/claim/create';
         axios.post(url, {
             employeeId: state.employeeId,
             contractId: state.contractId,
@@ -47,8 +47,10 @@ const AddClaim = (history) => {
             form.resetFields();
         });
     }
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         postInsurance()
+        // const data = await postClaim(state);
+        // console.log(data);
     }
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>

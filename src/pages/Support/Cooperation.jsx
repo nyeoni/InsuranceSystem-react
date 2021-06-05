@@ -7,6 +7,7 @@ import {DataTable2} from "../../components/DataTable2";
 import {DownOutlined} from "@ant-design/icons";
 import Search from "antd/es/input/Search";
 import ClaimDetail from "./ClaimDetail";
+import InfoModal from "../../components/InfoModal";
 
 async function getInsurances() {
     const response = await axios.get(
@@ -14,7 +15,6 @@ async function getInsurances() {
     );
     return response.data;
 }
-//id, name, address, contactNumber, PartnerCategory(guswkdcnfehddjqcp , quddnjs wkehd), employee_id,
 const Cooperation = () => {
     const title = "협력업체관리";
     const subtitle = "HM 보험회사와 협력 관계를 가지는 업체들을 조회하고, 관리할 수 있는 페이지 입니다"
@@ -64,22 +64,27 @@ const Cooperation = () => {
         },
         {
             title: '업체 이름',
-            dataIndex: 'partnerName',
-            key: 'partnerName',
+            dataIndex: 'name',
+            key: 'name',
             render: text => <a>{text}</a>,
         },
         {
             title: '업체 주소',
-            dataIndex: 'partnerAddress',
-            key: 'partnerAddress',
+            dataIndex: 'address',
+            key: 'address',
             width: '20%',
             render: text => <a>{text}</a>,
         },
         {
+            title: '관리 직원 ID',
+            width: '20%',
+            render: (record) => record.employee.id,
+        },
+        {
             title: '업체 분류',
-            key: 'partnerCategory',
+            key: 'category',
+            dataIndex: 'category',
             width: '15%',
-            dataIndex: 'partnerCategory',
             filters: [
                 {
                     text: '병원',
@@ -111,14 +116,13 @@ const Cooperation = () => {
             key: 'action',
             width: '10%',
 
-            render: (text, record) =>(<Space size="middle"><a onClick={() => onRow(record)} style={{color:'blueviolet'}}>Modify</a></Space>)
+            render: (text, record) =>(<Space size="middle"><a onClick={() => onRow(record)} style={{color:'blueviolet'}}>담당 처리사고 조회</a></Space>)
         },
     ];
     const onRow = (record) => {
         console.log('a', record.id)
         setClickedRecord(searchData.find(r => r.id === record.id))
         setVisible(true);
-
     };
 
     const menu = (
@@ -156,6 +160,7 @@ const Cooperation = () => {
             </Space>
             <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
             {/*<ClaimDetail clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>*/}
+            {/*<InfoModal clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>*/}
         </Wrapper>
 
     )
