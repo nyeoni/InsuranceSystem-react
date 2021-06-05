@@ -11,14 +11,14 @@ import {Route} from "react-router-dom";
 
 async function getAccident() {
     const response = await axios.get(
-        'https://60aba7e95a4de40017cca8e4.mockapi.io/claim'
+        'hminsu.net/api/claim'
     );
     return response.data;
 }
 
 const Claim = ({match, history}) => {
     const title = "사고접수처리";
-    const subtitle  = "고객의 사고 접수에 따른 보상을 위해 추가적인 정보를 입력하여 사고접수 처리하는 페이지입니다"
+    const subtitle = "고객의 사고 접수에 따른 보상을 위해 추가적인 정보를 입력하여 사고접수 처리하는 페이지입니다"
     const [visible, setVisible] = React.useState(false);
     const [clickedRecord, setClickedRecord] = React.useState([]);
 
@@ -36,7 +36,7 @@ const Claim = ({match, history}) => {
         }
     }
     const [initialState, refetch] = useAsync(getAccident, settingData, [getAccident], skip);
-    const { loading, error } = initialState;
+    const {loading, error} = initialState;
     if (error) {
         return (<div>에러가 발생하였습니다.</div>);
     }
@@ -45,13 +45,13 @@ const Claim = ({match, history}) => {
         if (e.key === '2') {
             console.log('click', e.key);
             setOption("고객 성명");
-        }
-        else if (e.key === '1') {
+        } else if (e.key === '1') {
             console.log('click', e.key);
             setOption("고객 ID");
         }
     }
-    const columns = [//todo: 고객 ID, 고객 성명, 가입 상품 ID/name
+
+    const columns = [
         {
             title: 'No',
             dataIndex: 'id',
@@ -116,14 +116,12 @@ const Claim = ({match, history}) => {
             title: 'Action',
             key: 'action',
             width: '10%',
-            render: (text, record) => (<Space size="middle"><a onClick={() => onRow(record)} style={{color:'orangered'}}>보상 심사요청</a></Space>),
+            render: (text, record) => (
+                <Space size="middle"><a onClick={() => onRow(record)} style={{color: 'orangered'}}>보상 심사요청</a></Space>),
         },
     ];
     const onRow = (record) => {
         let clickedRecord = searchData.find(r => r.id === record.id)
-        // history.push(`${match.url}/detail/${clickedRecord.id}`)
-        // history.push(`${match.url}/${record.id}`)
-        //
         setClickedRecord(searchData.find(r => r.id === record.id))
         setVisible(true);
     };
@@ -136,40 +134,42 @@ const Claim = ({match, history}) => {
 
     const onSearch = value => {
         let name;
-        console.log(typeof(value));
+        console.log(typeof (value));
         console.log(value);
-        if (value == "") {setSearchData(data);}
-        else if (option == "고객 성명") {
+        if (value == "") {
+            setSearchData(data);
+        } else if (option == "고객 성명") {
             console.log("clientName");
             console.log(value);
             let res = [];
-            data.forEach(function (d){
+            data.forEach(function (d) {
                 if (d.clientName.includes(value)) res.push(d);
             })
             setSearchData(res);
-        }
-        else if (option == "고객 ID") {
+        } else if (option == "고객 ID") {
             console.log("number");
             console.log(value);
             setSearchData(data.filter(d => d.id === value))
         }
     };
-    const onClick = () =>{
+    const onClick = () => {
         history.push(`${match.url}/addclaim`)
     }
     return (
-        <Wrapper title={title} subtitle={subtitle}underline={true}>
+        <Wrapper title={title} subtitle={subtitle} underline={true}>
             <Space>
                 <Dropdown overlay={menu}>
-                    <Button style={{ width: 95 }}>
-                        {option} <DownOutlined />
+                    <Button style={{width: 95}}>
+                        {option} <DownOutlined/>
                     </Button>
                 </Dropdown>
-                <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
+                <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{width: 300}}/>
             </Space>
             <Button variant="contained" style={{float: 'right'}} color="primary" onClick={onClick}>Add Claim</Button>
-            <DataTable2 loading={loading} dataSource={searchData} columns = {columns.filter(col => col.dataIndex !== 'claimDetail'&&col.dataIndex !=='damageCost'&&col.dataIndex !=='claimRate')} title = {title}/>
-            <ClaimDetail visible = {visible} setVisible={setVisible} clickedRecord = {clickedRecord}/>
+            <DataTable2 loading={loading} dataSource={searchData}
+                        columns={columns.filter(col => col.dataIndex !== 'claimDetail' && col.dataIndex !== 'damageCost' && col.dataIndex !== 'claimRate')}
+                        title={title}/>
+            <ClaimDetail visible={visible} setVisible={setVisible} clickedRecord={clickedRecord} columns={columns}/>
         </Wrapper>
     )
 }

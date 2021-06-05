@@ -46,7 +46,7 @@ const Create = () => {
     }, [state])
 
     const postInsurance = () => {
-        const url = '/api/insurance/create';
+        const url = 'http://hminsu.net//api/insurance/create';
         const {name, description,coverages, registerDocuments, accidentDocuments,basePremiumRate,category,
             startAge, endAge, creditRating,createEmployeeId,managementEmployeeId }= state;
         axios.post(url, {
@@ -77,10 +77,10 @@ const Create = () => {
 
                 <Form.Item rules={[{required: true, message: '상품의 종류를 선택해주세요!'}]} name='category' label="상품 항목">
                     <Select value={state.category} onChange={(val)=>{handleChange({target: {name: 'category', value: val}})}}>
-                        <Select.Option value="Car">자동차 보험</Select.Option>
-                        <Select.Option value="Driver">운전자 보험</Select.Option>
-                        <Select.Option value="Fire">화재 보험</Select.Option>
-                        <Select.Option value="Traveller">여행자 보험</Select.Option>
+                        <Select.Option value="자동차">자동차 보험</Select.Option>
+                        <Select.Option value="운전자">운전자 보험</Select.Option>
+                        <Select.Option value="화재">화재 보험</Select.Option>
+                        <Select.Option value="여행자">여행자 보험</Select.Option>
                     </Select>
                 </Form.Item>
                 <Row>
@@ -136,7 +136,7 @@ const Create = () => {
                 </Form.Item>
 
                 <Form.Item rules={[{required:true, message: '보험의 기초 보험요율을 입력해주세요'}]} name="basePremiumRate" label="기초 보험요율">
-                    <InputNumber defaultValue={1.02} min={0} max={100.00} step="0.01" value={state.basePremiumRate}
+                    <InputNumber min={0} max={100.00} step="0.01" value={state.basePremiumRate}
                                  formatter={value => `${value}%`} parser={value => value.replace('%', '')}
                                  onChange={(val)=>{handleChange({target: {name: 'basePremiumRate', value: val}})}}/>
                 </Form.Item>

@@ -32,7 +32,7 @@ const AddClaim = (history) => {
     }, [state])
 
     const postInsurance = () => {
-        const url = 'https://60aba7e95a4de40017cca8e4.mockapi.io/claim';
+        const url = 'http://hminsu.net/api/claim/create';
         axios.post(url, {
             employeeId: state.employeeId,
             contractId: state.contractId,
@@ -45,7 +45,6 @@ const AddClaim = (history) => {
         }).then((r) => {console.log(r);
             alert("API 보내기 성공");
             form.resetFields();
-            // history.back();안돼
         });
     }
     const handleSubmit = () => {
