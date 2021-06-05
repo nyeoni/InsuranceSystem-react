@@ -2,7 +2,9 @@ import React, {useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
 import useAsync from "../../customHooks/useAsync";
 import axios from "axios";
-import {Button, Row, Col, Form, Input, InputNumber, Select, Spin, Statistic, Tabs} from "antd";
+import {Button, Row, Col, Form, Input, InputNumber, Select, Spin, Statistic, Tabs, Progress} from "antd";
+import styled from "styled-components";
+import {Style} from "@material-ui/icons";
 
 async function getInsurance(id) {
     const response = await axios.get(
@@ -10,6 +12,20 @@ async function getInsurance(id) {
     );
     return response.data;
 }
+
+const StyledDiv = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: space-around;
+    width: 100%;
+    height: 100%;
+    padding-top: 10px;
+    padding-right: 3px;
+    padding-left: 3px;
+    margin-top: 2rem;
+    background-color: white;
+`;
 
 const ManageDetail = ({match}) => {
     const { id } = match.params;
@@ -69,18 +85,18 @@ const ManageDetail = ({match}) => {
     return(
         <Wrapper title={insurance.name} underline={false}>
             {/*<div style={{marginTop: '1rem'}}>{insurance.description}</div>*/}
-            <Tabs style={{marginTop: '1rem'}} defaultActiveKey="1" onChange={callback}>
+            <Tabs style={{marginTop: '1rem', height: '100%'}} defaultActiveKey="1" onChange={callback}>
                 <TabPane tab="상품분석" key="1">
                     <div style={{marginTop: '1rem'}}>
                         <Row gutter={8}>
                             <Col span={8}>
-                                <Statistic title="전체 계약 수" value={112893} />
+                                <Statistic title="계약 수" value={112893} />
                             </Col>
                             <Col span={8}>
-                                <Statistic title="보상지급 계약 수" value={112893} precision={2} />
+                                <Statistic title="보상지급 계약 수" value={112893} />
                             </Col>
                             <Col span={8}>
-                                <Statistic title="중도해지 계약 " value={112893} precision={2} />
+                                <Statistic title="중도해지 계약 " value={112893} />
                             </Col>
                         </Row>
                         <Row style={{marginTop:'1rem'}} gutter={8}>
@@ -88,12 +104,20 @@ const ManageDetail = ({match}) => {
                                 <Statistic title="위험률" value="13%" />
                             </Col>
                             <Col span={8}>
-                                <Statistic title="보상지급 계약 수" value={112893} precision={2} />
+                                <Statistic title="전체 차지 비율" value="15%" precision={2} />
                             </Col>
                             <Col span={8}>
-                                <Statistic title="중도해지 계약 " value={112893} precision={2} />
+                                <Statistic title="이윤" value={111223000000} precision={2} />
                             </Col>
                         </Row>
+                        <StyledDiv>
+                            <div>
+                                <div style={{fontSize: '14px', color: 'rgba(0, 0, 0, 0.45)', }}>손해율</div>
+                                <Progress type="circle" percent={70} />
+                            </div>
+
+                        </StyledDiv>
+
                     </div>
                 </TabPane>
                 <TabPane tab="상품수정" key="2">
