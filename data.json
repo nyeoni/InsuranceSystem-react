@@ -1,4 +1,328 @@
 {
+  "client": [
+    {
+      "id" : "1",
+      "name" : "김기역",
+      "age" : 25,
+      "address" : "대한민국",
+      "phoneNumber" : "010-0000-000",
+      "email" : "naver.com",
+      "accountNumber" : "12341234",
+      "bank" : "IBK기업",
+      "gender" : "MALE",
+      "rrn" : {
+        "rrnFront" : 210527,
+        "rrnBack" : 11111111
+      },
+      "contractList" : [ {
+        "id" : "1",
+        "insurancePremium" : 1,
+        "contractDate" : {
+          "registerDate" : "2021-05-28T01:07:02.0886271",
+          "startDate" : "2021-05-28T01:07:02.0886271",
+          "endDate" : "2021-05-28T01:07:02.0886271"
+        },
+        "status" : "계약신청",
+        "channel": "온라인",
+        "clientId" : "1",
+        "insuranceId" : "1",
+        "employeeId" : "1"
+      } ],
+      "accidentHistoryList" : [ {
+        "id" : "1",
+        "accidentDate" : "2021-05-28T01:06:53.948754",
+        "accidentRate" : 50.0,
+        "accidentDescription" : "사고 요약",
+        "clientId" : "1"
+      } ]
+    },
+    {
+      "id" : "2",
+      "name" : "김이번",
+      "age" : 20,
+      "address" : "대한민국",
+      "phoneNumber" : "010-0000-000",
+      "email" : "naver.com",
+      "accountNumber" : "12341234",
+      "bank" : "IBK기업",
+      "gender" : "MALE",
+      "rrn" : {
+        "rrnFront" : 210527,
+        "rrnBack" : 11111111
+      },
+      "contractList" : [ {
+        "id" : "2",
+        "insurancePremium" : 1,
+        "contractDate" : {
+          "registerDate" : "2021-05-28T01:07:02.0886271",
+          "startDate" : "2021-05-28T01:07:02.0886271",
+          "endDate" : "2021-05-28T01:07:02.0886271"
+        },
+        "status" : "계약신청",
+        "channel": "온라인",
+        "clientId" : "2",
+        "insuranceId" : "2",
+        "employeeId" : "2"
+      } ],
+      "accidentHistoryList" : [ {
+        "id" : "2",
+        "accidentDate" : "2021-05-28T01:06:53.948754",
+        "accidentRate" : 50.0,
+        "accidentDescription" : "사고 요약",
+        "clientId" : "2"
+      } ]
+    },
+    {
+      "id" : "3",
+      "name" : "김삼번",
+      "age" : 20,
+      "address" : "대한민국",
+      "phoneNumber" : "010-0000-000",
+      "email" : "naver.com",
+      "accountNumber" : "12341234",
+      "bank" : "IBK기업",
+      "gender" : "MALE",
+      "rrn" : {
+        "rrnFront" : 210527,
+        "rrnBack" : 11111111
+      },
+      "contractList" : [ {
+        "id" : "3",
+        "insurancePremium" : 1,
+        "contractDate" : {
+          "registerDate" : "2021-05-28T01:07:02.0886271",
+          "startDate" : "2021-05-28T01:07:02.0886271",
+          "endDate" : "2021-05-28T01:07:02.0886271"
+        },
+        "status" : "계약신청",
+        "channel": "온라인",
+        "clientId" : "3",
+        "insuranceId" : "3",
+        "employeeId" : "3"
+      } ],
+      "accidentHistoryList" : [ {
+        "id" : "3",
+        "accidentDate" : "2021-05-28T01:06:53.948754",
+        "accidentRate" : 50.0,
+        "accidentDescription" : "사고 요약",
+        "clientId" : "3"
+      } ]
+    },
+    {
+      "id" : "4",
+      "name" : "이름",
+      "age" : 20,
+      "address" : "대한민국",
+      "phoneNumber" : "010-0000-000",
+      "email" : "naver.com",
+      "accountNumber" : "12341234",
+      "bank" : "IBK기업",
+      "gender" : "MALE",
+      "rrn" : {
+        "rrnFront" : 210527,
+        "rrnBack" : 11111111
+      },
+      "contractList" : [ {
+        "id" : "4",
+        "insurancePremium" : 1,
+        "contractDate" : {
+          "registerDate" : "2021-05-28T01:07:02.0886271",
+          "startDate" : "2021-05-28T01:07:02.0886271",
+          "endDate" : "2021-05-28T01:07:02.0886271"
+        },
+        "status" : "계약신청",
+        "channel": "온라인",
+        "clientId" : "4",
+        "insuranceId" : "4",
+        "employeeId" : "4"
+      } ],
+      "accidentHistoryList" : [ {
+        "id" : "4",
+        "accidentDate" : "2021-05-28T01:06:53.948754",
+        "accidentRate" : 50.0,
+        "accidentDescription" : "사고 요약",
+        "clientId" : "4"
+      } ]
+    },
+    {
+      "id" : "5",
+      "name" : "이름",
+      "age" : 20,
+      "address" : "대한민국",
+      "phoneNumber" : "010-0000-000",
+      "email" : "naver.com",
+      "accountNumber" : "12341234",
+      "bank" : "IBK기업",
+      "gender" : "MALE",
+      "rrn" : {
+        "rrnFront" : 210527,
+        "rrnBack" : 11111111
+      },
+      "contractList" : [],
+      "accidentHistoryList" : [ ]
+    },
+    {
+      "id" : "6",
+      "name" : "박땡땡",
+      "age" : 20,
+      "address" : "대한민국",
+      "phoneNumber" : "010-0000-000",
+      "email" : "naver.com",
+      "accountNumber" : "12341234",
+      "bank" : "IBK기업",
+      "gender" : "MALE",
+      "rrn" : {
+        "rrnFront" : 210527,
+        "rrnBack" : 11111111
+      },
+      "contractList" : [],
+      "accidentHistoryList" : []
+    },
+    {
+      "id" : "7",
+      "name" : "이성재",
+      "age" : 20,
+      "address" : "대한민국",
+      "phoneNumber" : "010-0000-000",
+      "email" : "naver.com",
+      "accountNumber" : "12341234",
+      "bank" : "IBK기업",
+      "gender" : "MALE",
+      "rrn" : {
+        "rrnFront" : 210527,
+        "rrnBack" : 11111111
+      },
+      "contractList" : [ {
+        "id" : null,
+        "insurancePremium" : 1,
+        "contractDate" : {
+          "registerDate" : "2021-05-28T01:07:02.0886271",
+          "startDate" : "2021-05-28T01:07:02.0886271",
+          "endDate" : "2021-05-28T01:07:02.0886271"
+        },
+        "status" : "계약신청",
+        "channel": "온라인",
+        "clientId" : "7",
+        "insuranceId" : "3",
+        "employeeId" : null
+      } ],
+      "accidentHistoryList" : [ {
+        "id" : null,
+        "accidentDate" : "2021-05-28T01:06:53.948754",
+        "accidentRate" : 50.0,
+        "accidentDescription" : "사고 요약",
+        "clientId" : null
+      } ]
+    },
+    {
+      "id" : "8",
+      "name" : "최윤식",
+      "age" : 20,
+      "address" : "대한민국",
+      "phoneNumber" : "010-0000-000",
+      "email" : "naver.com",
+      "accountNumber" : "12341234",
+      "bank" : "IBK기업",
+      "gender" : "MALE",
+      "rrn" : {
+        "rrnFront" : 210527,
+        "rrnBack" : 11111111
+      },
+      "contractList" : [ {
+        "id" : "8",
+        "insurancePremium" : 1,
+        "contractDate" : {
+          "registerDate" : "2021-05-28T01:07:02.0886271",
+          "startDate" : "2021-05-28T01:07:02.0886271",
+          "endDate" : "2021-05-28T01:07:02.0886271"
+        },
+        "status" : "계약신청",
+        "channel": "온라인",
+        "clientId" : null,
+        "insuranceId" : "1",
+        "employeeId" : "8"
+      } ],
+      "accidentHistoryList" : [ {
+        "id" : null,
+        "accidentDate" : "2021-05-28T01:06:53.948754",
+        "accidentRate" : 50.0,
+        "accidentDescription" : "사고 요약",
+        "clientId" : "8"
+      } ]
+    },
+    {
+      "id" : "9",
+      "name" : "김민희",
+      "age" : 20,
+      "address" : "대한민국",
+      "phoneNumber" : "010-0000-000",
+      "email" : "naver.com",
+      "accountNumber" : "12341234",
+      "bank" : "IBK기업",
+      "gender" : "MALE",
+      "rrn" : {
+        "rrnFront" : 210527,
+        "rrnBack" : 11111111
+      },
+      "contractList" : [ {
+        "id" : "9",
+        "insurancePremium" : 1,
+        "contractDate" : {
+          "registerDate" : "2021-05-28T01:07:02.0886271",
+          "startDate" : "2021-05-28T01:07:02.0886271",
+          "endDate" : "2021-05-28T01:07:02.0886271"
+        },
+        "status" : "계약신청",
+        "channel": "온라인",
+        "clientId" : null,
+        "insuranceId" : "1",
+        "employeeId" : "3"
+      } ],
+      "accidentHistoryList" : [ {
+        "id" : "9",
+        "accidentDate" : "2021-05-28T01:06:53.948754",
+        "accidentRate" : 50.0,
+        "accidentDescription" : "사고 요약",
+        "clientId" : "8"
+      } ]
+    },
+    {
+      "id" : "10",
+      "name" : "홍수혁",
+      "age" : 20,
+      "address" : "대한민국",
+      "phoneNumber" : "010-0000-000",
+      "email" : "sample.naver.com",
+      "accountNumber" : "12341234",
+      "bank" : "IBK기업",
+      "gender" : "MALE",
+      "rrn" : {
+        "rrnFront" : 210527,
+        "rrnBack" : 11111111
+      },
+      "contractList" : [ {
+        "id" : "10",
+        "insurancePremium" : 1,
+        "contractDate" : {
+          "registerDate" : "2021-05-28T01:07:02.0886271",
+          "startDate" : "2021-05-28T01:07:02.0886271",
+          "endDate" : "2021-05-28T01:07:02.0886271"
+        },
+        "status" : "계약신청",
+        "channel": "온라인",
+        "clientId" : "10",
+        "insuranceId" : "4",
+        "employeeId" : "10"
+      } ],
+      "accidentHistoryList" : [ {
+        "id" : "10",
+        "accidentDate" : "2021-05-28T01:06:53.948754",
+        "accidentRate" : 50.0,
+        "accidentDescription" : "사고 요약",
+        "clientId" : "10"
+      } ]
+    }
+  ],
   "compensation" : [
     {
       "id": 1,
