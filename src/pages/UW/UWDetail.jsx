@@ -1,33 +1,16 @@
 
 import React, {useEffect, useState} from "react";
-import {Modal, Form, Row, Col, Divider, Input, Select, Button} from "antd"
-import "../../css/Modal.css"
+import {Drawer, Button, DatePicker, Form, Row, Col, Input, InputNumber, Divider, Select, Modal} from "antd"
+import '../../css/Detail.css'
 import axios from "axios";
 import useAsync from "../../customHooks/useAsync";
+import {useForm} from "antd/es/form/Form";
 
-// async function getPartner() {
-//     const response = await axios.get(
-//         'https://60aba7e95a4de40017cca8e4.mockapi.io/partner'
-//     );
-//     return response.data;
-// }
-/////
-//partner
-// const [data, setData] = useState([]);
-// const settingData = (data) => {
-//     if (data) {setData(data);}
-//     else {console.log("데이터 설정 실패");}
-// }
-// const [initialState, refetch] = useAsync(getPartner, settingData, [getPartner]);
-// const { loading, error } = initialState;
-// if (error) {return (<div>에러가 발생하였습니다.</div>);}
-//
-const ClaimDetail = (props) => {
-    // const style = {width:'90%', marginLeft: '4%'};
+const UWDetail = (props) => {
     const [form] = Form.useForm();
     const [state, setState] = useState({
         status : '보상심사중',
-        dateHandled: ''
+        dateHandled: '' //todo: 아직 안 사용, 변수명
     });
     const getDate = () => {
         var getDate = new Date().toLocaleDateString();
@@ -35,7 +18,6 @@ const ClaimDetail = (props) => {
     }
     useEffect(() => {getDate();}, [])
     useEffect(() => {console.log('useEffect ',state);}, [state])
-
 
     const handleCancel = () => {
         console.log('Clicked cancel button');
@@ -58,7 +40,7 @@ const ClaimDetail = (props) => {
         }).then((r)=> console.log(r)
         )
     }
-    return (
+    return(
         <Modal title = "해당 Claim에 대한 보상을 심사합니다" width={800} visible = {props.visible} footer={null}>
             <Form form={form} layout="vertical" onFinish={handleSubmit}>
                 <Row>
@@ -68,45 +50,46 @@ const ClaimDetail = (props) => {
                         </Form.Item>
                     </Col>
                     <Col span={12}>
-                        <Form.Item label={props.columns.find(d => d.key === 'contractId').title}>
+                        <Form.Item label={"daf"}>
+                        {/*<Form.Item label={props.columns.find(d => d.key === 'contractId').title}>*/}
                             <Input  value={props.clickedRecord.contractId}/>
                         </Form.Item>
                     </Col>
                 </Row>
-                <Divider style={{fontSize: '1em'}} orientation="center">접수된 사고는 보상심사 단계로 이관됩니다.</Divider>
-                <Row>
-                    <Col span={24}>
-                        <Form.Item label={'계약 시작 날짜'}>
-                            <Input readOnly={true} name="dateHandled" value={state.dateHandled} onInput={handleChange}/>
-                        </Form.Item>
-                    </Col>
-                </Row>
+                <Divider style={{fontSize: '1em'}} orientation="center">확인시 해당 계약은 심사단계로 이관됩니다.</Divider>
+
+                        {/*<Form.Item label={props.columns.find(d => d.key === 'startDate').title}>*/}
+                        {/*<Form.Item label={props.columns.find(d => d.key === 'endDate').title}>*/}
+
                 <Row>
                     <Col span={12}>
-                        <Form.Item label={props.columns.find(d => d.key === 'damageCost').title}>
-                            <Input value={props.clickedRecord.damageCost}/>
+                        <Form.Item label={"계약 시작 일자"}>
+                            <Input value={props.clickedRecord.contractDate.startDate}/>
                         </Form.Item>
                     </Col>
                     <Col span={12}>
-                        <Form.Item label={props.columns.find(d => d.key === 'claimRate').title}>
-                            <Input value={props.clickedRecord.claimRate}/>
+                        <Form.Item label={"계약 종료 일자"}>
+                            <Input value={props.clickedRecord.contractDate.endDate}/>
                         </Form.Item>
                     </Col>
-                </Row>
-                <Row>
-                    <Col span={24}>
-                        <Form.Item label={props.columns.find(d => d.key === 'claimDetail').title}>
-                            <Input.TextArea value={props.clickedRecord.claimDetail}/>
-                        </Form.Item>
-                    </Col>
-                </Row>
+                </Row><Row>
+                <Col span={12}>
+                    <Form.Item label={"고객 ID / 고객성명"}>
+                        <Input value={props.clickedRecord.client.id}/>
+                    </Form.Item>
+                </Col>
+                <Col span={12}>
+                    <Form.Item label={"보험상품 ID / 보험상품 이름"}>
+                        <Input value={props.clickedRecord.insurance.id}/>
+                    </Form.Item>
+                </Col>
+            </Row>
                 <Form.Item>
                     <Button type="primary" htmlType="submit" value="Submit">Submit</Button>
                     <Button onClick={handleCancel}>Cancel</Button>
                 </Form.Item>
-
             </Form>
         </Modal>
     )
 }
-export default ClaimDetail;
+export default UWDetail;

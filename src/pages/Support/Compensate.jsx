@@ -10,7 +10,7 @@ import InfoModal from "../../components/InfoModal";
 
 async function getCompensation() {
     const response = await axios.get(
-        'https://60aba7e95a4de40017cca8e4.mockapi.io/conpensation'
+        'https://60aba7e95a4de40017cca8e4.mockapi.io/compensation'
     );
     return response.data;
 }
@@ -20,7 +20,6 @@ const Compensate = () => {
     const title = "보상처리";
     const subtitle = "HM 보험에 접수된 고객의 사고들을 보여주며, 보상처리와 보상금 지급 여부를 결정하는 페이지입니다"
     const [clickedRecord, setClickedRecord] = React.useState([]);
-
 
     const [data, setData] = useState([]);
     const [option, setOption] = useState("보상상태");
@@ -38,9 +37,7 @@ const Compensate = () => {
     const [initialState, refetch] = useAsync(getCompensation, settingData, [getCompensation], skip);
     const { loading, error } = initialState;
 
-    if (error) {
-        return (<div>에러가 발생하였습니다.</div>);
-    }
+    if (error) {return (<div>에러가 발생하였습니다.</div>);}
 
     function handleMenuClick(e) {
         if (e.key === '1') {
@@ -98,14 +95,14 @@ const Compensate = () => {
         console.log(value);
         if (value == "") {setSearchData(data);}
 
-        else if (option == "보험번호") {
+        else if (option == "보상상태") {
             console.log("number");
             console.log(value);
             setSearchData(
                 data.filter(d => d.id === value)
             )
         }
-        else if (option == "보험명"){
+        else if (option == "보험번호"){
             console.log("name");
             console.log(value);
             let res = [];
@@ -130,7 +127,7 @@ const Compensate = () => {
                 </Dropdown>
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
-           <DataTable2/>
+            <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
         </Wrapper>
     )
 }

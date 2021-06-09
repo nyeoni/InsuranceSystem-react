@@ -45,7 +45,7 @@ const Create = () => {
         console.log('useEffect ',state);
     }, [state])
 
-    const postInsurance = () => {
+    async function postInsurance  ()  {
         const url = '/api/insurance/create';
         const {name, description,coverages, registerDocuments, accidentDocuments,basePremiumRate,category,
             startAge, endAge, creditRating,createEmployeeId,managementEmployeeId }= state;
@@ -64,8 +64,8 @@ const Create = () => {
             alert("api 성공")
         });
     }
-    const handleSubmit = () => {
-        postInsurance()
+    const handleSubmit = async () => {
+        const value = await postInsurance()
             // .then((response) => {console.log('response, ', response.data)})
     }
     return (

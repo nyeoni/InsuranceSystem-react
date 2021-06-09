@@ -6,7 +6,7 @@ import useAsync from "../../customHooks/useAsync";
 import {Button, Dropdown, Menu, Space, Tag} from "antd";
 import {DownOutlined} from "@ant-design/icons";
 import Search from "antd/es/input/Search";
-import UWModal from "./UWModal";
+import UWModal from "./UWDetail";
 import ClaimDetail from "../Support/ClaimDetail";
 
 async function getContract() {
@@ -145,31 +145,6 @@ const Underwriting = () => {
             <Menu.Item key="2">보험번호</Menu.Item>
         </Menu>
     );
-    // const onSearch = value => {
-    //     if (value === "")
-    //     {
-    //         setSearchData(data);
-    //     }
-    //     else if (option === "보험번호")
-    //     {
-    //         console.log("number");
-    //         console.log(value);
-    //         setSearchData(
-    //             data.filter(d => d.id === value)
-    //         )
-    //     }
-    //     else if (option === "보험명")
-    //     {
-    //         console.log("name");
-    //         console.log(value);
-    //         let res = [];
-    //         data.forEach(function (d){
-    //             if (d.name.includes(value))
-    //                 res.push(d);
-    //         })
-    //         setSearchData(res);
-    //     }
-    // };
     return (
         <Wrapper title = {title} subtitle={subtitle} underline={true}>
             <Space>
@@ -181,7 +156,7 @@ const Underwriting = () => {
                 <Search placeholder="검색할 내용" allowClear style={{ width: 300 }} />
             </Space>
             <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
-            <UWModal clickedRecord = {clickedRecord} columns={columns} visible = {visible} setVisible = {setVisible}/>
+            {/*<UWModal clickedRecord = {clickedRecord} columns={columns} visible = {visible} setVisible = {setVisible}/>*/}
         </Wrapper>
     )
 }

@@ -11,9 +11,9 @@ import {Route} from "react-router-dom";
 
 async function getAccident() {
     const response = await axios.get(
-        'https://60aba7e95a4de40017cca8e4.mockapi.io/claim'
+        '/api/claim'
     );
-    return response.data;
+    return response.data.data;
 }
 
 const Claim = ({match, history}) => {
@@ -38,6 +38,7 @@ const Claim = ({match, history}) => {
     const [initialState, refetch] = useAsync(getAccident, settingData, [getAccident], skip);
     const {loading, error} = initialState;
     if (error) {
+        console.log('Error', error.message);
         return (<div>에러가 발생하였습니다.</div>);
     }
 

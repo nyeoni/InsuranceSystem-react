@@ -11,7 +11,7 @@ import '../../css/Detail.css'
 
 async function getInsurances() {
     const response = await axios.get(
-        'https://608c26ef9f42b20017c3d801.mockapi.io/api/v1/newinsurance'
+        '/api/insurance'
     );
     return response.data;
 }
