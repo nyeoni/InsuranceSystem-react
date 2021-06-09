@@ -1,10 +1,12 @@
 import React from "react";
+import {Wrapper} from "../../components/Wrapper";
 
 const Contract = () => {
+    const title = "계약관리"
     return (
-        <div>
-            <h1>Contract</h1>
-        </div>
+        <Wrapper title = {title}>
+
+        </Wrapper>
     )
 }
 
