@@ -11,7 +11,7 @@ import {Route} from "react-router-dom";
 
 async function getAccident() {
     const response = await axios.get(
-        '/api/claim'
+        'http://hminsu.net/api/claim'
     );
     return response.data.data;
 }

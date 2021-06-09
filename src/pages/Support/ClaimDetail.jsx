@@ -5,6 +5,7 @@ import "../../css/Modal.css"
 import axios from "axios";
 import useAsync from "../../customHooks/useAsync";
 
+//          partner
 // async function getPartner() {
 //     const response = await axios.get(
 //         'https://60aba7e95a4de40017cca8e4.mockapi.io/partner'
@@ -35,7 +36,6 @@ const ClaimDetail = (props) => {
     }
     useEffect(() => {getDate();}, [])
     useEffect(() => {console.log('useEffect ',state);}, [state])
-
 
     const handleCancel = () => {
         console.log('Clicked cancel button');

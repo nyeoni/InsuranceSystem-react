@@ -11,9 +11,9 @@ import '../../css/Detail.css'
 
 async function getInsurances() {
     const response = await axios.get(
-        '/api/insurance'
+        'http://hminsu.net/api/insurance'
     );
-    return response.data;
+    return response.data.data;
 }
 
 const Manage = ({match, history}) => {

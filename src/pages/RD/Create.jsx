@@ -46,8 +46,7 @@ const Create = () => {
     }, [state])
 
     async function postInsurance  ()  {
-        const url = '/api/insurance/create';
-
+        const url = 'http://hminsu.net/api/insurance/create';
         const {name, description,coverages, registerDocuments, accidentDocuments,basePremiumRate,category,
             startAge, endAge, creditRating,createEmployeeId,managementEmployeeId }= state;
         axios.post(url, {
@@ -154,7 +153,7 @@ const Create = () => {
                 <Form.Item rules={[{required: true, message: '담당 직원을 입력해주세요!'}]} name="managementEmployeeId" label="보험 담당책임 직원 ID" >
                     <Input name="managementEmployeeId" value={state.managementEmployeeId} onChange={handleChange}/>
                 </Form.Item>
-                <Form.Item><Button type="primary" htmlType="submit" value="Submit">Submit</Button></Form.Item>
+                <Form.Item><Button style={{marginBottom : '10px'}} type="primary" htmlType="submit" value="Submit">Submit</Button></Form.Item>
             </Form>
         </Wrapper>
     );
