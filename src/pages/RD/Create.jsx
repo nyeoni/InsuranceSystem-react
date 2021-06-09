@@ -21,8 +21,8 @@ const Create = () => {
         endAge: '',
         creditRating: '',
         category: '',
-        createEmployeeId : '1234',
-        managementEmployeeId : ''
+        createEmployeeId : '1',
+        managementEmployeeId : '1'
     })
 
     const handleChange = (event) =>{
@@ -45,8 +45,9 @@ const Create = () => {
         console.log('useEffect ',state);
     }, [state])
 
-    const postInsurance = () => {
-        const url = 'http://hminsu.net//api/insurance/create';
+    async function postInsurance  ()  {
+        const url = '/api/insurance/create';
+
         const {name, description,coverages, registerDocuments, accidentDocuments,basePremiumRate,category,
             startAge, endAge, creditRating,createEmployeeId,managementEmployeeId }= state;
         axios.post(url, {
@@ -64,8 +65,9 @@ const Create = () => {
             alert("api 성공")
         });
     }
-    const handleSubmit = () => {
-        postInsurance()
+
+    const handleSubmit = async () => {
+        const value = await postInsurance()
             // .then((response) => {console.log('response, ', response.data)})
     }
     return (
