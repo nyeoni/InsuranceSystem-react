@@ -7,8 +7,7 @@ import useAsync from "../../customHooks/useAsync";
 import {Button, Dropdown, Menu, Space, Tag} from "antd";
 import {DownOutlined} from "@ant-design/icons";
 import Search from "antd/es/input/Search";
-import UWModal from "./UWDetail";
-import ClaimDetail from "../Support/ClaimDetail";
+
 
 async function getContract() {
     const response = await axios.get(
@@ -17,7 +16,7 @@ async function getContract() {
     return response.data;
 }
 
-const Underwriting = () => {
+const Underwriting = ({match, history}) => {
     const title = "인수심사";
     const subtitle = "각 계약에 따른 인수심사로 조건을 평가하여 계약을 인수하는 페이지";
     const [visible, setVisible] = React.useState(false);
@@ -114,19 +113,13 @@ const Underwriting = () => {
                 );
             }
         },
-        {
-            title: 'Action',
-            key: 'action',
-            width: '15%',
-            render: (text, record) => (
-                <Space size="middle"><a onClick={() => onRow(record)} style={{color:'blue'}}>계약 인수심사</a></Space>
-            ),
-        },
     ];
-    const onRow = (record) => {
-        console.log('a', record.id)
-        setClickedRecord(searchData.find(r => r.id === record.id))
-        setVisible(true);
+    const onRow = (record, rowIndex) => {
+        return {
+            onClick: () => {
+                history.push(`${match.url}/${record.id}`);
+            },
+        };
     };
     function handleMenuClick(e) {
         if (e.key === '1')
@@ -156,8 +149,7 @@ const Underwriting = () => {
                 </Dropdown>
                 <Search placeholder="검색할 내용" allowClear style={{ width: 300 }} />
             </Space>
-            <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
-            {/*<UWModal clickedRecord = {clickedRecord} columns={columns} visible = {visible} setVisible = {setVisible}/>*/}
+            <DataTable2 onRow={onRow} loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
         </Wrapper>
     )
 }

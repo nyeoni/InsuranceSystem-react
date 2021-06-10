@@ -7,7 +7,6 @@ import Compensate from "../Support/Compensate";
 import Cooperation from "../Support/Cooperation";
 import Evalution from "../Support/Evaluation";
 
-
 // TODO : props 뭐 받을지 생각
 const SupportRouter = (props) => {
     return (
