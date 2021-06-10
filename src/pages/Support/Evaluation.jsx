@@ -57,9 +57,16 @@ const Evaluation = () => {
     }
     const columns = [
         {
-            title: '보상처리 직원 ID',
+            title: '직원 ID',
             dataIndex: 'id',
             key: 'id',
+            width: '10%',
+            render: text => <a>{text}</a>,
+        },
+        {
+            title: '직원 성명',
+            dataIndex: 'name',
+            key: 'name',
             width: '10%',
             render: text => <a>{text}</a>,
         },
@@ -72,23 +79,14 @@ const Evaluation = () => {
             title: '전체 보상액',
             dataIndex: 'cost',
             key: 'cost',
-            render: text => <a>{text}</a>,
+            render: text => <a>{text}원</a>,
         },
         {
-            title: 'Claim ID',
-            render: (record) => record.claim.id
-        },
-        {
-            title: '보상 처리일자',
-            dataIndex: 'dateTime',
-            key: 'dateTime',
-            render: text => <a>{text}</a>,
-        },
-        {
-            title: '보상 상태',
-            dataIndex: 'status',
-            key: 'status',
-            render: text => <a>{text}</a>,
+            title: 'Action',
+            key: 'action',
+            width: '15%',
+
+            render: (text, record) =>(<Space size="middle"><a onClick={() => onRow(record)} style={{color:'blueviolet'}}>담당 처리사고 조회</a></Space>)
         },
     ];
     const menu = (
@@ -117,14 +115,11 @@ const Evaluation = () => {
             setSearchData(res);
         }
     };
-    const onRow = (record, rowIndex) => {
-        return {onClick: (record) => {
-            console.log('before', clickedRecord);
-            setClickedRecord(searchData[rowIndex]);
-            setVisible(true);
-            }
-        };
-    }
+    const onRow = (record) => {
+        console.log('a', record.id)
+        setClickedRecord(searchData.find(r => r.id === record.id))
+        setVisible(true);
+    };
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>
             <Space>
@@ -136,7 +131,7 @@ const Evaluation = () => {
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
             <DataTable2 onRow={onRow} loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
-            {/*<InfoModal visible={false} setVisible = {setVisible()} clickedRecord={clickedRecord}/>*/}
+            <InfoModal title = {title} visible={false} setVisible = {setVisible} clickedRecord={clickedRecord}/>
         </Wrapper>
     )
 }

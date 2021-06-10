@@ -67,6 +67,7 @@ const Cooperation = () => {
             title: '업체 이름',
             dataIndex: 'name',
             key: 'name',
+            width: '10%',
             render: text => <a>{text}</a>,
         },
         {
@@ -78,14 +79,14 @@ const Cooperation = () => {
         },
         {
             title: '관리 직원 ID',
-            width: '20%',
+            width: '10%',
             render: (record) => record.employee.id,
         },
         {
             title: '업체 분류',
             key: 'category',
             dataIndex: 'category',
-            width: '15%',
+            width: '20%',
             filters: [
                 {
                     text: '병원',
@@ -115,8 +116,7 @@ const Cooperation = () => {
         {
             title: 'Action',
             key: 'action',
-            width: '10%',
-
+            width: '15%',
             render: (text, record) =>(<Space size="middle"><a onClick={() => onRow(record)} style={{color:'blueviolet'}}>담당 처리사고 조회</a></Space>)
         },
     ];
@@ -125,7 +125,6 @@ const Cooperation = () => {
         setClickedRecord(searchData.find(r => r.id === record.id))
         setVisible(true);
     };
-
     const menu = (
         <Menu onClick={handleMenuClick}>
             <Menu.Item key="1">업체 이름</Menu.Item>
@@ -160,8 +159,7 @@ const Cooperation = () => {
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
             <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
-            {/*<ClaimDetail clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>*/}
-            {/*<InfoModal clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>*/}
+            <InfoModal title = {title} clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>
         </Wrapper>
 
     )

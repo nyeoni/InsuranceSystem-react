@@ -1,10 +1,16 @@
 import React from "react";
 import {Form, Input, Modal} from 'antd';
+import {useForm} from "antd/es/form/Form";
 
 const InfoModal = (props) => {
+    const [form] = useForm();
+    function onCancel() {
+        props.setVisible(false);
+    }
+
     return(
-        <Modal title={"asdf"} visible= {props.visible}>
-            <Form labelCol={8} wrapperCol={16}>
+        <Modal title={props.title + "의 추가정보"} visible= {props.visible} onCancel={onCancel}>
+            <Form form = {form} labelCol={10} wrapperCol={14} layout={"vertical"}>
                 {Object.entries(props.clickedRecord).map(([key, value])=>{
                     return(
                         <Form.Item label={key}>
@@ -12,6 +18,7 @@ const InfoModal = (props) => {
                         </Form.Item>
                     )
                 })}
+
             </Form>
         </Modal>
        )

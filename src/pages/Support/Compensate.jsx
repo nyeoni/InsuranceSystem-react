@@ -20,6 +20,7 @@ async function getCompensation() {
 const Compensate = () => {
     const title = "보상처리";
     const subtitle = "HM 보험에 접수된 고객의 사고들을 보여주며, 보상처리와 보상금 지급 여부를 결정하는 페이지입니다"
+    const [visible, setVisible] = React.useState(false);
     const [clickedRecord, setClickedRecord] = React.useState([]);
 
     const [data, setData] = useState([]);
@@ -66,16 +67,19 @@ const Compensate = () => {
         },
         {
             title: '보상처리 직원 ID',
+            width: '10%',
             render: (record) => record.employee.id,
         },
         {
             title: '보상액',
             dataIndex: 'cost',
             key: 'cost',
+            width: '10%',
             render: text => <a>{text}</a>,
         },
         {
             title: 'Claim ID',
+            width: '15%',
             render: (record) => record.claim.id
         },
         {
@@ -89,6 +93,12 @@ const Compensate = () => {
             dataIndex: 'status',
             key: 'status',
             render: text => <a>{text}</a>,
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            width: '15%',
+            render: (text, record) =>(<Space size="middle"><a onClick={() => onRow(record)} style={{color:'blueviolet'}}>보상 처리</a></Space>)
         },
     ];
     const onSearch = value => {
@@ -111,13 +121,11 @@ const Compensate = () => {
             setSearchData(res);
         }
     };
-    const onRow = (record, rowIndex) => {
-        return {onClick: (record) => {
-                console.log('before', clickedRecord);
-                setClickedRecord(searchData[rowIndex]);
-            }
-        };
-    }
+    const onRow = (record) => {
+        console.log('a', record.id)
+        setClickedRecord(searchData.find(r => r.id === record.id))
+        setVisible(true);
+    };
     return (
         <Wrapper title = {title} subtitle={subtitle} underline={true}>
             <Space>
@@ -129,6 +137,7 @@ const Compensate = () => {
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
             <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
+            <InfoModal clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>
         </Wrapper>
     )
 }
