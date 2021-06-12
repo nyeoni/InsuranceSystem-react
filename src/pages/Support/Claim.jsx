@@ -6,7 +6,8 @@ import {DownOutlined} from "@ant-design/icons";
 import Search from "antd/es/input/Search";
 import useAsync from "../../customHooks/useAsync";
 import axios from "axios";
-import AccidentModal from "../../components/AccidentModal";
+import ClaimDetail from "./ClaimDetail";
+import {Route} from "react-router-dom";
 
 async function getAccident() {
     const response = await axios.get(
@@ -17,7 +18,7 @@ async function getAccident() {
 
 const Claim = ({match, history}) => {
     const title = "사고접수처리";
-    const subtitle  = "고객의 사고 접수에 따른 보상을 위해 추가적인 정보를 입력하여 사고접수 처리하는 페이지입니다"
+    const subtitle = "고객의 사고 접수에 따른 보상을 위해 추가적인 정보를 입력하여 사고접수 처리하는 페이지입니다"
     const [visible, setVisible] = React.useState(false);
     const [clickedRecord, setClickedRecord] = React.useState([]);
 
@@ -35,7 +36,7 @@ const Claim = ({match, history}) => {
         }
     }
     const [initialState, refetch] = useAsync(getAccident, settingData, [getAccident], skip);
-    const { loading, error } = initialState;
+    const {loading, error} = initialState;
     if (error) {
         return (<div>에러가 발생하였습니다.</div>);
     }
@@ -44,13 +45,13 @@ const Claim = ({match, history}) => {
         if (e.key === '2') {
             console.log('click', e.key);
             setOption("고객 성명");
-        }
-        else if (e.key === '1') {
+        } else if (e.key === '1') {
             console.log('click', e.key);
             setOption("고객 ID");
         }
     }
-    const columns = [//todo: 고객 ID, 고객 성명, 가입 상품 ID/name
+
+    const columns = [
         {
             title: 'No',
             dataIndex: 'id',
@@ -109,21 +110,26 @@ const Claim = ({match, history}) => {
             title: '접수 상태',
             dataIndex: 'status',
             key: 'status',
-            render: text => <a>{text}</a>,
+            render: (text, record) => <a onClick={() => onRow(record)} style={{color: 'orangered'}}>{text}(변경하기)</a>,
         },
         {
             title: 'Action',
             key: 'action',
             width: '10%',
-            render: (text, record) => (<Space size="middle"><a onClick={() => onRow(record)} style={{color:'orangered'}}>보상 심사요청</a></Space>),
+            render: (text, record) => (
+                <Space size="middle"><a onClick={() => evaluatePartner(record)} style={{color: 'blue'}}>업체 평가하기</a></Space>),
         },
     ];
     const onRow = (record) => {
-        console.log('a', record.id)
+        let clickedRecord = searchData.find(r => r.id === record.id)
         setClickedRecord(searchData.find(r => r.id === record.id))
         setVisible(true);
-
     };
+    const evaluatePartner = (record) => {
+        let clickedRecord = searchData.find(r => r.id === record.id)
+        setClickedRecord(searchData.find(r => r.id === record.id))
+        alert("보상 대기중일때 업체 등록과 평가가 가능합니다.")
+    }
     const menu = (
         <Menu onClick={handleMenuClick}>
             <Menu.Item key="1">고객 ID</Menu.Item>
@@ -133,41 +139,42 @@ const Claim = ({match, history}) => {
 
     const onSearch = value => {
         let name;
-        console.log(typeof(value));
+        console.log(typeof (value));
         console.log(value);
-        if (value == "") {setSearchData(data);}
-        else if (option == "고객 성명") {
+        if (value == "") {
+            setSearchData(data);
+        } else if (option == "고객 성명") {
             console.log("clientName");
             console.log(value);
             let res = [];
-            data.forEach(function (d){
+            data.forEach(function (d) {
                 if (d.clientName.includes(value)) res.push(d);
             })
             setSearchData(res);
-        }
-        else if (option == "고객 ID") {
+        } else if (option == "고객 ID") {
             console.log("number");
             console.log(value);
             setSearchData(data.filter(d => d.id === value))
         }
     };
-    const onClick = () =>{
+    const onClick = () => {
         history.push(`${match.url}/addclaim`)
     }
     return (
-        <Wrapper title={title} subtitle={subtitle}underline={true}>
+        <Wrapper title={title} subtitle={subtitle} underline={true}>
             <Space>
                 <Dropdown overlay={menu}>
-                    <Button style={{ width: 95 }}>
-                        {option} <DownOutlined />
+                    <Button style={{width: 95}}>
+                        {option} <DownOutlined/>
                     </Button>
                 </Dropdown>
-                <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
+                <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{width: 300}}/>
             </Space>
             <Button variant="contained" style={{float: 'right'}} color="primary" onClick={onClick}>Add Claim</Button>
-
-            <DataTable2 loading={loading} dataSource={searchData} columns = {columns.filter(col => col.dataIndex !== 'claimDetail'&&col.dataIndex !=='damageCost'&&col.dataIndex !=='claimRate')} title = {title}/>
-            <AccidentModal clickedRecord = {clickedRecord} columns={columns} visible = {visible} setVisible = {setVisible}/>
+            <DataTable2 loading={loading} dataSource={searchData}
+                        columns={columns.filter(col => col.dataIndex !== 'claimDetail' && col.dataIndex !== 'damageCost' && col.dataIndex !== 'claimRate')}
+                        title={title}/>
+            <ClaimDetail visible={visible} setVisible={setVisible} clickedRecord={clickedRecord} columns={columns}/>
         </Wrapper>
     )
 }

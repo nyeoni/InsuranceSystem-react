@@ -5,6 +5,21 @@ import {Wrapper} from "../../components/Wrapper";
 import "../../css/Detail.css";
 import {useSelector} from "react-redux";
 
+async function postInsurance(data) {
+    const url = '/api/insurance/create';
+    const response = await axios({
+        method: 'post',
+        url: url,
+        data: data,
+        headers: {'content-type': 'application/json'}
+    }).catch(err => {
+        console.log(err.message);
+    });
+    console.log(response);
+
+    return response.data;
+}
+
 const Create = () => {
     const title = "상품개발"
     const subtitle = "HM 손해보험의 보험상품을 개발하기 위한 페이지입니다."
@@ -21,8 +36,8 @@ const Create = () => {
         endAge: '',
         creditRating: '',
         category: '',
-        createEmployeeId : '1234',
-        managementEmployeeId : ''
+        createEmployeeId : '1',
+        managementEmployeeId : '1'
     })
 
     const handleChange = (event) =>{
@@ -45,28 +60,32 @@ const Create = () => {
         console.log('useEffect ',state);
     }, [state])
 
-    const postInsurance = () => {
-        const url = 'http://hminsu.net//api/insurance/create';
-        const {name, description,coverages, registerDocuments, accidentDocuments,basePremiumRate,category,
-            startAge, endAge, creditRating,createEmployeeId,managementEmployeeId }= state;
-        axios.post(url, {
-            name,
-            description,
-            coverages,
-            registerDocuments,
-            accidentDocuments,
-            basePremiumRate,
-            category,
-            createEmployeeId,
-            managementEmployeeId,
-            target : {startAge, endAge, creditRating},
-        }).then(r => {console.log(r)
-            alert("api 성공")
-        });
-    }
-    const handleSubmit = () => {
-        postInsurance()
-            // .then((response) => {console.log('response, ', response.data)})
+    // const postInsurance = () => {
+    //     const url = 'http://hminsu.net/api/insurance/create';
+    //     const {name, description,coverages, registerDocuments, accidentDocuments,basePremiumRate,category,
+    //         startAge, endAge, creditRating,createEmployeeId,managementEmployeeId }= state;
+    //     axios.post(url, {
+    //         name,
+    //         description,
+    //         coverages,
+    //         registerDocuments,
+    //         accidentDocuments,
+    //         basePremiumRate,
+    //         category,
+    //         createEmployeeId,
+    //         managementEmployeeId,
+    //         target : {startAge, endAge, creditRating},
+    //     }).then(r => {console.log(r)
+    //         alert("api 성공")
+    //     }).catch(err => {
+    //         console.log(err.message);
+    //     });
+    // }
+    const handleSubmit = async () => {
+        // postInsurance()
+        // .then((response) => {console.log('response, ', response.data)})
+        const data = await postInsurance(state);
+        console.log(data);
     }
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>

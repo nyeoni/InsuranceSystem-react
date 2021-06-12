@@ -10,6 +10,7 @@
       "accountNumber" : "12341234",
       "bank" : "IBK기업",
       "gender" : "MALE",
+      "job" : "운송",
       "rrn" : {
         "rrnFront" : 210527,
         "rrnBack" : 11111111
@@ -46,6 +47,7 @@
       "accountNumber" : "12341234",
       "bank" : "IBK기업",
       "gender" : "MALE",
+      "job" : "운송",
       "rrn" : {
         "rrnFront" : 210527,
         "rrnBack" : 11111111
@@ -82,6 +84,7 @@
       "accountNumber" : "12341234",
       "bank" : "IBK기업",
       "gender" : "MALE",
+      "job" : "서비스직_운전",
       "rrn" : {
         "rrnFront" : 210527,
         "rrnBack" : 11111111
@@ -118,6 +121,7 @@
       "accountNumber" : "12341234",
       "bank" : "IBK기업",
       "gender" : "MALE",
+      "job" : "서비스직_여행",
       "rrn" : {
         "rrnFront" : 210527,
         "rrnBack" : 11111111
@@ -154,6 +158,7 @@
       "accountNumber" : "12341234",
       "bank" : "IBK기업",
       "gender" : "MALE",
+      "job" : "서비스직_여행",
       "rrn" : {
         "rrnFront" : 210527,
         "rrnBack" : 11111111
@@ -171,6 +176,7 @@
       "accountNumber" : "12341234",
       "bank" : "IBK기업",
       "gender" : "MALE",
+      "job" : "운송",
       "rrn" : {
         "rrnFront" : 210527,
         "rrnBack" : 11111111
@@ -188,6 +194,7 @@
       "accountNumber" : "12341234",
       "bank" : "IBK기업",
       "gender" : "MALE",
+      "job" : "운송",
       "rrn" : {
         "rrnFront" : 210527,
         "rrnBack" : 11111111
@@ -224,6 +231,7 @@
       "accountNumber" : "12341234",
       "bank" : "IBK기업",
       "gender" : "MALE",
+      "job" : "기타",
       "rrn" : {
         "rrnFront" : 210527,
         "rrnBack" : 11111111
@@ -260,6 +268,7 @@
       "accountNumber" : "12341234",
       "bank" : "IBK기업",
       "gender" : "MALE",
+      "job" : "운송",
       "rrn" : {
         "rrnFront" : 210527,
         "rrnBack" : 11111111
@@ -296,6 +305,7 @@
       "accountNumber" : "12341234",
       "bank" : "IBK기업",
       "gender" : "MALE",
+      "job" : "운송",
       "rrn" : {
         "rrnFront" : 210527,
         "rrnBack" : 11111111

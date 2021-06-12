@@ -15,6 +15,13 @@ const StyledSpan = styled.span`
     font-size: 14px;
 `
 
+const FlexDiv = styled.div`
+    display: flex;
+    align-content: space-around;
+    justify-content: space-between;
+    align-items: center;
+`
+
 async function getClients() {
     const response = await axios.get(
         'http://localhost:4000/client'
@@ -25,11 +32,20 @@ async function getClients() {
 const Client = ({match, history}) => {
     const title = "고객관리";
     const subtitle = "잠재 고객 및 계약 고객을 분석하여 추가 영업기회 확보";
+    // load data and setting
     const [searchData, setSearchData] = useState([]);
     const [state, refetch] = useAsync(getClients, setSearchData, [getClients]);
     const { loading, data, error } = state;
-    const [option, setOption] = useState("고객명");
 
+    const [option, setOption] = useState("고객명"); // search
+    const [dateRange, setDateRange] = useState({
+        minDate: '',
+        maxDate: ''
+    }); // date range
+
+    const [gender, setGender] = useState('전체'); // gender pick
+
+    // table utils
     const onRow = (record, rowIndex) => {
         return {
             onClick: () => {
@@ -37,26 +53,12 @@ const Client = ({match, history}) => {
             },
         };
     };
-
-    function handleMenuClick(e) {
-        if (e.key === '1')
-        {
-            console.log('click', e.key);
-            setOption("고객명");
-        }
-        else if (e.key === '2')
-        {
-            console.log('click', e.key);
-            setOption("전화번호");
-        }
-    }
-
     const columns = [
         {
             title: 'No',
             dataIndex: 'id',
             key: 'id',
-            width: '10%',
+            width: '3%',
             render: text => <a>{text}</a>,
         },
         {
@@ -64,6 +66,24 @@ const Client = ({match, history}) => {
             dataIndex: 'name',
             key: 'name',
             render: text => <a>{text}</a>,
+        },
+        {
+            title: '성별',
+            dataIndex: 'gender',
+            width: '10%',
+            key: 'gender',
+            render: (gender) => {
+                if (gender === 'MALE')
+                    return '남';
+                else
+                    return '여';
+            }
+        },
+        {
+            title: '직업',
+            dataIndex: 'job',
+            width: '20%',
+            key: 'job',
         },
         {
             title: '전화번호',
@@ -128,14 +148,19 @@ const Client = ({match, history}) => {
         },
     ];
 
-    if (error) {
-        return (
-            <div>
-                에러가 발생하였습니다.
-            </div>
-        );
+    // search utils
+    function handleMenuClick(e) {
+        if (e.key === '1')
+        {
+            console.log('click', e.key);
+            setOption("고객명");
+        }
+        else if (e.key === '2')
+        {
+            console.log('click', e.key);
+            setOption("전화번호");
+        }
     }
-
     const menu = (
         <Menu onClick={handleMenuClick}>
             <Menu.Item key="1">
@@ -146,7 +171,6 @@ const Client = ({match, history}) => {
             </Menu.Item>
         </Menu>
     );
-
     const onSearch = value => {
         if (value === "")
         {
@@ -176,53 +200,90 @@ const Client = ({match, history}) => {
         }
     };
 
+    // date range
+    const dateChange = val => {
+        if (val !== null) {
+            setDateRange({
+                minDate: val[0]._d,
+                maxDate: val[1]._d,
+            })
+        }
+        console.log(dateRange);
+        console.log(val);
+        console.log(val[0]);
+        console.log(val[0]._d);
+    }
+    // exception
+    if (error) {
+        return (
+            <div>
+                에러가 발생하였습니다.
+            </div>
+        );
+    }
+    const genderChange = (event) => {
+        if (gender === '남' && event.target.value == '남')
+        {
+            setGender('');
+            console.log('남!');
+        }
+        else if (gender === '' && event.target.value == '')
+        {
+            setGender('');
+            console.log('!');
+        }
+        else
+            setGender(event.target.value);
+    }
+
     return (
         <Wrapper title={title} underline={true} subtitle={subtitle} >
-            <Space>
-                <Dropdown overlay={menu}>
-                    <Button style={{ width: 95 }}>
-                        {option} <DownOutlined />
-                    </Button>
-                </Dropdown>
-                <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
+            <FlexDiv>
+                <Space>
+                    <Dropdown overlay={menu}>
+                        <Button style={{ width: 95 }}>
+                            {option} <DownOutlined />
+                        </Button>
+                    </Dropdown>
+                    <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
+                </Space>
                 <Divider type="vertical" />
-                <StyledSpan>계약 만기일</StyledSpan><RangePicker />
+                <Space><StyledSpan>계약 만기일</StyledSpan><RangePicker onChange={dateChange}/></Space>
                 <Divider type="vertical" />
-                <StyledSpan>연령대</StyledSpan>
-                <div className="site-input-group-wrapper">
-                    <Input.Group compact>
-                        <Select defaultValue="1">
-                            <Option value="1">Between</Option>
-                            <Option value="2">Except</Option>
-                        </Select>
-                        <Input style={{ width: 100, textAlign: 'center' }} placeholder="Minimum" />
-                        <Input
-                            className="site-input-split"
-                            style={{
-                                width: 30,
-                                borderLeft: 0,
-                                borderRight: 0,
-                                pointerEvents: 'none',
-                            }}
-                            placeholder="~"
-                            disabled
-                        />
-                        <Input
-                            className="site-input-right"
-                            style={{
-                                width: 100,
-                                textAlign: 'center',
-                            }}
-                            placeholder="Maximum"
-                        />
-                    </Input.Group>
-                </div>
+                <Space>
+                    <StyledSpan>연령대</StyledSpan>
+                    <div className="site-input-group-wrapper">
+                        <Input.Group compact>
+                            <Input style={{ width: 100, textAlign: 'center' }} placeholder="Minimum" />
+                            <Input
+                                className="site-input-split"
+                                style={{
+                                    width: 30,
+                                    borderLeft: 0,
+                                    borderRight: 0,
+                                    pointerEvents: 'none',
+                                }}
+                                placeholder="~"
+                                disabled
+                            />
+                            <Input
+                                className="site-input-right"
+                                style={{
+                                    width: 100,
+                                    textAlign: 'center',
+                                }}
+                                placeholder="Maximum"
+                            />
+                        </Input.Group>
+                    </div>
+                </Space>
                 <Divider type="vertical" />
-                <Radio.Group value="15px">
-                    <Radio.Button value="남">남</Radio.Button>
-                    <Radio.Button value="여">여</Radio.Button>
+                <Radio.Group value={gender} onChange={genderChange}>
+                    <Radio.Button value='남'>남</Radio.Button>
+                    <Radio.Button value='여'>여</Radio.Button>
+                    <Radio.Button value='전체'>전체</Radio.Button>
                 </Radio.Group>
-            </Space>
+            </FlexDiv>
             <DataTable2 dataSource={searchData} columns={columns} loading={loading} onRow={onRow}/>
         </Wrapper>
     )
