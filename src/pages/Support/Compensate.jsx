@@ -11,9 +11,10 @@ import CompensationModal from "./CompensationModal";
 
 async function getCompensation() {
     const response = await axios.get(
-        'http://hminsu.net/api/compensation'
+        'https://60aba7e95a4de40017cca8e4.mockapi.io/compensation'
+        // 'http://hminsu.net/api/compensation'
     );
-    return response.data.data;
+    return response.data;
 }
 
 //status: 보상완료, cost 둘 다 넘겨줄 것, claim은 처리완료로 자동으로 바뀜.
@@ -21,7 +22,9 @@ const Compensate = () => {
     const title = "보상처리";
     const subtitle = "HM 보험에 접수된 고객의 사고들을 보여주며, 보상처리와 보상금 지급 여부를 결정하는 페이지입니다"
     const [visible, setVisible] = React.useState(false);
-    const [clickedRecord, setClickedRecord] = React.useState([]);
+    const [clickedRecord, setClickedRecord] = React.useState(undefined);
+
+    // useEffect(() =>{console.log('asdf', clickedRecord)}, [clickedRecord])
 
     const [data, setData] = useState([]);
     const [option, setOption] = useState("보상상태");
@@ -107,7 +110,9 @@ const Compensate = () => {
     const onRow = (record) => {
         console.log('a', record.id)
         setClickedRecord(searchData.find(r => r.id === record.id))
+        console.log('clciked', clickedRecord)
         setVisible(true);
+
     };
     const onSearch = value => {
         console.log(typeof(value));
