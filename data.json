@@ -19,7 +19,7 @@
         "id" : "1",
         "insurancePremium" : 1,
         "contractDate" : {
-          "registerDate" : "2021-05-28T01:07:02.0886271",
+          "registerDate" : "2021-02-28T01:07:02.0886271",
           "startDate" : "2021-05-28T01:07:02.0886271",
           "endDate" : "2021-05-28T01:07:02.0886271"
         },
@@ -28,7 +28,77 @@
         "clientId" : "1",
         "insuranceId" : "1",
         "employeeId" : "1"
-      } ],
+      },
+        {
+          "id" : "2",
+          "insurancePremium" : 1,
+          "contractDate" : {
+            "registerDate" : "2021-05-28T01:07:02.0886271",
+            "startDate" : "2021-05-28T01:07:02.0886271",
+            "endDate" : "2021-05-28T01:07:02.0886271"
+          },
+          "status" : "계약신청",
+          "channel": "온라인",
+          "clientId" : "1",
+          "insuranceId" : "1",
+          "employeeId" : "1"
+        },
+        {
+          "id" : "3",
+          "insurancePremium" : 1,
+          "contractDate" : {
+            "registerDate" : "2021-02-28T01:07:02.0886271",
+            "startDate" : "2021-05-28T01:07:02.0886271",
+            "endDate" : "2021-05-28T01:07:02.0886271"
+          },
+          "status" : "계약신청",
+          "channel": "온라인",
+          "clientId" : "1",
+          "insuranceId" : "1",
+          "employeeId" : "1"
+        },
+        {
+          "id" : "4",
+          "insurancePremium" : 1,
+          "contractDate" : {
+            "registerDate" : "2021-05-28T01:07:02.0886271",
+            "startDate" : "2021-05-28T01:07:02.0886271",
+            "endDate" : "2021-05-28T01:07:02.0886271"
+          },
+          "status" : "계약신청",
+          "channel": "온라인",
+          "clientId" : "1",
+          "insuranceId" : "1",
+          "employeeId" : "1"
+        },
+        {
+          "id" : "5",
+          "insurancePremium" : 1,
+          "contractDate" : {
+            "registerDate" : "2021-05-28T01:07:02.0886271",
+            "startDate" : "2021-05-28T01:07:02.0886271",
+            "endDate" : "2021-05-28T01:07:02.0886271"
+          },
+          "status" : "계약신청",
+          "channel": "온라인",
+          "clientId" : "1",
+          "insuranceId" : "1",
+          "employeeId" : "1"
+        },
+        {
+          "id" : "6",
+          "insurancePremium" : 1,
+          "contractDate" : {
+            "registerDate" : "2021-05-28T01:07:02.0886271",
+            "startDate" : "2021-05-28T01:07:02.0886271",
+            "endDate" : "2021-05-28T01:07:02.0886271"
+          },
+          "status" : "계약신청",
+          "channel": "전화",
+          "clientId" : "1",
+          "insuranceId" : "1",
+          "employeeId" : "1"
+        }],
       "accidentHistoryList" : [ {
         "id" : "1",
         "accidentDate" : "2021-05-28T01:06:53.948754",
@@ -61,7 +131,7 @@
           "endDate" : "2021-05-28T01:07:02.0886271"
         },
         "status" : "계약신청",
-        "channel": "온라인",
+        "channel": "대면",
         "clientId" : "2",
         "insuranceId" : "2",
         "employeeId" : "2"
@@ -468,5 +538,547 @@
         "role": "과장"
       }
     }
-  ]
+  ],
+  "insurance" : [
+      {
+        "id": 1,
+        "name": "HM 운전자 보험",
+        "description": "운전자의 자동차 이용 성향에 따른 맞춤설계로 고객의 니즈에 맞는 보험선택이 가능합니다.",
+        "category": "운전자",
+        "target": {
+          "creditRating": 3,
+          "startAge": 24,
+          "endAge": 70
+        },
+        "liablityCoverages": [
+          "대인배상",
+          "대물배상",
+          "자기신체사고"
+        ],
+        "accidentDocuments": [
+          "청구서",
+          "사고증명서",
+          "신분증"
+        ],
+        "registerDocuments": [
+          "신분증",
+          "자동차면허",
+          "가족증명서"
+        ],
+        "createTime": null,
+        "modifiedTime": null,
+        "createEmployee": {
+          "id": null,
+          "name": "최윤식",
+          "phoneNumber": "010-0200-0020",
+          "email": "abcddd@hminsu.net",
+          "department": "개발",
+          "role": "과장"
+        },
+        "managementEmployee": {
+          "id": null,
+          "name": "최윤식",
+          "phoneNumber": "010-0000-0000",
+          "email": "abcddd@hminsu.net",
+          "department": "개발",
+          "role": "과장"
+        },
+        "contractList": [ {
+      "id" : "1",
+      "insurancePremium" : 1,
+      "contractDate" : {
+        "registerDate" : "2021-02-28T01:07:02.0886271",
+        "startDate" : "2021-05-28T01:07:02.0886271",
+        "endDate" : "2021-05-28T01:07:02.0886271"
+      },
+      "status" : "계약신청",
+      "channel": "온라인",
+      "clientId" : "1",
+      "insuranceId" : "1",
+      "employeeId" : "1"
+    },
+      {
+        "id" : "2",
+        "insurancePremium" : 1,
+        "contractDate" : {
+          "registerDate" : "2021-05-28T01:07:02.0886271",
+          "startDate" : "2021-05-28T01:07:02.0886271",
+          "endDate" : "2021-05-28T01:07:02.0886271"
+        },
+        "status" : "계약신청",
+        "channel": "온라인",
+        "clientId" : "1",
+        "insuranceId" : "1",
+        "employeeId" : "1"
+      },
+      {
+        "id" : "3",
+        "insurancePremium" : 1,
+        "contractDate" : {
+          "registerDate" : "2021-02-28T01:07:02.0886271",
+          "startDate" : "2021-05-28T01:07:02.0886271",
+          "endDate" : "2021-05-28T01:07:02.0886271"
+        },
+        "status" : "계약신청",
+        "channel": "온라인",
+        "clientId" : "1",
+        "insuranceId" : "1",
+        "employeeId" : "1"
+      },
+      {
+        "id" : "4",
+        "insurancePremium" : 1,
+        "contractDate" : {
+          "registerDate" : "2021-05-28T01:07:02.0886271",
+          "startDate" : "2021-05-28T01:07:02.0886271",
+          "endDate" : "2021-05-28T01:07:02.0886271"
+        },
+        "status" : "계약신청",
+        "channel": "온라인",
+        "clientId" : "1",
+        "insuranceId" : "1",
+        "employeeId" : "1"
+      },
+      {
+        "id" : "5",
+        "insurancePremium" : 1,
+        "contractDate" : {
+          "registerDate" : "2021-05-28T01:07:02.0886271",
+          "startDate" : "2021-05-28T01:07:02.0886271",
+          "endDate" : "2021-05-28T01:07:02.0886271"
+        },
+        "status" : "계약신청",
+        "channel": "온라인",
+        "clientId" : "1",
+        "insuranceId" : "1",
+        "employeeId" : "1"
+      },
+      {
+        "id" : "6",
+        "insurancePremium" : 1,
+        "contractDate" : {
+          "registerDate" : "2021-05-28T01:07:02.0886271",
+          "startDate" : "2021-05-28T01:07:02.0886271",
+          "endDate" : "2021-05-28T01:07:02.0886271"
+        },
+        "status" : "계약신청",
+        "channel": "전화",
+        "clientId" : "1",
+        "insuranceId" : "1",
+        "employeeId" : "1"
+      }],
+    "accidentHistoryList" : [ {
+      "id" : "1",
+      "accidentDate" : "2021-05-28T01:06:53.948754",
+      "accidentRate" : 50.0,
+      "accidentDescription" : "사고 요약",
+      "clientId" : "1"
+    } ]
+      },
+      {
+        "id": 2,
+        "name": "HM 자동차 보험",
+        "description": "HM보험사에서 내놓는 최초의 보험",
+        "category": "자동차",
+        "target": {
+          "creditRating": 3,
+          "startAge": 24,
+          "endAge": 70
+        },
+        "liablityCoverages": [
+          "대인배상",
+          "대물배상",
+          "자기신체사고"
+        ],
+        "accidentDocuments": [
+          "청구서",
+          "사고증명서",
+          "신분증"
+        ],
+        "registerDocuments": [
+          "신분증",
+          "자동차면허",
+          "가족증명서"
+        ],
+        "createTime": null,
+        "modifiedTime": null,
+        "createEmployee": {
+          "id": null,
+          "name": "최윤식",
+          "phoneNumber": "010-000-000",
+          "email": "abcd",
+          "department": "개발",
+          "role": "과장"
+        },
+        "managementEmployee": {
+          "id": null,
+          "name": "최윤식",
+          "phoneNumber": "010-000-000",
+          "email": "abcd",
+          "department": "개발",
+          "role": "과장"
+        },
+        "contractList" : [ {
+          "id" : "1",
+          "insurancePremium" : 1,
+          "contractDate" : {
+            "registerDate" : "2021-02-28T01:07:02.0886271",
+            "startDate" : "2021-05-28T01:07:02.0886271",
+            "endDate" : "2021-05-28T01:07:02.0886271"
+          },
+          "status" : "계약신청",
+          "channel": "온라인",
+          "clientId" : "1",
+          "insuranceId" : "1",
+          "employeeId" : "1"
+        },
+          {
+            "id" : "2",
+            "insurancePremium" : 1,
+            "contractDate" : {
+              "registerDate" : "2021-05-28T01:07:02.0886271",
+              "startDate" : "2021-05-28T01:07:02.0886271",
+              "endDate" : "2021-05-28T01:07:02.0886271"
+            },
+            "status" : "계약신청",
+            "channel": "온라인",
+            "clientId" : "1",
+            "insuranceId" : "1",
+            "employeeId" : "1"
+          },
+          {
+            "id" : "3",
+            "insurancePremium" : 1,
+            "contractDate" : {
+              "registerDate" : "2021-02-28T01:07:02.0886271",
+              "startDate" : "2021-05-28T01:07:02.0886271",
+              "endDate" : "2021-05-28T01:07:02.0886271"
+            },
+            "status" : "계약신청",
+            "channel": "온라인",
+            "clientId" : "1",
+            "insuranceId" : "1",
+            "employeeId" : "1"
+          },
+          {
+            "id" : "4",
+            "insurancePremium" : 1,
+            "contractDate" : {
+              "registerDate" : "2021-05-28T01:07:02.0886271",
+              "startDate" : "2021-05-28T01:07:02.0886271",
+              "endDate" : "2021-05-28T01:07:02.0886271"
+            },
+            "status" : "계약신청",
+            "channel": "온라인",
+            "clientId" : "1",
+            "insuranceId" : "1",
+            "employeeId" : "1"
+          },
+          {
+            "id" : "5",
+            "insurancePremium" : 1,
+            "contractDate" : {
+              "registerDate" : "2021-05-28T01:07:02.0886271",
+              "startDate" : "2021-05-28T01:07:02.0886271",
+              "endDate" : "2021-05-28T01:07:02.0886271"
+            },
+            "status" : "계약신청",
+            "channel": "온라인",
+            "clientId" : "1",
+            "insuranceId" : "1",
+            "employeeId" : "1"
+          },
+          {
+            "id" : "6",
+            "insurancePremium" : 1,
+            "contractDate" : {
+              "registerDate" : "2021-05-28T01:07:02.0886271",
+              "startDate" : "2021-05-28T01:07:02.0886271",
+              "endDate" : "2021-05-28T01:07:02.0886271"
+            },
+            "status" : "계약신청",
+            "channel": "전화",
+            "clientId" : "1",
+            "insuranceId" : "1",
+            "employeeId" : "1"
+          }],
+        "accidentHistoryList" : [ {
+          "id" : "1",
+          "accidentDate" : "2021-05-28T01:06:53.948754",
+          "accidentRate" : 50.0,
+          "accidentDescription" : "사고 요약",
+          "clientId" : "1"
+        } ]
+      },
+      {
+        "id": 3,
+        "name": "HM 화재 보험",
+        "description": "HM보험사에서 내놓는 최초의 보험",
+        "category": "화재",
+        "target": {
+          "creditRating": 3,
+          "startAge": 24,
+          "endAge": 70
+        },
+        "liablityCoverages": [
+          "대인배상",
+          "대물배상",
+          "자기신체사고"
+        ],
+        "accidentDocuments": [
+          "청구서",
+          "사고증명서",
+          "신분증"
+        ],
+        "registerDocuments": [
+          "신분증",
+          "자동차면허",
+          "가족증명서"
+        ],
+        "createTime": null,
+        "modifiedTime": null,
+        "createEmployee": {
+          "id": null,
+          "name": "최윤식",
+          "phoneNumber": "010-000-000",
+          "email": "abcd",
+          "department": "개발",
+          "role": "과장"
+        },
+        "managementEmployee": {
+          "id": null,
+          "name": "최윤식",
+          "phoneNumber": "010-000-000",
+          "email": "abcd",
+          "department": "개발",
+          "role": "과장"
+        },
+        "contractList" : [ {
+          "id" : "1",
+          "insurancePremium" : 1,
+          "contractDate" : {
+            "registerDate" : "2021-02-28T01:07:02.0886271",
+            "startDate" : "2021-05-28T01:07:02.0886271",
+            "endDate" : "2021-05-28T01:07:02.0886271"
+          },
+          "status" : "계약신청",
+          "channel": "온라인",
+          "clientId" : "1",
+          "insuranceId" : "1",
+          "employeeId" : "1"
+        },
+          {
+            "id" : "2",
+            "insurancePremium" : 1,
+            "contractDate" : {
+              "registerDate" : "2021-05-28T01:07:02.0886271",
+              "startDate" : "2021-05-28T01:07:02.0886271",
+              "endDate" : "2021-05-28T01:07:02.0886271"
+            },
+            "status" : "계약신청",
+            "channel": "온라인",
+            "clientId" : "1",
+            "insuranceId" : "1",
+            "employeeId" : "1"
+          },
+          {
+            "id" : "3",
+            "insurancePremium" : 1,
+            "contractDate" : {
+              "registerDate" : "2021-02-28T01:07:02.0886271",
+              "startDate" : "2021-05-28T01:07:02.0886271",
+              "endDate" : "2021-05-28T01:07:02.0886271"
+            },
+            "status" : "계약신청",
+            "channel": "온라인",
+            "clientId" : "1",
+            "insuranceId" : "1",
+            "employeeId" : "1"
+          },
+          {
+            "id" : "4",
+            "insurancePremium" : 1,
+            "contractDate" : {
+              "registerDate" : "2021-05-28T01:07:02.0886271",
+              "startDate" : "2021-05-28T01:07:02.0886271",
+              "endDate" : "2021-05-28T01:07:02.0886271"
+            },
+            "status" : "계약신청",
+            "channel": "온라인",
+            "clientId" : "1",
+            "insuranceId" : "1",
+            "employeeId" : "1"
+          },
+          {
+            "id" : "5",
+            "insurancePremium" : 1,
+            "contractDate" : {
+              "registerDate" : "2021-05-28T01:07:02.0886271",
+              "startDate" : "2021-05-28T01:07:02.0886271",
+              "endDate" : "2021-05-28T01:07:02.0886271"
+            },
+            "status" : "계약신청",
+            "channel": "온라인",
+            "clientId" : "1",
+            "insuranceId" : "1",
+            "employeeId" : "1"
+          },
+          {
+            "id" : "6",
+            "insurancePremium" : 1,
+            "contractDate" : {
+              "registerDate" : "2021-05-28T01:07:02.0886271",
+              "startDate" : "2021-05-28T01:07:02.0886271",
+              "endDate" : "2021-05-28T01:07:02.0886271"
+            },
+            "status" : "계약신청",
+            "channel": "전화",
+            "clientId" : "1",
+            "insuranceId" : "1",
+            "employeeId" : "1"
+          }],
+        "accidentHistoryList" : [ {
+          "id" : "1",
+          "accidentDate" : "2021-05-28T01:06:53.948754",
+          "accidentRate" : 50.0,
+          "accidentDescription" : "사고 요약",
+          "clientId" : "1"
+        } ]
+      },
+      {
+        "id": 4,
+        "name": "HM 여행자 보험",
+        "description": "HM보험사에서 내놓는 최초의 보험",
+        "category": "여행",
+        "target": {
+          "creditRating": 3,
+          "startAge": 24,
+          "endAge": 70
+        },
+        "liablityCoverages": [
+          "대인배상",
+          "대물배상",
+          "자기신체사고"
+        ],
+        "accidentDocuments": [
+          "청구서",
+          "사고증명서",
+          "신분증"
+        ],
+        "registerDocuments": [
+          "신분증",
+          "자동차면허",
+          "가족증명서"
+        ],
+        "createTime": null,
+        "modifiedTime": null,
+        "createEmployee": {
+          "id": null,
+          "name": "최윤식",
+          "phoneNumber": "010-000-000",
+          "email": "abcd",
+          "department": "개발",
+          "role": "과장"
+        },
+        "managementEmployee": {
+          "id": null,
+          "name": "최윤식",
+          "phoneNumber": "010-000-000",
+          "email": "abcd",
+          "department": "개발",
+          "role": "과장"
+        },
+        "contractList" : [ {
+          "id" : "1",
+          "insurancePremium" : 1,
+          "contractDate" : {
+            "registerDate" : "2021-02-28T01:07:02.0886271",
+            "startDate" : "2021-05-28T01:07:02.0886271",
+            "endDate" : "2021-05-28T01:07:02.0886271"
+          },
+          "status" : "계약신청",
+          "channel": "온라인",
+          "clientId" : "1",
+          "insuranceId" : "1",
+          "employeeId" : "1"
+        },
+          {
+            "id" : "2",
+            "insurancePremium" : 1,
+            "contractDate" : {
+              "registerDate" : "2021-05-28T01:07:02.0886271",
+              "startDate" : "2021-05-28T01:07:02.0886271",
+              "endDate" : "2021-05-28T01:07:02.0886271"
+            },
+            "status" : "계약신청",
+            "channel": "온라인",
+            "clientId" : "1",
+            "insuranceId" : "1",
+            "employeeId" : "1"
+          },
+          {
+            "id" : "3",
+            "insurancePremium" : 1,
+            "contractDate" : {
+              "registerDate" : "2021-02-28T01:07:02.0886271",
+              "startDate" : "2021-05-28T01:07:02.0886271",
+              "endDate" : "2021-05-28T01:07:02.0886271"
+            },
+            "status" : "계약신청",
+            "channel": "온라인",
+            "clientId" : "1",
+            "insuranceId" : "1",
+            "employeeId" : "1"
+          },
+          {
+            "id" : "4",
+            "insurancePremium" : 1,
+            "contractDate" : {
+              "registerDate" : "2021-05-28T01:07:02.0886271",
+              "startDate" : "2021-05-28T01:07:02.0886271",
+              "endDate" : "2021-05-28T01:07:02.0886271"
+            },
+            "status" : "계약신청",
+            "channel": "온라인",
+            "clientId" : "1",
+            "insuranceId" : "1",
+            "employeeId" : "1"
+          },
+          {
+            "id" : "5",
+            "insurancePremium" : 1,
+            "contractDate" : {
+              "registerDate" : "2021-05-28T01:07:02.0886271",
+              "startDate" : "2021-05-28T01:07:02.0886271",
+              "endDate" : "2021-05-28T01:07:02.0886271"
+            },
+            "status" : "계약신청",
+            "channel": "온라인",
+            "clientId" : "1",
+            "insuranceId" : "1",
+            "employeeId" : "1"
+          },
+          {
+            "id" : "6",
+            "insurancePremium" : 1,
+            "contractDate" : {
+              "registerDate" : "2021-05-28T01:07:02.0886271",
+              "startDate" : "2021-05-28T01:07:02.0886271",
+              "endDate" : "2021-05-28T01:07:02.0886271"
+            },
+            "status" : "계약신청",
+            "channel": "전화",
+            "clientId" : "1",
+            "insuranceId" : "1",
+            "employeeId" : "1"
+          }],
+        "accidentHistoryList" : [ {
+          "id" : "1",
+          "accidentDate" : "2021-05-28T01:06:53.948754",
+          "accidentRate" : 50.0,
+          "accidentDescription" : "사고 요약",
+          "clientId" : "1"
+        } ]
+      }
+    ]
 }

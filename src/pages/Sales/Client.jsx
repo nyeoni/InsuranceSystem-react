@@ -15,11 +15,19 @@ const StyledSpan = styled.span`
     font-size: 14px;
 `
 
+const FilterDiv = styled.div`
+    display: flex;
+    align-content: space-around;
+    justify-content: space-between;
+    flex-direction: column;
+`
+
 const FlexDiv = styled.div`
     display: flex;
     align-content: space-around;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 `
 
 async function getClients() {
@@ -238,6 +246,7 @@ const Client = ({match, history}) => {
 
     return (
         <Wrapper title={title} underline={true} subtitle={subtitle} >
+            <FilterDiv>
             <FlexDiv>
                 <Space>
                     <Dropdown overlay={menu}>
@@ -284,6 +293,7 @@ const Client = ({match, history}) => {
                     <Radio.Button value='전체'>전체</Radio.Button>
                 </Radio.Group>
             </FlexDiv>
+            </FilterDiv>
             <DataTable2 dataSource={searchData} columns={columns} loading={loading} onRow={onRow}/>
         </Wrapper>
     )

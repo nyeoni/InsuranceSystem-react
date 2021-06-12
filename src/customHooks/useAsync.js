@@ -51,6 +51,7 @@ export const useAsync = (callback, setData, deps = [], skip = false) => {
             return;
         }
         fetchData();
+        console.log("i dont skip");
         // eslint 설정을 다음 줄에서만 비활성화
         // eslint-disable-next-line
     }, deps);

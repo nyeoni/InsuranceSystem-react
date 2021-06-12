@@ -51,3 +51,9 @@ input.ant-input:focus {
 [data-theme="dark"] .site-input-group-wrapper .site-input-split {
     background-color: transparent;
 }
+
+/* Contract.jsx */
+.ant-select {
+    align-content : space-around;
+    justify-content: space-around;
+}

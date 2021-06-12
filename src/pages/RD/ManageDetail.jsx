@@ -96,7 +96,7 @@ const ManageDetail = ({match}) => {
                                 <Statistic title="보상지급 계약 수" value={112893} />
                             </Col>
                             <Col span={8}>
-                                <Statistic title="중도해지 계약 " value={112893} />
+                                <Statistic title="중도해지 계약 수" value={112893} />
                             </Col>
                         </Row>
                         <Row style={{marginTop:'1rem'}} gutter={8}>
