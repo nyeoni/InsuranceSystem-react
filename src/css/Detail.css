@@ -1,9 +1,9 @@
 @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+/*@import '~antd/dist/antd.css';*/
 
 h1 {
     font-family: 'NanumSquare','Noto Sans KR', sans-serif;
     font-weight: bold;
-
     text-align: center;
 }
 .d-inline-block{
@@ -19,9 +19,10 @@ div.ant-page-header {
 input.ant-input:focus {
     font-size: inherit !important;
     height: inherit !important;
-}
+    /*width: inherit !important; 주의: 이거 때문에 포커스 되면 크기 조정됨 */
 
-/* Create.jsx */
+}
+/* Create.jsx 이거 되려면 위에 antd.css import 해야함*/
 .create-input {
     width: 300px;
 }

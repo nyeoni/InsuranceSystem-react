@@ -1,10 +1,12 @@
 import React from "react";
+import {Wrapper} from "../../components/Wrapper";
 
 const Apply = () => {
+    const title = "상품가입"
     return (
-        <div>
-            <h1>Apply</h1>
-        </div>
+        <Wrapper title = {title}>
+
+        </Wrapper>
     )
 }
 

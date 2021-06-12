@@ -60,6 +60,7 @@ const Create = () => {
         console.log('useEffect ',state);
     }, [state])
 
+<<<<<<< HEAD
     // const postInsurance = () => {
     //     const url = 'http://hminsu.net/api/insurance/create';
     //     const {name, description,coverages, registerDocuments, accidentDocuments,basePremiumRate,category,
@@ -86,6 +87,31 @@ const Create = () => {
         // .then((response) => {console.log('response, ', response.data)})
         const data = await postInsurance(state);
         console.log(data);
+=======
+    async function postInsurance  ()  {
+        const url = 'http://hminsu.net/api/insurance/create';
+        const {name, description,coverages, registerDocuments, accidentDocuments,basePremiumRate,category,
+            startAge, endAge, creditRating,createEmployeeId,managementEmployeeId }= state;
+        axios.post(url, {
+            name,
+            description,
+            coverages,
+            registerDocuments,
+            accidentDocuments,
+            basePremiumRate,
+            category,
+            createEmployeeId,
+            managementEmployeeId,
+            target : {startAge, endAge, creditRating},
+        }).then(r => {console.log(r)
+            alert("api 성공")
+        });
+    }
+
+    const handleSubmit = async () => {
+        const value = await postInsurance()
+            // .then((response) => {console.log('response, ', response.data)})
+>>>>>>> soohyuk
     }
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>
@@ -171,7 +197,7 @@ const Create = () => {
                 <Form.Item rules={[{required: true, message: '담당 직원을 입력해주세요!'}]} name="managementEmployeeId" label="보험 담당책임 직원 ID" >
                     <Input name="managementEmployeeId" value={state.managementEmployeeId} onChange={handleChange}/>
                 </Form.Item>
-                <Form.Item><Button type="primary" htmlType="submit" value="Submit">Submit</Button></Form.Item>
+                <Form.Item><Button style={{marginBottom : '10px'}} type="primary" htmlType="submit" value="Submit">Submit</Button></Form.Item>
             </Form>
         </Wrapper>
     );

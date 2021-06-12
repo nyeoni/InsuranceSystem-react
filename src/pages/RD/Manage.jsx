@@ -11,9 +11,9 @@ import '../../css/Detail.css'
 
 async function getInsurances() {
     const response = await axios.get(
-        'https://608c26ef9f42b20017c3d801.mockapi.io/api/v1/newinsurance'
+        'http://hminsu.net/api/insurance'
     );
-    return response.data;
+    return response.data.data;
 }
 
 const Manage = ({match, history}) => {
@@ -132,10 +132,7 @@ const Manage = ({match, history}) => {
     );
 
     if (error) {
-        return (
-            <div>
-                에러가 발생하였습니다.
-            </div>
+        return (<div>에러가 발생하였습니다.</div>
         );
     }
 

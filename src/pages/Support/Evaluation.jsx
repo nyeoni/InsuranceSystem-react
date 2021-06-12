@@ -1,3 +1,4 @@
+
 import React, {useEffect, useRef, useState} from "react";
 
 import {Wrapper} from "../../components/Wrapper";
@@ -21,14 +22,11 @@ const Evaluation = () => {
     const subtitle = "HM 보험회사의 고객에게 처리된 보상들과 그 상세 내용을 보여주는 페이지입니다."
 
     const [clickedRecord, setClickedRecord] = React.useState([]);
-    const mounted = useRef(false);
-    useEffect(() => {
-        if(!mounted.current){mounted.current = true;}
-        else{InfoModal(clickedRecord);}
-    }, [clickedRecord])
+    const [visible, setVisible] = React.useState(false);
+
 
     const [data, setData] = useState([]);
-    const [option, setOption] = useState("보험명");
+    const [option, setOption] = useState("직원 성명");
     const [searchData, setSearchData] = useState([]);
     const [skip, setSkip] = useState(false);
     const settingData = (data) => {
@@ -59,67 +57,60 @@ const Evaluation = () => {
     }
     const columns = [
         {
-            title: 'No',
+            title: '직원 ID',
             dataIndex: 'id',
             key: 'id',
             width: '10%',
             render: text => <a>{text}</a>,
         },
         {
-            title: '보상처리 직원 ID',
-            render: (record) => record.employee.id,
+
+            title: '직원 성명',
+            dataIndex: 'name',
+            key: 'name',
+            width: '10%',
+            render: text => <a>{text}</a>,
         },
+        //보상처리 직원, 처리한 보상 list
+        // {
+        //     title: '보상처리 직원 ID',
+        //     render: (record) => record.employee.id,
+        // },
         {
-            title: '보상액',
+
+            title: '전체 보상액',
             dataIndex: 'cost',
             key: 'cost',
-            render: text => <a>{text}</a>,
+            render: text => <a>{text}원</a>,
         },
         {
-            title: 'Claim ID',
-            render: (record) => record.claim.id
-        },
-        {
-            title: '보상 처리일자',
-            dataIndex: 'dateTime',
-            key: 'dateTime',
-            render: text => <a>{text}</a>,
-        },
-        {
-            title: '보상 상태',
-            dataIndex: 'status',
-            key: 'status',
-            render: text => <a>{text}</a>,
+            title: 'Action',
+            key: 'action',
+            width: '15%',
+
+            render: (text, record) =>(<Space size="middle"><a onClick={() => onRow(record)} style={{color:'blueviolet'}}>담당 처리사고 조회</a></Space>)
+
         },
     ];
     const menu = (
         <Menu onClick={handleMenuClick}>
-            <Menu.Item key="1">보험상품 이름</Menu.Item>
-            <Menu.Item key="2">보험 번호</Menu.Item>
+            <Menu.Item key="1">직원 성명</Menu.Item>
+            {/*<Menu.Item key="2">보험 번호</Menu.Item>*/}
         </Menu>
     );
-    const menuRange = (
-        <Menu onClick={handleMenuClick}>
-            <Menu.Item key="1">1개월</Menu.Item>
-            <Menu.Item key="2">3개월</Menu.Item>
-            <Menu.Item key="3">6개월</Menu.Item>
-            <Menu.Item key="4">1년</Menu.Item>
-            <Menu.Item key="5">전체 조회</Menu.Item>
-        </Menu>
-    );
+
     const onSearch = value => {
         console.log(typeof(value));
         console.log(value);
         if (value == "") {setSearchData(data);}
-
-        else if (option == "보험번호") {
-            console.log("number");
-            console.log(value);
-            setSearchData(
-                data.filter(d => d.id === value)
-            )
-        }
-        else if (option == "보험명"){
+        // else if (option == "보험번호") {
+        //     console.log("number");
+        //     console.log(value);
+        //     setSearchData(
+        //         data.filter(d => d.id === value)
+        //     )
+        // }
+        else if (option == "직원 성명"){
             console.log("name");
             console.log(value);
             let res = [];
@@ -127,13 +118,11 @@ const Evaluation = () => {
             setSearchData(res);
         }
     };
-    const onRow = (record, rowIndex) => {
-        return {onClick: (record) => {
-            console.log('before', clickedRecord);
-            setClickedRecord(searchData[rowIndex]);
-            }
-        };
-    }
+    const onRow = (record) => {
+        console.log('a', record.id)
+        setClickedRecord(searchData.find(r => r.id === record.id))
+        setVisible(true);
+    };
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>
             <Space>
@@ -142,14 +131,10 @@ const Evaluation = () => {
                         {option}<DownOutlined />
                     </Button>
                 </Dropdown>
-                <Dropdown overlay={menuRange}>
-                    <Button style={{ width: 95 }}>
-                        {option}<DownOutlined />
-                    </Button>
-                </Dropdown>
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
             <DataTable2 onRow={onRow} loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
+            <InfoModal title = {title} visible={false} setVisible = {setVisible} clickedRecord={clickedRecord}/>
         </Wrapper>
     )
 }

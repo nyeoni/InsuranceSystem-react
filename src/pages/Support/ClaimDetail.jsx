@@ -5,12 +5,25 @@ import "../../css/Modal.css"
 import axios from "axios";
 import useAsync from "../../customHooks/useAsync";
 
+
+//          partner
 // async function getPartner() {
 //     const response = await axios.get(
 //         'https://60aba7e95a4de40017cca8e4.mockapi.io/partner'
 //     );
 //     return response.data;
 // }
+/////
+//partner
+// const [data, setData] = useState([]);
+// const settingData = (data) => {
+//     if (data) {setData(data);}
+//     else {console.log("데이터 설정 실패");}
+// }
+// const [initialState, refetch] = useAsync(getPartner, settingData, [getPartner]);
+// const { loading, error } = initialState;
+// if (error) {return (<div>에러가 발생하였습니다.</div>);}
+//
 const ClaimDetail = (props) => {
     // const style = {width:'90%', marginLeft: '4%'};
     const [form] = Form.useForm();
@@ -25,16 +38,6 @@ const ClaimDetail = (props) => {
     useEffect(() => {getDate();}, [])
     useEffect(() => {console.log('useEffect ',state);}, [state])
 
-    //partner
-    // const [data, setData] = useState([]);
-    // const settingData = (data) => {
-    //     if (data) {setData(data);}
-    //     else {console.log("데이터 설정 실패");}
-    // }
-    // const [initialState, refetch] = useAsync(getPartner, settingData, [getPartner]);
-    // const { loading, error } = initialState;
-    // if (error) {return (<div>에러가 발생하였습니다.</div>);}
-    //
     const handleCancel = () => {
         console.log('Clicked cancel button');
         props.setVisible(false);
@@ -46,10 +49,7 @@ const ClaimDetail = (props) => {
         setState({...state, [name]: value});
     }
     const handleSubmit = () => {
-        // setTimeout(() => {
-        //     props.setVisible(false);
-        // }, 1000);
-        //
+
         postCompensation()
     }
     const postCompensation = () => {
@@ -79,7 +79,8 @@ const ClaimDetail = (props) => {
                 <Divider style={{fontSize: '1em'}} orientation="center">접수된 사고는 보상심사 단계로 이관됩니다.</Divider>
                 <Row>
                     <Col span={24}>
-                        <Form.Item label={'접수 처리 날짜'}>
+
+                        <Form.Item label={'계약 시작 날짜'}>
                             <Input readOnly={true} name="dateHandled" value={state.dateHandled} onInput={handleChange}/>
                         </Form.Item>
                     </Col>
@@ -107,20 +108,6 @@ const ClaimDetail = (props) => {
                     <Button type="primary" htmlType="submit" value="Submit">Submit</Button>
                     <Button onClick={handleCancel}>Cancel</Button>
                 </Form.Item>
-                {/*<Row>*/}
-                    {/*<Col span={24}>*/}
-                    {/*    <Form.Item label="협력 업체">*/}
-                    {/*        <Select mode={"multiple"} value={state.type}*/}
-                    {/*                onChange={(val)=>{handleChange({target: {name: 'type', value: val}})}}>*/}
-                    {/*            {data.map((v) => {*/}
-                    {/*                return(*/}
-                    {/*                    <Select.Option key={v.id} value={v.id}>{v.partnerName}</Select.Option>*/}
-                    {/*                )*/}
-                    {/*            })}*/}
-                    {/*        </Select>*/}
-                    {/*    </Form.Item>*/}
-                    {/*</Col>*/}
-                {/*</Row>*/}
             </Form>
         </Modal>
     )
