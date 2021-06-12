@@ -3,6 +3,7 @@ import {Route} from "react-router-dom"
 import UWPolicy from "../UW/UWPolicy";
 import AddUWPolicy from "../UW/AddUWPolicy";
 import UWPolicyDetail from "../UW/UWPolicyDetail";
+import Lossmanage from "../UW/Lossmanage";
 import Underwriting from "../UW/Underwriting";
 import UWDetail from "../UW/UWDetail";
 
@@ -15,6 +16,7 @@ const UWRouter = (props) => {
             <Route path="/uw/policy" exact={true} render={props => <UWPolicy {...props}/>}/>
             <Route path="/uw/policy/addpolicy" exact={true} render={props => <AddUWPolicy {...props}/>}/>
             <Route path="/uw/policy/:id" exact={true} render={props => <UWPolicyDetail {...props}/>}/>
+            <Route path="/uw/lossmanage" exact={true} render={props => <Lossmanage/>}/>
         </>
     )
 }

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Form, Input, Button, Select, InputNumber, DatePicker, Row, Col} from 'antd';
+import {Form, Input, Button, Select, notification} from 'antd';
 import axios from "axios";
 import {Wrapper} from "../../components/Wrapper";
 import "../../css/Detail.css";
@@ -11,15 +11,19 @@ async function addCooperation(data, form) {
         url: url,
         data: data,
         headers: {'content-type': 'application/json'}
-    }).then(
-
-        form.resetFields
-    ).catch(err => {
+    }).then(() => {
+            form.resetFields();
+            notification.open({
+            message: 'Notification!',
+            description:
+                '협력업체 정보 전송 완료'
+        })
+    }).catch(err => {
         console.log(err.message);
     });
     console.log(response);
 
-    return response.data;
+    return response.data.data;
 }
 
 const AddCooperation = (history) => {

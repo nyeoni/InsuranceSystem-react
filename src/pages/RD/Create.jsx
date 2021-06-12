@@ -31,7 +31,7 @@ const Create = () => {
         coverages: [],
         registerDocuments: [],
         accidentDocuments: [],
-        basePremiumRate: '',
+        basePrice: '',
         startAge: '',
         endAge: '',
         creditRating: '',
@@ -130,10 +130,11 @@ const Create = () => {
                     </Select>
                 </Form.Item>
 
-                <Form.Item rules={[{required:true, message: '보험의 기초 보험요율을 입력해주세요'}]} name="basePremiumRate" label="기초 보험요율">
-                    <InputNumber min={0} max={100.00} step="0.01" value={state.basePremiumRate}
-                                 formatter={value => `${value}%`} parser={value => value.replace('%', '')}
-                                 onChange={(val)=>{handleChange({target: {name: 'basePremiumRate', value: val}})}}/>
+                <Form.Item rules={[{required:true, message: '보험의 기초 보험료를 입력해주세요'}]} name="basePrice" label="기초 보험료(KRW)">
+                    <InputNumber style={{width : '50%'}}
+                                 defaultValue={100000} min={0} formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} step={1000}
+                                 parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                                 onChange={(val)=>{if(val > 0){handleChange({target: {name: 'basePrice', value: val}})}}}/>
                 </Form.Item>
 
                 <Form.Item rules={[{required:true, message: '보험의 개괄적인 설명을 입력해주세요'}]} name={"description"} label="보험상품 개요">

@@ -5,7 +5,7 @@ import axios from "axios";
 
 
 async function postCompensation(id, data) {
-    const url = `hminsu.net/api/compensation/${id}/status`;
+    const url = `http://hminsu.net/api/compensation/${id}/status`;
     const response = await axios({
         method: 'post',
         url: url,
@@ -75,6 +75,5 @@ const CompensationModal = (props) => {
                 </Form>
             </Modal>
         )
-
 }
 export default CompensationModal;

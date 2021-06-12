@@ -90,11 +90,19 @@ const Cooperation = ({match, history}) => {
             filters: [
                 {
                     text: '병원',
-                    value: 'Hospital',
+                    value: '병원',
                 },
                 {
-                    text: '사고 현장관리',
-                    value: 'Anycar',
+                    text: '현장출동업체',
+                    value: '현장출동업체',
+                },
+                {
+                    text: '자동차정비업체',
+                    value: '자동차정비업체',
+                },
+                {
+                    text: '변호사',
+                    value: '변호사',
                 },
             ],
             onFilter: (value, record) => record.type.indexOf(value) === 0,
@@ -104,9 +112,15 @@ const Cooperation = ({match, history}) => {
                 if (partnerCategory === '병원') {
                     value = "병원";
                     color = 'geekblue';
-                } else if (partnerCategory === '사고 현장관리') {
-                    value = "사고 현장관리";
+                } else if (partnerCategory === '현장출동업체') {
+                    value = "현장출동업체";
                     color = 'green';
+                } else if (partnerCategory === '자동차정비업체') {
+                    value = "자동차정비업체";
+                    color = 'yellow';
+                } else if (partnerCategory === '변호사') {
+                    value = "변호사";
+                    color = 'red';
                 }
                 return (
                     <Tag color={color} key={partnerCategory}>{value}</Tag>
