@@ -4,10 +4,11 @@ import {DataTable2} from "../../components/DataTable2";
 import axios from "axios";
 import useAsync from "../../customHooks/useAsync";
 import "../../css/Detail.css";
-import {Button, Dropdown, DatePicker, Radio, Menu, Space, Tag, Input, Select, Divider} from "antd";
+import {Button, Dropdown, DatePicker, Radio, Menu, Space, Tag, Input, Select, Divider, Descriptions} from "antd";
 import {DownOutlined} from "@ant-design/icons";
 import Search from "antd/es/input/Search";
 import styled from "styled-components";
+import Modal from "antd/es/modal/Modal";
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 
@@ -52,12 +53,17 @@ const Client = ({match, history}) => {
     }); // date range
 
     const [gender, setGender] = useState('전체'); // gender pick
+    const [visible, setVisible] = useState(false);
+    const [target, setTarget] = useState([]);
 
     // table utils
     const onRow = (record, rowIndex) => {
         return {
             onClick: () => {
-                // history.push(`${match.url}/${record.id}`)
+                setVisible(true);
+                setTarget(record);
+                console.log(record);
+                console.log(rowIndex);
             },
         };
     };
@@ -295,6 +301,43 @@ const Client = ({match, history}) => {
             </FlexDiv>
             </FilterDiv>
             <DataTable2 dataSource={searchData} columns={columns} loading={loading} onRow={onRow}/>
+            <Modal
+                title="Client Info"
+                centered
+                visible={visible}
+                onOk={() => setVisible(false)}
+                onCancel={() => setVisible(false)}
+                width={1000}
+            >
+                <Descriptions title="Client Info" bordered>
+                    <Descriptions.Item label="이름">{target.name}</Descriptions.Item>
+                    <Descriptions.Item label="Billing Mode">Prepaid</Descriptions.Item>
+                    <Descriptions.Item label="Automatic Renewal">YES</Descriptions.Item>
+                    <Descriptions.Item label="Order time">2018-04-24 18:00:00</Descriptions.Item>
+                    <Descriptions.Item label="Usage Time" span={2}>
+                        2019-04-24 18:00:00
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Status" span={3}>
+                        Running
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Negotiated Amount">$80.00</Descriptions.Item>
+                    <Descriptions.Item label="Discount">$20.00</Descriptions.Item>
+                    <Descriptions.Item label="Official Receipts">$60.00</Descriptions.Item>
+                    <Descriptions.Item label="Config Info">
+                        Data disk type: MongoDB
+                        <br />
+                        Database version: 3.4
+                        <br />
+                        Package: dds.mongo.mid
+                        <br />
+                        Storage space: 10 GB
+                        <br />
+                        Replication factor: 3
+                        <br />
+                        Region: East China 1<br />
+                    </Descriptions.Item>
+                </Descriptions>
+            </Modal>
         </Wrapper>
     )
 }
