@@ -108,11 +108,8 @@ const Compensate = () => {
         },
     ];
     const onRow = (record) => {
-        console.log('a', record.id)
         setClickedRecord(searchData.find(r => r.id === record.id))
-        console.log('clciked', clickedRecord)
         setVisible(true);
-
     };
     const onSearch = value => {
         console.log(typeof(value));

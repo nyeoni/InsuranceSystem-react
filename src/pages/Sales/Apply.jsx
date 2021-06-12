@@ -3,6 +3,7 @@ import {Wrapper} from "../../components/Wrapper";
 import axios from "axios";
 import {Row, Col, DatePicker, Form, Input, InputNumber, notification, Select, Button} from "antd";
 import useAsync from "../../customHooks/useAsync";
+import moment from 'moment'
 
 async function getInsurance() {
     const response = await axios.get(
@@ -30,7 +31,6 @@ async function addContract(data, form) {
         console.log(err.message);
     });
 }
-
 
 const Apply = () => {
     useEffect(() =>{
@@ -77,7 +77,7 @@ const Apply = () => {
         return (
             <Wrapper title = {title} subtitle={subtitle} underline={true}>
                 <Form labelCol={{span: 10}} wrapperCol={{span: 12}} layout="vertical" size={"large"} onFinish={handleSubmit}
-                      initialValues={{registerDate : new Date().toISOString()}}>
+                      initialValues={{registerDate : new Date().toISOString().split('T')[0]}}>
                     <Form.Item rules={[{required: true, message: '고객 ID를 입력해주세요!'}]} name="clientId" label="고객 ID" >
                         <Input style={{width:'95%'}} name="clientId" value={state.clientId} onChange={handleChange} placeholder={"고객의 ID를 입력해주세요"}/>
                     </Form.Item>
@@ -104,7 +104,10 @@ const Apply = () => {
                         </Col>
                         <Col span={6}>
                             <Form.Item wrapperCol={12} name="endDate" label="계약 만기일" rules={[{required: true, message: '계약 만기일을 입력하세요'}]}>
-                                <DatePicker style={{width:'90%'}} onChange={(val)=>{if(val !== null){
+                                <DatePicker style={{width:'90%'}} disabledDate={(current)=>{
+                                    return state.startDate && current && current.valueOf() < moment(state.startDate);
+                                }}
+                                            onChange={(val)=>{if(val !== null){
                                     handleChange({target: {name: 'endDate', value: val.toISOString()}})}}}/>
                             </Form.Item>
                         </Col>

@@ -19,8 +19,8 @@ async function postCompensation(id, data) {
 }
 
 const CompensationModal = (props) => {
-    console.log(1214)
-        // const {id} = props.clickedRecord.id;
+        const{clickedRecord, title, visible, setVisible} = props
+        // const {id} = clickedRecord.id;
         const [form] = useForm();
         const [state, setState] = useState({
             cost : '',
@@ -47,26 +47,26 @@ const CompensationModal = (props) => {
         }, [state])
 
         const handleSubmit = async () => {
-            const data = await postCompensation(props.clickedRecord.id, state);
+            const data = await postCompensation(clickedRecord.id, state);
             console.log(data);
         }
     function onCancel() {
-        props.setVisible(false);
+        setVisible(false);
     }
-    if(props.clickedRecord !== undefined){
-        console.log('clicked',props.clickedRecord)
+    if(clickedRecord){
+        console.log('real clicked',clickedRecord)
         return(
-            <Modal title={props.title + "의 추가정보"} visible= {props.visible} width={1000} onCancel={onCancel}>
+            <Modal title={title + "의 추가정보"} visible= {visible} width={1000} onCancel={onCancel}>
                 <Form form = {form} labelCol={10} wrapperCol={12} layout={"vertical"}>
                     <Divider style={{fontSize: '1em'}} orientation="center">해당 보상의 상태는 자동으로 '보상완료'로 변경됩니다.</Divider>
                     <Form.Item label={"Compensation ID"}>
-                        <Input  value={props.clickedRecord.id}/>
+                        <Input  value={clickedRecord.id}/>
                     </Form.Item>
                     <Form.Item label={"Contract ID"}>
-                        <Input value={props.clickedRecord.contract.id}/>
+                        <Input value={clickedRecord.contract.id}/>
                     </Form.Item>
                     <Form.Item label={"Claim ID"}>
-                        <Input  value={props.clickedRecord.claim.id}/>
+                        <Input  value={clickedRecord.claim.id}/>
                     </Form.Item>
                     <Form.Item rules={[{required: true, message: '보상할 금액을 입력해야합니다!'}]} name="cost" label="사고 보상금액(KRW)" >
                         <InputNumber value={state.cost} placeholder="보상할 금액을 입력해주세요" min = '0'
