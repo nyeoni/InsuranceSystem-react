@@ -9,7 +9,7 @@ import axios from "axios";
 
 async function getInsurances() {
     const response = await axios.get(
-        '/api/insurance'
+        'http://hminsu.net/api/insurance'
     );
     return response.data.data;
 }

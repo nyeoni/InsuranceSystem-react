@@ -11,9 +11,9 @@ import Search from "antd/es/input/Search";
 
 async function getContract() {
     const response = await axios.get(
-        'https://608c26ef9f42b20017c3d801.mockapi.io/api/v1/contract'
+        'http://hminsu.net/api/contract'
     );
-    return response.data;
+    return response.data.data;
 }
 
 const Underwriting = ({match, history}) => {

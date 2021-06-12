@@ -121,11 +121,15 @@ const Claim = ({match, history}) => {
                 <Space size="middle"><a onClick={() => evaluatePartner(record)} style={{color: 'blue'}}>업체 평가하기</a></Space>),
         },
     ];
-    const onRow = (record) => {
-        let clickedRecord = searchData.find(r => r.id === record.id)
-        setClickedRecord(searchData.find(r => r.id === record.id))
-        setVisible(true);
+    const onRow = (record, rowIndex) => {
+        return {
+            onClick: (record) => {
+                setClickedRecord(searchData.find(r => r.id === record.id))
+                setVisible(true);
+                },
+        };
     };
+
     const evaluatePartner = (record) => {
         let clickedRecord = searchData.find(r => r.id === record.id)
         setClickedRecord(searchData.find(r => r.id === record.id))

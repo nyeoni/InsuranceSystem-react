@@ -13,17 +13,15 @@ import InfoModal from "../../components/InfoModal";
 
 async function getTables() {
     const response = await axios.get(
-        'https://60aba7e95a4de40017cca8e4.mockapi.io/compensation'
+        'http://hminsu.net/api/employee', { params: { department: "보상" } }
     );
-    return response.data;
+    return response.data.data;
 }
 const Evaluation = () => {
     const title = "보상평가관리";
     const subtitle = "HM 보험회사의 고객에게 처리된 보상들과 그 상세 내용을 보여주는 페이지입니다."
-
     const [clickedRecord, setClickedRecord] = React.useState([]);
     const [visible, setVisible] = React.useState(false);
-
 
     const [data, setData] = useState([]);
     const [option, setOption] = useState("직원 성명");
@@ -48,11 +46,7 @@ const Evaluation = () => {
     function handleMenuClick(e) {
         if (e.key === '1') {
             console.log('click', e.key);
-            setOption("보험명");
-        }
-        else if (e.key === '2') {
-            console.log('click', e.key);
-            setOption("보험번호");
+            setOption("직원 성명");
         }
     }
     const columns = [
@@ -64,38 +58,40 @@ const Evaluation = () => {
             render: text => <a>{text}</a>,
         },
         {
-
             title: '직원 성명',
             dataIndex: 'name',
             key: 'name',
             width: '10%',
             render: text => <a>{text}</a>,
         },
-        //보상처리 직원, 처리한 보상 list
-        // {
-        //     title: '보상처리 직원 ID',
-        //     render: (record) => record.employee.id,
-        // },
         {
-
-            title: '전체 보상액',
-            dataIndex: 'cost',
-            key: 'cost',
-            render: text => <a>{text}원</a>,
+            title: '직급',
+            dataIndex: 'role',
+            key: 'role',
+            width: '10%',
+            render: text => <a>{text}</a>,
         },
+        // {
+        //     title: '누적 보상금액',
+        //     dataIndex: 'cost',
+        //     key: 'cost',
+        //     render: text => <a>{text}</a>,
+        // },
         {
             title: 'Action',
             key: 'action',
             width: '15%',
-
             render: (text, record) =>(<Space size="middle"><a onClick={() => onRow(record)} style={{color:'blueviolet'}}>담당 처리사고 조회</a></Space>)
-
         },
     ];
+    const onRow = (record) => {
+        console.log('a', record.id)
+        setClickedRecord(searchData.find(r => r.id === record.id))
+        setVisible(true);
+    };
     const menu = (
         <Menu onClick={handleMenuClick}>
             <Menu.Item key="1">직원 성명</Menu.Item>
-            {/*<Menu.Item key="2">보험 번호</Menu.Item>*/}
         </Menu>
     );
 
@@ -103,13 +99,6 @@ const Evaluation = () => {
         console.log(typeof(value));
         console.log(value);
         if (value == "") {setSearchData(data);}
-        // else if (option == "보험번호") {
-        //     console.log("number");
-        //     console.log(value);
-        //     setSearchData(
-        //         data.filter(d => d.id === value)
-        //     )
-        // }
         else if (option == "직원 성명"){
             console.log("name");
             console.log(value);
@@ -118,11 +107,7 @@ const Evaluation = () => {
             setSearchData(res);
         }
     };
-    const onRow = (record) => {
-        console.log('a', record.id)
-        setClickedRecord(searchData.find(r => r.id === record.id))
-        setVisible(true);
-    };
+
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>
             <Space>
@@ -133,8 +118,8 @@ const Evaluation = () => {
                 </Dropdown>
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
-            <DataTable2 onRow={onRow} loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
-            <InfoModal title = {title} visible={false} setVisible = {setVisible} clickedRecord={clickedRecord}/>
+            <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
+            <InfoModal title = {title} clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>
         </Wrapper>
     )
 }

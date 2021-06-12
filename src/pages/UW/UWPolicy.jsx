@@ -6,9 +6,10 @@ import useAsync from "../../customHooks/useAsync";
 import {Button} from "antd";
 async function getBoards() {
     const response = await axios.get(
-        'https://608c26ef9f42b20017c3d801.mockapi.io/api/v1/board'
+        //hminsu.net/api/board/{id}
+        'http://hminsu.net/api/board'
     );
-    return response.data;
+    return response.data.data;
 }
 const UWPolicy = ({match, history}) => {
     const [state, refetch] = useAsync(getBoards, null, [getBoards]);

@@ -12,11 +12,11 @@ import InfoModal from "../../components/InfoModal";
 
 async function getInsurances() {
     const response = await axios.get(
-        'https://60aba7e95a4de40017cca8e4.mockapi.io/partner'
+        'http://hminsu.net/api/partner'
     );
-    return response.data;
+    return response.data.data;
 }
-const Cooperation = () => {
+const Cooperation = ({match, history}) => {
     const title = "협력업체관리";
     const subtitle = "HM 보험회사와 협력 관계를 가지는 업체들을 조회하고, 관리할 수 있는 페이지 입니다"
     const [visible, setVisible] = React.useState(false);
@@ -117,7 +117,7 @@ const Cooperation = () => {
             title: 'Action',
             key: 'action',
             width: '15%',
-            render: (text, record) =>(<Space size="middle"><a onClick={() => onRow(record)} style={{color:'blueviolet'}}>담당 처리사고 조회</a></Space>)
+            render: (text, record) =>(<Space size="middle"><Button onClick={(event) => onRow(record)} style={{color:'blueviolet'}}>담당 처리사고 조회</Button></Space>)
         },
     ];
     const onRow = (record) => {
@@ -148,6 +148,9 @@ const Cooperation = () => {
             setSearchData(res);
         }
     };
+    const onClick = () => {
+        history.push(`${match.url}/addpartner`)
+    }
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>
             <Space>
@@ -158,6 +161,7 @@ const Cooperation = () => {
                 </Dropdown>
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
+            <Button variant="contained" style={{float: 'right'}} color="primary" onClick={onClick}>Add Partner</Button>
             <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
             <InfoModal title = {title} clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>
         </Wrapper>

@@ -40,11 +40,10 @@ const AddUWPolicy = ({match, history}) => {
         const data = await addClaim()
         console.log(data)
     }
-
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>
             <Form form = {form} labelCol={{span: 10,}} wrapperCol={{span: 14,}} size={"large"} layout="vertical" onFinish={handleSubmit}>
-                <Form.Item rules={[{required: true, message: '담당 직원을 입력해주세요!'}]} name="employeeId" label="사고 접수 담당 직원ID" >
+                <Form.Item name="employeeId" label="사고 접수 담당 직원ID" >
                     <Input name="author" disabled={true} defaultValue={state.author} onChange={handleChange} placeholder="사고 접수를 담당하고있는 직원의 ID를 입력해주세요"/>
                 </Form.Item>
                 <Form.Item label={'글 제목'} name="title" rules={[{required: true, message: '제목을 입력해주세요'}]}>

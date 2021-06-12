@@ -24,6 +24,8 @@ import useAsync from "../../customHooks/useAsync";
 // const { loading, error } = initialState;
 // if (error) {return (<div>에러가 발생하였습니다.</div>);}
 //
+
+
 const ClaimDetail = (props) => {
     // const style = {width:'90%', marginLeft: '4%'};
     const [form] = Form.useForm();
@@ -49,7 +51,6 @@ const ClaimDetail = (props) => {
         setState({...state, [name]: value});
     }
     const handleSubmit = () => {
-
         postCompensation()
     }
     const postCompensation = () => {

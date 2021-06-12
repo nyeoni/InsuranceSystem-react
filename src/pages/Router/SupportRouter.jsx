@@ -6,7 +6,7 @@ import Claim from "../Support/Claim";
 import Compensate from "../Support/Compensate";
 import Cooperation from "../Support/Cooperation";
 import Evalution from "../Support/Evaluation";
-
+import AddCooperation from "../Support/AddCooperation";
 // TODO : props 뭐 받을지 생각
 const SupportRouter = (props) => {
     return (
@@ -15,6 +15,7 @@ const SupportRouter = (props) => {
             <Route path="/support/accident/addclaim" exact={true} render={props => <AddClaim {...props}/>} />
             <Route path="/support/compensate" exact={true} render={props => <Compensate {...props}/>} />
             <Route path="/support/cooperation" exact={true} render={props => <Cooperation {...props}/>} />
+            <Route path="/support/cooperation/addpartner" exact={true} render={props => <AddCooperation {...props}/>} />
             <Route path="/support/evalution" exact={true} render={props => <Evalution {...props} />} />
         </>
     )

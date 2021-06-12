@@ -33,6 +33,4 @@ const UWPolicyDetail = ({match, history}) => {
         </Wrapper>
     )
 }
-
-
 export default UWPolicyDetail;

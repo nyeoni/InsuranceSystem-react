@@ -7,16 +7,16 @@ import {Button, Dropdown, Menu, Space} from "antd";
 import useAsync from "../../customHooks/useAsync";
 import {DownOutlined} from "@ant-design/icons";
 import Search from "antd/es/input/Search";
-import InfoModal from "../../components/InfoModal";
+import CompensationModal from "./CompensationModal";
 
 async function getCompensation() {
     const response = await axios.get(
-        'https://60aba7e95a4de40017cca8e4.mockapi.io/compensation'
+        'http://hminsu.net/api/compensation'
     );
-    return response.data;
+    return response.data.data;
 }
-//보상완료, cost 둘 다 넘겨줄 것, claim은 처리완료로 자동으로 바뀜.
 
+//status: 보상완료, cost 둘 다 넘겨줄 것, claim은 처리완료로 자동으로 바뀜.
 const Compensate = () => {
     const title = "보상처리";
     const subtitle = "HM 보험에 접수된 고객의 사고들을 보여주며, 보상처리와 보상금 지급 여부를 결정하는 페이지입니다"
@@ -104,6 +104,11 @@ const Compensate = () => {
             render: (text, record) =>(<Space size="middle"><a onClick={() => onRow(record)} style={{color:'blueviolet'}}>보상 처리</a></Space>)
         },
     ];
+    const onRow = (record) => {
+        console.log('a', record.id)
+        setClickedRecord(searchData.find(r => r.id === record.id))
+        setVisible(true);
+    };
     const onSearch = value => {
         console.log(typeof(value));
         console.log(value);
@@ -126,11 +131,6 @@ const Compensate = () => {
         }
     };
 
-    const onRow = (record) => {
-        console.log('a', record.id)
-        setClickedRecord(searchData.find(r => r.id === record.id))
-        setVisible(true);
-    };
     return (
         <Wrapper title = {title} subtitle={subtitle} underline={true}>
             <Space>
@@ -142,7 +142,7 @@ const Compensate = () => {
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
             <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
-            <InfoModal clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>
+            <CompensationModal title={title} clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>
         </Wrapper>
     )
 }
