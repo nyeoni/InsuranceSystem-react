@@ -8,7 +8,7 @@ import {Style} from "@material-ui/icons";
 
 async function getInsurance(id) {
     const response = await axios.get(
-        `https://608c26ef9f42b20017c3d801.mockapi.io/api/v1/newinsurance/${id}`
+        `http://hminsu.net/api/insurance/${id}`
     );
     return response.data;
 }

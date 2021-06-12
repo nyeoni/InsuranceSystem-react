@@ -1,31 +1,30 @@
 import React from "react";
-import {Modal} from 'antd';
-import "../css/Modal.css"
+import {Form, Input, Modal} from 'antd';
+import {useForm} from "antd/es/form/Form";
 
-function InfoModal(clickedRecord) {
+const InfoModal = (props) => {
+    function onCancel() {
+        props.setVisible(false);
+    }
     return(
-        Modal.info({
-            title: "세부 내용",
-            width: 850,
-            content: (
-                <table className="ModalTable">
-                    <thead><tr>
-                        <th>세부 항목</th>
-                        <th>내용</th>
-                    </tr></thead>
-                    <tbody>
-                    {Object.entries(clickedRecord).map(([key, value])=>{
-                        return(
-                            <tr key={key}>
-                                <td>{key}</td><td>{value}</td>
-                            </tr>
-                        )
-                    })}
-                    </tbody>
-                </table>
-            ),
-            onOk(){}
-        })
-    )
+        <Modal title={props.title + "의 추가정보"} visible= {props.visible} onCancel={onCancel}>
+            <Form labelCol={10} wrapperCol={14} layout={"vertical"}>
+                <Form.Item label="보상 직원 ID">
+                    <Input readOnly={true} value={props.clickedRecord.id}/>
+                </Form.Item>
+                <Form.Item label="보상 직원 성명">
+                    <Input readOnly={true} value={props.clickedRecord.name}/>
+                </Form.Item>
+                {/*{Object.entries(props.clickedRecord).map(([key, value])=>{*/}
+                {/*    return(*/}
+                {/*        <Form.Item label={key}>*/}
+                {/*            <Input readOnly={true} value={value}/>*/}
+                {/*        </Form.Item>*/}
+                {/*    )*/}
+                {/*})}*/}
+
+            </Form>
+        </Modal>
+       )
 }
 export default InfoModal;

@@ -1,3 +1,4 @@
+
 import React, {useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
 import axios from "axios";
@@ -11,11 +12,11 @@ import InfoModal from "../../components/InfoModal";
 
 async function getInsurances() {
     const response = await axios.get(
-        'https://60aba7e95a4de40017cca8e4.mockapi.io/partner'
+        'http://hminsu.net/api/partner'
     );
-    return response.data;
+    return response.data.data;
 }
-const Cooperation = () => {
+const Cooperation = ({match, history}) => {
     const title = "협력업체관리";
     const subtitle = "HM 보험회사와 협력 관계를 가지는 업체들을 조회하고, 관리할 수 있는 페이지 입니다"
     const [visible, setVisible] = React.useState(false);
@@ -66,6 +67,7 @@ const Cooperation = () => {
             title: '업체 이름',
             dataIndex: 'name',
             key: 'name',
+            width: '10%',
             render: text => <a>{text}</a>,
         },
         {
@@ -77,22 +79,30 @@ const Cooperation = () => {
         },
         {
             title: '관리 직원 ID',
-            width: '20%',
+            width: '10%',
             render: (record) => record.employee.id,
         },
         {
             title: '업체 분류',
             key: 'category',
             dataIndex: 'category',
-            width: '15%',
+            width: '20%',
             filters: [
                 {
                     text: '병원',
-                    value: 'Hospital',
+                    value: '병원',
                 },
                 {
-                    text: '사고 현장관리',
-                    value: 'Anycar',
+                    text: '현장출동업체',
+                    value: '현장출동업체',
+                },
+                {
+                    text: '자동차정비업체',
+                    value: '자동차정비업체',
+                },
+                {
+                    text: '변호사',
+                    value: '변호사',
                 },
             ],
             onFilter: (value, record) => record.type.indexOf(value) === 0,
@@ -102,9 +112,15 @@ const Cooperation = () => {
                 if (partnerCategory === '병원') {
                     value = "병원";
                     color = 'geekblue';
-                } else if (partnerCategory === '사고 현장관리') {
-                    value = "사고 현장관리";
+                } else if (partnerCategory === '현장출동업체') {
+                    value = "현장출동업체";
                     color = 'green';
+                } else if (partnerCategory === '자동차정비업체') {
+                    value = "자동차정비업체";
+                    color = 'yellow';
+                } else if (partnerCategory === '변호사') {
+                    value = "변호사";
+                    color = 'red';
                 }
                 return (
                     <Tag color={color} key={partnerCategory}>{value}</Tag>
@@ -114,9 +130,8 @@ const Cooperation = () => {
         {
             title: 'Action',
             key: 'action',
-            width: '10%',
-
-            render: (text, record) =>(<Space size="middle"><a onClick={() => onRow(record)} style={{color:'blueviolet'}}>담당 처리사고 조회</a></Space>)
+            width: '15%',
+            render: (text, record) =>(<Space size="middle"><Button onClick={(event) => onRow(record)} style={{color:'blueviolet'}}>담당 처리사고 조회</Button></Space>)
         },
     ];
     const onRow = (record) => {
@@ -124,7 +139,6 @@ const Cooperation = () => {
         setClickedRecord(searchData.find(r => r.id === record.id))
         setVisible(true);
     };
-
     const menu = (
         <Menu onClick={handleMenuClick}>
             <Menu.Item key="1">업체 이름</Menu.Item>
@@ -148,6 +162,9 @@ const Cooperation = () => {
             setSearchData(res);
         }
     };
+    const onClick = () => {
+        history.push(`${match.url}/addpartner`)
+    }
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>
             <Space>
@@ -158,9 +175,9 @@ const Cooperation = () => {
                 </Dropdown>
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
+            <Button variant="contained" style={{float: 'right'}} color="primary" onClick={onClick}>Add Partner</Button>
             <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
-            {/*<ClaimDetail clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>*/}
-            {/*<InfoModal clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>*/}
+            <InfoModal title = {title} clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>
         </Wrapper>
 
     )

@@ -11,9 +11,9 @@ import {Route} from "react-router-dom";
 
 async function getAccident() {
     const response = await axios.get(
-        'https://60aba7e95a4de40017cca8e4.mockapi.io/claim'
+        'http://hminsu.net/api/claim'
     );
-    return response.data;
+    return response.data.data;
 }
 
 const Claim = ({match, history}) => {
@@ -38,6 +38,7 @@ const Claim = ({match, history}) => {
     const [initialState, refetch] = useAsync(getAccident, settingData, [getAccident], skip);
     const {loading, error} = initialState;
     if (error) {
+        console.log('Error', error.message);
         return (<div>에러가 발생하였습니다.</div>);
     }
 
@@ -120,11 +121,15 @@ const Claim = ({match, history}) => {
                 <Space size="middle"><a onClick={() => evaluatePartner(record)} style={{color: 'blue'}}>업체 평가하기</a></Space>),
         },
     ];
-    const onRow = (record) => {
-        let clickedRecord = searchData.find(r => r.id === record.id)
-        setClickedRecord(searchData.find(r => r.id === record.id))
-        setVisible(true);
+    const onRow = (record, rowIndex) => {
+        return {
+            onClick: (record) => {
+                setClickedRecord(searchData.find(r => r.id === record.id))
+                setVisible(true);
+                },
+        };
     };
+
     const evaluatePartner = (record) => {
         let clickedRecord = searchData.find(r => r.id === record.id)
         setClickedRecord(searchData.find(r => r.id === record.id))
@@ -180,3 +185,4 @@ const Claim = ({match, history}) => {
 }
 
 export default Claim;
+
