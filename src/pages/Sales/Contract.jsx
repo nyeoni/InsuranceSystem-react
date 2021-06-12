@@ -52,9 +52,9 @@ const SmallContainer = styled.div`
 
 async function getInsurances() {
     const response = await axios.get(
-        'http://localhost:4000/insurance'
+        'http://hminsu.net/api/insurance'
     );
-    return response.data;
+    return response.data.data;
 }
 
 const Contract = () => {

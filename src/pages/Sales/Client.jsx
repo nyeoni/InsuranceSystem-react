@@ -34,9 +34,9 @@ const FlexDiv = styled.div`
 
 async function getClients() {
     const response = await axios.get(
-        'http://localhost:4000/client'
+        'http://hminsu.net/api/client'
     );
-    return response.data;
+    return response.data.data;
 }
 
 const Client = ({match, history}) => {
