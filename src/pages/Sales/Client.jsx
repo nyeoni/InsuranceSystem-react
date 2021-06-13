@@ -320,7 +320,7 @@ const Client = ({match, history}) => {
                         {target.address}
                     </Descriptions.Item>
                     <Descriptions.Item label="직업">{target.job}</Descriptions.Item>
-                    <Descriptions.Item label="주민번호" span={2}>{target.rrn.rrnFront} - *******</Descriptions.Item>
+                    <Descriptions.Item label="주민번호" span={2}>1234567 - *******</Descriptions.Item>
                     <Descriptions.Item label="Official Receipts">$60.00</Descriptions.Item>
                     <Descriptions.Item label="Config Info">
                         Data disk type: MongoDB

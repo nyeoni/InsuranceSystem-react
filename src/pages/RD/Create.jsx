@@ -54,39 +54,21 @@ const Create = () => {
             setState({...state, [name]: value});
             console.log('single val', value)
         }
+        const tmp = atos(state.coverages);
+        console.log(state.coverages);
         // console.log('state, ', state);
     }
     useEffect(() => {
         console.log('useEffect ',state);
     }, [state])
 
-    // const postInsurance = () => {
-    //     const url = 'http://hminsu.net/api/insurance/create';
-    //     const {name, description,coverages, registerDocuments, accidentDocuments,basePremiumRate,category,
-    //         startAge, endAge, creditRating,createEmployeeId,managementEmployeeId }= state;
-    //     axios.post(url, {
-    //         name,
-    //         description,
-    //         coverages,
-    //         registerDocuments,
-    //         accidentDocuments,
-    //         basePremiumRate,
-    //         category,
-    //         createEmployeeId,
-    //         managementEmployeeId,
-    //         target : {startAge, endAge, creditRating},
-    //     }).then(r => {console.log(r)
-    //         alert("api 성공")
-    //     }).catch(err => {
-    //         console.log(err.message);
-    //     });
-    // }
     const handleSubmit = async () => {
-        // postInsurance()
-        // .then((response) => {console.log('response, ', response.data)})
+        const tmp = atos(state.coverages);
+        console.log(tmp);
         const data = await postInsurance(state);
         console.log(data);
     }
+
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>
             <Form labelCol={{span: 10,}} wrapperCol={{span: 14,}} layout="vertical" size={"large"} onFinish={handleSubmit}>

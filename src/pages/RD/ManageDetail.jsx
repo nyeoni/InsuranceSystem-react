@@ -1,14 +1,14 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
 import useAsync from "../../customHooks/useAsync";
 import axios from "axios";
 import {Button, Row, Col, Form, Input, InputNumber, Select, Spin, Statistic, Tabs, Progress} from "antd";
 import styled from "styled-components";
-import {Style} from "@material-ui/icons";
+import {Line, Bar, Doughnut} from "react-chartjs-2";
 
 async function getInsurance(id) {
     const response = await axios.get(
-        `https://608c26ef9f42b20017c3d801.mockapi.io/api/v1/newinsurance/${id}`
+        `http://localhost:4000/insurance/${id}`
     );
     return response.data;
 }
@@ -16,7 +16,7 @@ async function getInsurance(id) {
 const StyledDiv = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-content: space-around;
     width: 100%;
     height: 100%;
@@ -33,7 +33,74 @@ const ManageDetail = ({match}) => {
     const [state] = useAsync(() => getInsurance(id), setNewData,[id]);
     const { loading, data: insurance, error } = state;
     const { TabPane } = Tabs;
+    const [quaterData, setQuaterData] = useState({});
+    const [channelData, setChannelData] = useState({});
+    const makeQuaterData = (items) => {
+        console.log(items);
+        let quater = [0, 0, 0, 0];
+        let channel = [0, 0, 0];
+        items?.forEach(d => {
+            const currentDate = new Date(d.contractDate.registerDate);
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            const date = currentDate.getDate();
+
+            if (month >= 1 && month < 4) {
+                quater[0] += 1;
+            } else if (month >= 4 && month < 7) {
+                quater[1] += 1;
+            } else if (month >= 7 && month < 10) {
+                quater[2] += 1;
+            } else {
+                quater[3] += 1;
+            }
+            console.log(quater);
+        });
+        items?.forEach(d => {
+            const ch = d.channel;
+            if (ch === "온라인")
+                channel[0] += 1;
+            else if (ch === "전화")
+                channel[1] += 1;
+            else
+                channel[2] += 1;
+            console.log(channel);
+        })
+
+        setQuaterData({
+            labels: ["1분기", "2분기", "3분기", "4분기"],
+            datasets: [
+                {
+                    label : "계약 고객",
+                    backgroundColor : "#A0CBED",
+                    barThickness: 40,
+                    fill : true,
+                    data : quater
+                }
+            ]
+        });
+        setChannelData({
+            labels: ["온라인", "전화", "대면"],
+            datasets: [
+                {
+                    label : "온라인, 전화, 대면",
+                    backgroundColor : ["#ff3d67", "#059bff", "#ffc233"],
+                    cutout : '50%',
+                    fill : false,
+                    data : channel
+                }
+            ]
+        });
+    }
+
     // const title = insurance.name;
+
+    useEffect(() => {
+        console.log(newData);
+        if (newData != {}) {
+            makeQuaterData(newData.contractList);
+        }
+    }, [newData]);
 
     console.log(newData);
     if (error) return <div>에러가 발생했습니다</div>;
@@ -82,6 +149,19 @@ const ManageDetail = ({match}) => {
         postInsurance();
     }
 
+    const options = {
+        plugins: {
+            legend: {
+                position: 'bottom',
+            },
+            title: {
+                display: true,
+                text: '분기별 계약 추세',
+            }
+        },
+
+    }
+
     return(
         <Wrapper title={insurance.name} underline={false}>
             {/*<div style={{marginTop: '1rem'}}>{insurance.description}</div>*/}
@@ -111,11 +191,25 @@ const ManageDetail = ({match}) => {
                             </Col>
                         </Row>
                         <StyledDiv>
-                            <div>
-                                <div style={{fontSize: '14px', color: 'rgba(0, 0, 0, 0.45)', }}>손해율</div>
-                                <Progress type="circle" percent={70} />
+                            <div style={{width: '60%'}}>
+                                <Line data={quaterData} width={30} height={15} options={options}/>
                             </div>
 
+                            <div style={{height: '300px', width: '40%', marginTop: '15px'}}>
+                                <Doughnut width={7} height={7} className="doughnut" data={channelData} options={{
+                                    maintainAspectRatio: false,
+                                    plugins: {
+                                        legend: {
+                                            position: 'bottom',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: '채널별 비율',
+                                            fontSize: 16
+                                        },
+
+                                    }}} />
+                            </div>
                         </StyledDiv>
 
                     </div>

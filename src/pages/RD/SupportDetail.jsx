@@ -74,12 +74,12 @@ const SupportDetail = ({match}) => {
                     <Badge status="processing" text="Running" />
                 </Descriptions.Item>
                 <Descriptions.Item label="보상범위" span={3}>
-                    {newData.liablityCoverages.map((data, i) =>
+                    {newData.liablityCoverages?.map((data, i) =>
                         <span>{data} <Divider type="vertical" /></span>
                     )}
                 </Descriptions.Item>
                 <Descriptions.Item label="사고시 제출서류" span={3}>
-                    {newData.accidentDocuments.map((data, i) =>
+                    {newData.accidentDocuments?.map((data, i) =>
                         <span>{data} <Divider type="vertical" /></span>
                     )}
                 </Descriptions.Item>
