@@ -9,9 +9,9 @@ import axios from "axios";
 
 async function getInsurances() {
     const response = await axios.get(
-        'https://608c26ef9f42b20017c3d801.mockapi.io/api/v1/newinsurance'
+        'http://hminsu.net/api/insurance'
     );
-    return response.data;
+    return response.data.data;
 }
 
 const Support = ({match, history}) => {

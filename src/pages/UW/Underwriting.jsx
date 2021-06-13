@@ -1,44 +1,155 @@
-import React from "react";
+
+import React, {useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
-import {Button, Dropdown, DropdownButton} from "react-bootstrap";
+import {DataTable2} from "../../components/DataTable2";
+import axios from "axios";
+import useAsync from "../../customHooks/useAsync";
+import {Button, Dropdown, Menu, Space, Tag} from "antd";
+import {DownOutlined} from "@ant-design/icons";
+import Search from "antd/es/input/Search";
 
 
-// const Underwriting = () => {
-//     const title = "인수심사"
-//     return (
-//         <Wrapper title = {title}>
-//             <DropdownButton className="d-inline-block" id="dropdown-basic-button" title="보험 선택" variant = "secondary">
-//                 <Dropdown.Item eventKey="1">보험번호 : 임시 자동차 보험</Dropdown.Item>
-//                 <Dropdown.Item eventKey="2">보험번호 : 운전자 보험</Dropdown.Item>
-//                 <Dropdown.Item eventKey="3">보험번호 : 여행자 보험</Dropdown.Item>
-//                 <Dropdown.Divider />
-//                 <Dropdown.Item eventKey="4">전체 조회</Dropdown.Item>
-//             </DropdownButton>
-//
-//             <DropdownButton className="d-inline-block" id="dropdown-basic-button" title="심사 상태 선택" variant = "secondary">
-//                 <Dropdown.Item eventKey="1">심사 승인</Dropdown.Item>
-//                 <Dropdown.Item eventKey="2">심사 진행 중</Dropdown.Item>
-//                 <Dropdown.Item eventKey="3">심사 거부</Dropdown.Item>
-//                 <Dropdown.Divider />
-//                 <Dropdown.Item eventKey="4">전체 조회</Dropdown.Item>
-//             </DropdownButton>
-//
-//             <Button style={{float:'right'}} variant="outline-primary" >조회하기</Button>
-//             <div className="form-group">
-//                 <input type="text" placeholder="검색할 고객의 성명을 입력해주세요" className="form-control" id="employeeNameInput"/>
-//             </div>
-//
-//         </Wrapper>
-//     )
-// }
+async function getContract() {
+    const response = await axios.get(
+        'http://hminsu.net/api/contract'
+    );
+    return response.data.data;
+}
 
-const Underwriting = () => {
+const Underwriting = ({match, history}) => {
     const title = "인수심사";
+    const subtitle = "각 계약에 따른 인수심사로 조건을 평가하여 계약을 인수하는 페이지";
+    const [visible, setVisible] = React.useState(false);
+    const [clickedRecord, setClickedRecord] = React.useState([]);
+    //contract
+    const [data, setData] = useState([]);
+    const [option, setOption] = useState("보험번호");
+    const [searchData, setSearchData] = useState([]);
+    const [skip, setSkip] = useState(false);
+    const settingData = (data) => {
+        if (data) {setData(data); setSearchData(data);}
+        else {console.log("데이터 설정 실패");}
+    }
+    const [initialState, refetch] = useAsync(getContract, settingData, [getContract], skip);
+    const { loading, error } = initialState;
+    if (error) {return (<div>에러가 발생하였습니다.</div>);}
+    //
 
-
+    const columns = [
+        {
+            title: 'No',
+            dataIndex: 'id',
+            key: 'id',
+            width: '10%',
+            render: text => <a>{text}</a>,
+        },
+        {
+            title: '고객 ID',
+            width: '10%',
+            render: (record) => record.client.id,
+        },
+        {
+            title: '고객 성명',
+            width: '10%',
+            render: (record) => record.client.name,
+        },
+        {
+            title: '보험 ID',
+            width: '10%',
+            render: (record) =>record.insurance.id,
+        },
+        {
+            title: '보험 이름',
+            width: '10%',
+            render: (record) => record.insurance.name,
+        },
+        {
+            title: '계약 신청일',
+            width: '10%',
+            render: (record) => record.contractDate.registerDate,
+        },
+        {
+            title: '보험분류',
+            width: '10%',
+            filters: [
+                {
+                    text: '자동차보험',
+                    value: 'Car',
+                },
+                {
+                    text: '운전자보험',
+                    value: 'Driver',
+                },
+                {
+                    text: '화재보험',
+                    value: 'Fire',
+                },
+                {
+                    text: '여행보험',
+                    value: 'Traveller',
+                }
+            ],
+            onFilter: (value, record) => record.insurace.category.indexOf(value) === 0,
+            render: record => {
+                let color;
+                let value;
+                if (record.insurance.category === "자동차") {
+                    value = "자동차보험";
+                    color = 'geekblue';
+                } else if (record.insurance.category === "운전자") {
+                    value = "운전자보험";
+                    color = 'green';
+                } else if (record.insurance.category === "화재") {
+                    value = "화재보험";
+                    color = 'volcano';
+                } else {
+                    value = "여행보험";
+                    color = 'yellow';
+                }
+                return (
+                    <Tag color={color} key={record.insurance.category}>
+                        {value}
+                    </Tag>
+                );
+            }
+        },
+    ];
+    const onRow = (record, rowIndex) => {
+        return {
+            onClick: () => {
+                history.push(`${match.url}/${record.id}`);
+            },
+        };
+    };
+    function handleMenuClick(e) {
+        if (e.key === '1')
+        {
+            console.log('click', e.key);
+            setOption("고객번호");
+        }
+        else if (e.key === '2')
+        {
+            console.log('click', e.key);
+            setOption("보험번호");
+        }
+    }
+    const menu = (
+        <Menu onClick={handleMenuClick}>
+            <Menu.Item key="1">고객번호</Menu.Item>
+            <Menu.Item key="2">보험번호</Menu.Item>
+        </Menu>
+    );
     return (
-        <Wrapper title = {title} underline={true}>
-
+        <Wrapper title = {title} subtitle={subtitle} underline={true}>
+            <Space>
+                <Dropdown overlay={menu}>
+                    <Button style={{ width: 95 }}>
+                        {option} <DownOutlined />
+                    </Button>
+                </Dropdown>
+                <Search placeholder="검색할 내용" allowClear style={{ width: 300 }} />
+            </Space>
+            <DataTable2 onRow={onRow} loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
         </Wrapper>
     )
 }

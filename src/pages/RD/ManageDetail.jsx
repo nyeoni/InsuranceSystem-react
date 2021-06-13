@@ -2,17 +2,16 @@ import React, {useEffect, useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
 import useAsync from "../../customHooks/useAsync";
 import axios from "axios";
-import {Button, Row, Col, Form, Input, InputNumber, Select, Spin, Statistic, Tabs, Progress} from "antd";
+import {Button, Row, Col, Form, Input, InputNumber, Select, Spin, Statistic, Tabs, Progress, notification} from "antd";
 import styled from "styled-components";
 import {Line, Bar, Doughnut} from "react-chartjs-2";
 
 async function getInsurance(id) {
     const response = await axios.get(
-        `http://localhost:4000/insurance/${id}`
+        `http://hminsu.net/api/insurance/${id}`
     );
-    return response.data;
+    return response.data.data;
 }
-
 const StyledDiv = styled.div`
     display: flex;
     flex-direction: row;
@@ -133,8 +132,8 @@ const ManageDetail = ({match}) => {
             console.log('single val', value)
         }
     }
-    const postInsurance = () => {
-        const url = 'https://608c26ef9f42b20017c3d801.mockapi.io/api/v1/insurance';
+    const postInsurance = async() => {
+        const url = `https://hminsu.net/api/insurance/${id}/status`;
         axios.put(url, {
             id: newData.id,
             name: newData.name,
@@ -145,8 +144,9 @@ const ManageDetail = ({match}) => {
             status: '1'
         }).then(r => console.log(r));
     }
-    const handleSubmit = () => {
-        postInsurance();
+    const handleSubmit = async () => {
+        const data = await postInsurance(id);
+        console.log(data)
     }
 
     const options = {
@@ -258,7 +258,7 @@ const ManageDetail = ({match}) => {
                             </Select>
                         </Form.Item>
 
-                        <Form.Item  required={true} label="보험상품 개요"><Input.TextArea name="description" value={newData.description} onChange={handleChange}/></Form.Item>
+                        <Form.Item required={true} label="보험상품 개요"><Input.TextArea name="description" value={newData.description} onChange={handleChange}/></Form.Item>
                         <Form.Item required={true} label="기초 보험요율"><InputNumber defaultValue={1.23} min={0} max={100.00} step="0.01" formatter={value => `${value}%`} parser={value => value.replace('%', '')}
                             // onChange={this.handleChange}
                         /></Form.Item>

@@ -1,29 +1,12 @@
-.popupTable{
-    width: 100%;
-    /*border-collapse: collapse;*/
-    /*margin: 2px;*/
-    font-size: 1.3em;
-    font-family: sans-serif;
+.row {
+  font-family: sans-serif;
+  font-size: 20px;
+  background-color: cornsilk;
+  margin: 0.5%;
 }
 
-.popupTable thead tr{
-    background-color: #002967;
-    color: #ffffff;
-    /*border-bottom:  1px solid #444444;*/
-    text-align: left;
-}
-.popupTable th,
-.popupTable td {
-    padding: 10px 15px;
-}
-.popupTable tbody tr {
-    border-bottom: 1px solid #dddddd;
+.col {
+  font-family: "Noto Sans KR", sans-serif;
 }
 
-.popupTable tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
-}
-
-.popupTable tbody tr:last-of-type {
-    border-bottom: 2px solid #002967;
-}
+/*# sourceMappingURL=Popup.css.map */
