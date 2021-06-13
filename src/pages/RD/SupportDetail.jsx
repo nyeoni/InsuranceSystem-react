@@ -61,6 +61,7 @@ const SupportDetail = ({match}) => {
             </Wrapper>
         );
     }
+    if(newData){
         return (
             <Wrapper title={newData.name} underline={true}>
                 <SubTitle text="상품개요" />
@@ -74,14 +75,15 @@ const SupportDetail = ({match}) => {
                         <Badge status="processing" text="Running" />
                     </Descriptions.Item>
                     <Descriptions.Item label="보상범위" span={3}>
-                        {newData.liablityCoverages.map((data, i) =>
+                        {newData.liablityCoverages?.map((data, i) =>
                             <span>{data} <Divider type="vertical" /></span>
                         )}
                     </Descriptions.Item>
                     <Descriptions.Item label="사고시 제출서류" span={3}>
-                        {newData.accidentDocuments.map((data, i) =>
+                        {newData.accidentDocuments?.map((data, i) =>
                             <span>{data} <Divider type="vertical" /></span>
                         )}
+                    {/* 빈 어레이도 맵 돌아감, 근데 undefined null은 map 불가능 */}
                     </Descriptions.Item>
                     <Descriptions.Item label="상품개발사원">{newData.createEmployee.name}</Descriptions.Item>
                     <Descriptions.Item label="EMAIL">{newData.createEmployee.email}</Descriptions.Item>
@@ -95,7 +97,7 @@ const SupportDetail = ({match}) => {
                 </Descriptions>
             </Wrapper>
         );
-
+    }else{return null;}
 }
 
 export default SupportDetail;

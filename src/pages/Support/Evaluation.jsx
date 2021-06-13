@@ -13,14 +13,15 @@ import InfoModal from "../../components/InfoModal";
 
 async function getTables() {
     const response = await axios.get(
-        'http://hminsu.net/api/employee', { params: { department: "보상" } }
+        'https://60aba7e95a4de40017cca8e4.mockapi.io/employeeCompensation'
+        // 'http://hminsu.net/api/employee', { params: { department: "보상" } }
     );
-    return response.data.data;
+    return response.data;
 }
 const Evaluation = () => {
     const title = "보상평가관리";
     const subtitle = "HM 보험회사의 고객에게 처리된 보상들과 그 상세 내용을 보여주는 페이지입니다."
-    const [clickedRecord, setClickedRecord] = React.useState([]);
+    const [clickedRecord, setClickedRecord] = React.useState(undefined);
     const [visible, setVisible] = React.useState(false);
 
     const [data, setData] = useState([]);
