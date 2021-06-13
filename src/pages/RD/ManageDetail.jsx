@@ -177,18 +177,7 @@ const ManageDetail = ({match}) => {
         }
         console.log(newData.coverage);
     }
-    const postInsurance = async() => {
-        const url = `https://hminsu.net/api/insurance/${id}/status`;
-        axios.put(url, {
-            id: newData.id,
-            name: newData.name,
-            type: newData.type,
-            description: newData.description,
-            liablityCoverages: newData.liablityCoverages,
-            accidentDocuments: newData.accidentDocuments,
-            status: '1'
-        }).then(r => console.log(r));
-    }
+
     const handleSubmit = async () => {
         const data = await updateInsurance(newData, form, id);
         console.log(data)

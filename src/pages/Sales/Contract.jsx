@@ -6,7 +6,7 @@ import {Button, DatePicker, Dropdown, Menu, Select, Space, Spin, Statistic} from
 import axios from "axios";
 import useAsync from "../../customHooks/useAsync";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
-import {DownOutlined} from "@ant-design/icons";
+import {ArrowDownOutlined, ArrowUpOutlined, DownOutlined} from "@ant-design/icons";
 import Search from "antd/es/input/Search";
 
 const { Option } = Select;
@@ -264,15 +264,31 @@ const Contract = () => {
             </FilterPannel>
             <LargeContainer>
                 <div style={{display: 'flex', flexDirection: "column", justifyContent: 'space-between', width: '58%'}}>
-                    <SmallContainer  style={{width: '100%', height: '49%'}}>
-                        <div style={{marginLeft: '5px', marginTop: '2px'}}>
-                            <div>{target} 실적 리포트</div>
-                            <Statistic title="총 영업건수" value={112893} />
+                    <SmallContainer  style={{width: '100%', height: '30%'}}>
+                        <div style={{marginLeft: '1.5rem', marginRight: '7rem', marginTop: '1rem'}}>
+                            <div style={{marginBottom: '1.5rem'}}>{target} 실적 리포트</div>
+                            <LargeContainer>
+                                <Statistic title="총 영업건수" value={112893} />
+                                <Statistic
+                                    title="전 분기대비"
+                                    value={11.28}
+                                    precision={2}
+                                    valueStyle={{ color: '#3f8600' }}
+                                    prefix={true ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
+                                    suffix="%"
+                                />
+                                <Statistic
+                                    title="매출실적"
+                                    value={9.3}
+                                    precision={2}
+                                    suffix="₩"
+                                />
+                            </LargeContainer>
                         </div>
 
                     </SmallContainer>
-                    <SmallContainer style={{width: '100%', height: '49%'}}>
-                        <Bar data={quaterData} width={25} height={10} options={options}/>
+                    <SmallContainer style={{width: '100%', height: '68%'}}>
+                        <Bar data={quaterData} width={23} height={13} options={options}/>
                     </SmallContainer>
                 </div>
 
