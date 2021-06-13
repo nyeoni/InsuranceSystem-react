@@ -75,31 +75,24 @@ const Compensate = () => {
             render: (record) => record.employee.id,
         },
         {
-            title: '보상액',
-            dataIndex: 'cost',
-            key: 'cost',
-
-            width: '10%',
-            render: text => <a>{text}</a>,
-        },
-        {
             title: 'Claim ID',
             width: '15%',
             render: (record) => record.claim.id
         },
         {
-            title: '보상 처리일자',
-            dataIndex: 'dateTime',
-            key: 'dateTime',
+            title: '보상액',
+            dataIndex: 'cost',
+            key: 'cost',
+            width: '20%',
             render: text => <a>{text}</a>,
         },
         {
             title: '보상 상태',
             dataIndex: 'status',
             key: 'status',
+            width: '20%',
             render: text => <a>{text}</a>,
         },
-
         {
             title: 'Action',
             key: 'action',

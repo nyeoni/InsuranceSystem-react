@@ -5,14 +5,30 @@ import axios from "axios";
 import {Button, Row, Col, Form, Input, InputNumber, Select, Spin, Statistic, Tabs, Progress} from "antd";
 import styled from "styled-components";
 import {Style} from "@material-ui/icons";
-
+//{ "status" : "결재완료" }
 async function getInsurance(id) {
     const response = await axios.get(
         `http://hminsu.net/api/insurance/${id}`
     );
-    return response.data;
+    return response.data.data;
 }
-
+async function postInsurance(id) {
+    const url = `https://hminsu.net/api/insurance/${id}/status`;
+    const response = await axios({
+        method: 'post',
+        url: url,
+        data: { "status" : "결재완료" },
+        headers: {'content-type': 'application/json'}
+    }).then((response) => {
+        console.log(response);
+        return response.data.data;
+    }).catch(err => {
+        console.log(err.message);
+        throw err;
+    });
+    console.log('asf', response);
+    return response;
+}
 const StyledDiv = styled.div`
     display: flex;
     flex-direction: row;
@@ -66,20 +82,28 @@ const ManageDetail = ({match}) => {
             console.log('single val', value)
         }
     }
-    const postInsurance = () => {
-        const url = 'https://608c26ef9f42b20017c3d801.mockapi.io/api/v1/insurance';
-        axios.put(url, {
-            id: newData.id,
-            name: newData.name,
-            type: newData.type,
-            description: newData.description,
-            liablityCoverages: newData.liablityCoverages,
-            accidentDocuments: newData.accidentDocuments,
-            status: '1'
-        }).then(r => console.log(r));
-    }
-    const handleSubmit = () => {
-        postInsurance();
+    // const postInsurance = async() => {
+    //     const url = `https://hminsu.net/api/insurance/${id}/status`;
+    //     // axios.put(url, {
+    //     //     id: newData.id,
+    //     //     name: newData.name,
+    //     //     type: newData.type,
+    //     //     description: newData.description,
+    //     //     liablityCoverages: newData.liablityCoverages,
+    //     //     accidentDocuments: newData.accidentDocuments,
+    //     //     status: '1'
+    //     const responce = await axios({
+    //         method : 'post',
+    //         url: url,
+    //         data: {
+    //             status: '결재완료'
+    //         },
+    //         headers: {'content-type': 'application/json'}
+    //     }).then(r => console.log(r));
+    // }
+    const handleSubmit = async () => {
+        const data = await postInsurance(id);
+        console.log(data)
     }
 
     return(
@@ -164,7 +188,7 @@ const ManageDetail = ({match}) => {
                             </Select>
                         </Form.Item>
 
-                        <Form.Item  required={true} label="보험상품 개요"><Input.TextArea name="description" value={newData.description} onChange={handleChange}/></Form.Item>
+                        <Form.Item required={true} label="보험상품 개요"><Input.TextArea name="description" value={newData.description} onChange={handleChange}/></Form.Item>
                         <Form.Item required={true} label="기초 보험요율"><InputNumber defaultValue={1.23} min={0} max={100.00} step="0.01" formatter={value => `${value}%`} parser={value => value.replace('%', '')}
                             // onChange={this.handleChange}
                         /></Form.Item>

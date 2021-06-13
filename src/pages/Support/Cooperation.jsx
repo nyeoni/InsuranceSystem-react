@@ -20,7 +20,7 @@ const Cooperation = ({match, history}) => {
     const title = "협력업체관리";
     const subtitle = "HM 보험회사와 협력 관계를 가지는 업체들을 조회하고, 관리할 수 있는 페이지 입니다"
     const [visible, setVisible] = React.useState(false);
-    const [clickedRecord, setClickedRecord] = React.useState([]);
+    const [clickedRecord, setClickedRecord] = React.useState(undefined);
 
     const [data, setData] = useState([]);
     const [option, setOption] = useState("업체 이름");

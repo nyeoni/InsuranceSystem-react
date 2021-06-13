@@ -17,7 +17,7 @@ async function getInsurance(id) {
     const response = await axios.get(
         `http://hminsu.net/api/insurance/${id}`
     );
-    return response.data;
+    return response.data.data;
 }
 const SupportDetail = ({match}) => {
     const { id } = match.params;

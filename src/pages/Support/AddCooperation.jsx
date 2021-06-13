@@ -11,19 +11,21 @@ async function addCooperation(data, form) {
         url: url,
         data: data,
         headers: {'content-type': 'application/json'}
-    }).then(() => {
-            form.resetFields();
-            notification.open({
+    }).then((response) => {
+        console.log('a', data)
+        notification.open({
             message: 'Notification!',
             description:
                 '협력업체 정보 전송 완료'
-        })
+            })
+            form.resetFields();
+        return response.data.data;
     }).catch(err => {
+        console.log('ee', err)
         console.log(err.message);
     });
-    console.log(response);
-
-    return response.data.data;
+    console.log('end func',response);
+    return response;
 }
 
 const AddCooperation = (history) => {

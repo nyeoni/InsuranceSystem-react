@@ -1,28 +1,37 @@
 import React, {useEffect, useState} from "react";
-import {Form, Input, Button, Select,InputNumber, Row, Col} from 'antd';
+import {Form, Input, Button, Select, InputNumber, Row, Col, notification} from 'antd';
 import axios from "axios";
 import {Wrapper} from "../../components/Wrapper";
 import "../../css/Detail.css";
 import {useSelector} from "react-redux";
 
-async function postInsurance(data) {
-    const url = '/api/insurance/create';
+async function postInsurance(data, form) {
+    const url = 'http://hminsu.net/api/insurance/create';
     const response = await axios({
         method: 'post',
         url: url,
         data: data,
         headers: {'content-type': 'application/json'}
+    }).then((response) => {
+        console.log('a', data)
+        notification.open({
+            message: 'Notification!',
+            description:
+                '협력업체 정보 전송 완료'
+        })
+        form.resetFields();
+        return response.data.data;
     }).catch(err => {
         console.log(err.message);
     });
-    console.log(response);
-
-    return response.data;
+    return response.data.data;
 }
 
 const Create = () => {
     const title = "상품개발"
     const subtitle = "HM 손해보험의 보험상품을 개발하기 위한 페이지입니다."
+    const [form] = Form.useForm();
+
     // const userId = useSelector(state => (state.user.data.id))
 
     const [state, setState] = useState({
@@ -60,12 +69,12 @@ const Create = () => {
     }, [state])
 
     const handleSubmit = async () => {
-        const data = await postInsurance(state);
+        const data = await postInsurance(state, form);
         console.log(data);
     }
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>
-            <Form labelCol={{span: 10,}} wrapperCol={{span: 14,}} layout="vertical" size={"large"} onFinish={handleSubmit}>
+            <Form form={form} labelCol={{span: 10}} wrapperCol={{span: 14}} layout="vertical" size={"large"} onFinish={handleSubmit}>
                 <Form.Item rules={[{required: true, message: '보험의 이름을 입력해주세요!'}]} name="name" label="보험상품 이름" >
                     <Input name="name" value={state.name} onChange={handleChange} placeholder="예시) XX 자동차 보험"/>
                 </Form.Item>
