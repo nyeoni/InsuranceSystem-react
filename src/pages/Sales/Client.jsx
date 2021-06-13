@@ -311,17 +311,16 @@ const Client = ({match, history}) => {
             >
                 <Descriptions title="Client Info" bordered>
                     <Descriptions.Item label="이름">{target.name}</Descriptions.Item>
-                    <Descriptions.Item label="Billing Mode">Prepaid</Descriptions.Item>
-                    <Descriptions.Item label="Automatic Renewal">YES</Descriptions.Item>
-                    <Descriptions.Item label="Order time">2018-04-24 18:00:00</Descriptions.Item>
-                    <Descriptions.Item label="Usage Time" span={2}>
-                        2019-04-24 18:00:00
-                    </Descriptions.Item>
+                    <Descriptions.Item label="나이">{target.age}</Descriptions.Item>
+                    <Descriptions.Item label="성">{target.gender}</Descriptions.Item>
+                    <Descriptions.Item label="주소">{target.phoneNumber}</Descriptions.Item>
+                    <Descriptions.Item label="은행">{target.bank}</Descriptions.Item>
+                    <Descriptions.Item label="계좌번호">{target.accountNumber}</Descriptions.Item>
                     <Descriptions.Item label="Status" span={3}>
-                        Running
+                        {target.address}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Negotiated Amount">$80.00</Descriptions.Item>
-                    <Descriptions.Item label="Discount">$20.00</Descriptions.Item>
+                    <Descriptions.Item label="직업">{target.job}</Descriptions.Item>
+                    <Descriptions.Item label="주민번호" span={2}>{target.rrn.rrnFront} - *******</Descriptions.Item>
                     <Descriptions.Item label="Official Receipts">$60.00</Descriptions.Item>
                     <Descriptions.Item label="Config Info">
                         Data disk type: MongoDB
