@@ -2,31 +2,35 @@ import React, {useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
 import useAsync from "../../customHooks/useAsync";
 import axios from "axios";
-import {Button, Row, Col, Form, Input, InputNumber, Select, Spin, Statistic, Tabs, Progress} from "antd";
+import {Button, Row, Col, Form, Input, InputNumber, Select, Spin, Statistic, Tabs, Progress, notification} from "antd";
 import styled from "styled-components";
 import {Style} from "@material-ui/icons";
 //{ "status" : "결재완료" }
+
+
 async function getInsurance(id) {
     const response = await axios.get(
         `http://hminsu.net/api/insurance/${id}`
     );
     return response.data.data;
 }
-async function postInsurance(id) {
+async function postInsurance(id, data) {
     const url = `https://hminsu.net/api/insurance/${id}/status`;
     const response = await axios({
-        method: 'post',
+        method: 'put',
         url: url,
-        data: { "status" : "결재완료" },
+        data: { status : "결재완료" },
         headers: {'content-type': 'application/json'}
     }).then((response) => {
-        console.log(response);
+        notification.open({
+            message: 'Notification!',
+            description:
+                '보험상태 정보 전송 완료'
+        })
         return response.data.data;
     }).catch(err => {
         console.log(err.message);
-        throw err;
     });
-    console.log('asf', response);
     return response;
 }
 const StyledDiv = styled.div`
@@ -82,25 +86,18 @@ const ManageDetail = ({match}) => {
             console.log('single val', value)
         }
     }
-    // const postInsurance = async() => {
-    //     const url = `https://hminsu.net/api/insurance/${id}/status`;
-    //     // axios.put(url, {
-    //     //     id: newData.id,
-    //     //     name: newData.name,
-    //     //     type: newData.type,
-    //     //     description: newData.description,
-    //     //     liablityCoverages: newData.liablityCoverages,
-    //     //     accidentDocuments: newData.accidentDocuments,
-    //     //     status: '1'
-    //     const responce = await axios({
-    //         method : 'post',
-    //         url: url,
-    //         data: {
-    //             status: '결재완료'
-    //         },
-    //         headers: {'content-type': 'application/json'}
-    //     }).then(r => console.log(r));
-    // }
+    const postInsurance = async() => {
+        const url = `https://hminsu.net/api/insurance/${id}/status`;
+        axios.put(url, {
+            id: newData.id,
+            name: newData.name,
+            type: newData.type,
+            description: newData.description,
+            liablityCoverages: newData.liablityCoverages,
+            accidentDocuments: newData.accidentDocuments,
+            status: '1'
+        }).then(r => console.log(r));
+    }
     const handleSubmit = async () => {
         const data = await postInsurance(id);
         console.log(data)

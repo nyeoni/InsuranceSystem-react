@@ -9,7 +9,7 @@ import {Button, Dropdown, Menu, Space, Tag} from "antd";
 import {DataTable2} from "../../components/DataTable2";
 import {DownOutlined} from "@ant-design/icons";
 import Search from "antd/es/input/Search";
-import InfoModal from "../../components/InfoModal";
+import EvaluationModal from "../../components/EvaluationModal";
 
 async function getTables() {
     const response = await axios.get(
@@ -82,7 +82,7 @@ const Evaluation = () => {
             title: 'Action',
             key: 'action',
             width: '15%',
-            render: (text, record) =>(<Space size="middle"><a onClick={() => onRow(record)} style={{color:'blueviolet'}}>담당 처리사고 조회</a></Space>)
+            render: (text, record) =>(<Space size="middle"><Button onClick={() => onRow(record)} style={{color:'blueviolet'}}>담당 처리사고 조회</Button></Space>)
         },
     ];
     const onRow = (record) => {
@@ -120,7 +120,7 @@ const Evaluation = () => {
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
             <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
-            <InfoModal title = {title} clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>
+            <EvaluationModal title = {title} clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>
         </Wrapper>
     )
 }

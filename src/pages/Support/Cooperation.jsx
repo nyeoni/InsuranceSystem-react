@@ -8,7 +8,7 @@ import {DataTable2} from "../../components/DataTable2";
 import {DownOutlined} from "@ant-design/icons";
 import Search from "antd/es/input/Search";
 import ClaimDetail from "./ClaimDetail";
-import InfoModal from "../../components/InfoModal";
+import EvaluationModal from "../../components/EvaluationModal";
 
 async function getInsurances() {
     const response = await axios.get(
@@ -177,7 +177,7 @@ const Cooperation = ({match, history}) => {
             </Space>
             <Button variant="contained" style={{float: 'right'}} color="primary" onClick={onClick}>Add Partner</Button>
             <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
-            <InfoModal title = {title} clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>
+            <EvaluationModal title = {title} clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>
         </Wrapper>
 
     )

@@ -10,10 +10,15 @@ async function postInsurance(data, form) {
     const response = await axios({
         method: 'post',
         url: url,
-        data: data,
+        // data: data,
+        data: {...data,
+            target: {
+                startAge: data.startAge,
+                endAge: data.endAge,
+                creditRating: data.creditRating
+            }},
         headers: {'content-type': 'application/json'}
     }).then((response) => {
-        console.log('a', data)
         notification.open({
             message: 'Notification!',
             description:
@@ -24,7 +29,7 @@ async function postInsurance(data, form) {
     }).catch(err => {
         console.log(err.message);
     });
-    return response.data.data;
+    return response;
 }
 
 const Create = () => {
@@ -67,6 +72,7 @@ const Create = () => {
     useEffect(() => {
         console.log('useEffect ',state);
     }, [state])
+    // useState sync 맞추기 위해 이펙트 써야함?
 
     const handleSubmit = async () => {
         const data = await postInsurance(state, form);

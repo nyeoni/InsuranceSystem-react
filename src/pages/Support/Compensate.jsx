@@ -97,7 +97,7 @@ const Compensate = () => {
             title: 'Action',
             key: 'action',
             width: '15%',
-            render: (text, record) =>(<Space size="middle"><a onClick={() => onRow(record)} style={{color:'blueviolet'}}>보상 처리</a></Space>)
+            render: (text, record) =>(<Space size="middle"><Button onClick={() => onRow(record)} style={{color:'blueviolet'}}>보상 처리</Button></Space>)
         },
     ];
     const onRow = (record) => {
