@@ -2,7 +2,7 @@
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
 import styled from "styled-components";
-import {Button, DatePicker, Dropdown, Menu, Select, Space, Spin} from "antd";
+import {Button, DatePicker, Dropdown, Menu, Select, Space, Spin, Statistic} from "antd";
 import axios from "axios";
 import useAsync from "../../customHooks/useAsync";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
@@ -44,10 +44,7 @@ const SmallContainer = styled.div`
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1) !important;
     padding: 1rem 1rem 1rem 1rem;
     background-color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-between:space-around;
+    
 `
 
 async function getInsurances() {
@@ -77,7 +74,7 @@ const Contract = () => {
     const [initialState, refetch] = useAsync(getInsurances, settingData, [getInsurances], skip);
 
     const { loading, error } = initialState;
-
+    const [target, setTarget] = useState("전체");
     const [insu, setInsu] = useState(1);
     const [quaterData, setQuaterData] = useState({});
     const [channelData, setChannelData] = useState({});
@@ -99,6 +96,7 @@ const Contract = () => {
         console.log(items);
         let quater = [0, 0, 0, 0];
         let channel = [0, 0, 0];
+        let age = [0,0,0,0,0];
         items.forEach(d => {
             const currentDate = new Date(d.contractDate.registerDate);
             const year = currentDate.getFullYear();
@@ -125,7 +123,17 @@ const Contract = () => {
             else 
                 channel[2] += 1;
             console.log(channel);
-        })
+        });
+        items.forEach(d => {
+            const age = d.clientAge;
+            if (age === "온라인")
+                channel[0] += 1;
+            else if (age === "전화")
+                channel[1] += 1;
+            else
+                channel[2] += 1;
+            console.log(channel);
+        });
 
         setQuaterData({
             labels: ["1분기", "2분기", "3분기", "4분기"],
@@ -256,10 +264,16 @@ const Contract = () => {
             </FilterPannel>
             <LargeContainer>
                 <div style={{display: 'flex', flexDirection: "column", justifyContent: 'space-between', width: '58%'}}>
-                    <SmallContainer style={{width: '100%'}}>
-                        <Bar data={quaterData} width={60} height={30} options={options}/>
+                    <SmallContainer  style={{width: '100%', height: '49%'}}>
+                        <div style={{marginLeft: '5px', marginTop: '2px'}}>
+                            <div>{target} 실적 리포트</div>
+                            <Statistic title="총 영업건수" value={112893} />
+                        </div>
+
                     </SmallContainer>
-                    <SmallContainer  style={{width: '100%', height: '240px'}}></SmallContainer>
+                    <SmallContainer style={{width: '100%', height: '49%'}}>
+                        <Bar data={quaterData} width={25} height={10} options={options}/>
+                    </SmallContainer>
                 </div>
 
                 <SmallContainer style={{width: '40%', height: '650px',padding: '1rem 1rem 1rem 1rem'}}>

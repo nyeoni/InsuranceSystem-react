@@ -16,7 +16,11 @@ async function postInsurance(data, form) {
                 startAge: data.startAge,
                 endAge: data.endAge,
                 creditRating: data.creditRating
-            }},
+            },
+            coverage: (data.coverage).toString(),
+            registerDocument: (data.registerDocument).toString(),
+            accidentDocument: (data.accidentDocument).toString()
+        },
         headers: {'content-type': 'application/json'}
     }).then((response) => {
         notification.open({
@@ -42,9 +46,9 @@ const Create = () => {
     const [state, setState] = useState({
         name: '',
         description: '',
-        coverages: [],
-        registerDocuments: [],
-        accidentDocuments: [],
+        coverage: [],
+        registerDocument: [],
+        accidentDocument: [],
         basePrice: '',
         startAge: '',
         endAge: '',
@@ -64,7 +68,7 @@ const Create = () => {
                 [name] : [...value] //[target.startAge]
             });
             console.log('array val', value)
-        }else{
+        } else{
             setState({...state, [name]: value});
             console.log('single val', value)
         }
@@ -76,6 +80,7 @@ const Create = () => {
     // useState sync 맞추기 위해 이펙트 써야함?
 
     const handleSubmit = async () => {
+        // test(state, form);
         const data = await postInsurance(state, form);
         console.log(data);
     }
@@ -116,8 +121,8 @@ const Create = () => {
                     </Col>
                 </Row>
 
-                <Form.Item label="보험 상품의 보장내용" name={'coverages'} rules={[{required:true, message: '하나 이상의 보장내용을 선택해주세요', type:'array'}]}>
-                    <Select mode="multiple" value={state.coverages} onChange={(val)=>{handleChange({target: {name: 'coverages', value: val}})}}
+                <Form.Item label="보험 상품의 보장내용" name={'coverage'} rules={[{required:true, message: '하나 이상의 보장내용을 선택해주세요', type:'array'}]}>
+                    <Select mode="multiple" value={state.coverage} onChange={(val)=>{handleChange({target: {name: 'coverage', value: val}})}}
                             placeholder="보험 상품의 사고 보장내용을 선택해주세요">
                         <Select.Option value="대인배상">대인배상</Select.Option>
                         <Select.Option value="대물배상">대물배상</Select.Option>
@@ -125,8 +130,8 @@ const Create = () => {
                     </Select>
                 </Form.Item>
 
-                <Form.Item label="보험 가입시 요구 제출 서류" name={'registerDocuments'} rules={[{required: true, message: '하나 이상의 제출 서류를 선택해주세요', type:'array' }]}>
-                    <Select mode="multiple" value={state.registerDocuments} onChange={(val)=>{handleChange({target: {name: 'registerDocuments', value: val}})}}
+                <Form.Item label="보험 가입시 요구 제출 서류" name={'registerDocument'} rules={[{required: true, message: '하나 이상의 제출 서류를 선택해주세요', type:'array' }]}>
+                    <Select mode="multiple" value={state.registerDocument} onChange={(val)=>{handleChange({target: {name: 'registerDocument', value: val}})}}
                             placeholder="보험 가입시 필요한 제출 서류를 선택해주세요">
                         <Select.Option value="운전면허">운전면허</Select.Option>
                         <Select.Option value="운전자 사고 이력">운전자 사고 이력</Select.Option>{/*option??*/}
@@ -137,8 +142,8 @@ const Create = () => {
                     </Select>
                 </Form.Item>
 
-                <Form.Item rules={[{required: true, message: '하나 이상의 제출 서류를 선택해주세요', type:'array' }]} name={'accidentDocuments'} label="사고 보상청구시 요구 제출 서류">
-                    <Select mode="multiple" value={state.accidentDocuments} onChange={(val)=>{handleChange({target: {name: 'accidentDocuments', value: val}})}}
+                <Form.Item rules={[{required: true, message: '하나 이상의 제출 서류를 선택해주세요', type:'array' }]} name={'accidentDocument'} label="사고 보상청구시 요구 제출 서류">
+                    <Select mode="multiple" value={state.accidentDocument} onChange={(val)=>{handleChange({target: {name: 'accidentDocument', value: val}})}}
                             placeholder="보험 가입시 필요한 제출 서류를 선택해주세요">
                         <Select.Option value="사고 처리 협력업체 영수증">사고 처리 협력업체 영수증</Select.Option>
                         <Select.Option value="자동차 정비 영수증">자동차 정비 영수증</Select.Option>

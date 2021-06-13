@@ -55,6 +55,7 @@
       "last 1 safari version"
     ]
   },
+  "proxy": "http://hminsu.net/",
   "devDependencies": {
     "@material-ui/data-grid": "^4.0.0-alpha.28",
     "cross-env": "^7.0.3",
