@@ -13,7 +13,6 @@ import useAsync from "../../customHooks/useAsync";
 //     );
 //     return response.data;
 // }
-/////
 //partner
 // const [data, setData] = useState([]);
 // const settingData = (data) => {
@@ -25,25 +24,30 @@ import useAsync from "../../customHooks/useAsync";
 // if (error) {return (<div>에러가 발생하였습니다.</div>);}
 //
 
+//"status" : "보상심사중"
+async function postCompensation(id, data) {
+    const url = `http://hminsu.net/api/claim/${id}/status`;
+    const response = await axios({
+        method: 'post',
+        url: url,
+        data: data,
+        headers: {'content-type': 'application/json'}
+    }).then((response) => {
+        return response.data.data;
+    }).catch(err => {
+        console.log(err.message);
+    });
+    console.log(response);
+    return response.data;
+}
 
 const ClaimDetail = (props) => {
-    // const style = {width:'90%', marginLeft: '4%'};
+    const {visible, setVisible, clickedRecord, columns} = props;
     const [form] = Form.useForm();
     const [state, setState] = useState({
         status : '보상심사중',
-        dateHandled: ''
     });
-    const getDate = () => {
-        var getDate = new Date().toLocaleDateString();
-        setState({dateHandled: getDate});
-    }
-    useEffect(() => {getDate();}, [])
-    useEffect(() => {console.log('useEffect ',state);}, [state])
 
-    const handleCancel = () => {
-        console.log('Clicked cancel button');
-        props.setVisible(false);
-    };
     const handleChange = (event) =>{
         const target = event.target;
         const name = target.name;
@@ -54,63 +58,50 @@ const ClaimDetail = (props) => {
         postCompensation()
     }
     const postCompensation = () => {
-        const url = '/api/claim/'+props.clickedRecord.id+'/status';
+        const url = '/api/claim/'+clickedRecord.id+'/status';
         console.log('url : ', url);
         axios.post(url, {
             status: state.status,
-        }).then((r)=> console.log(r)
-        )
+        }).then((r)=> console.log(r))
     }
-
-    return (
-        <Modal title = "해당 Claim에 대한 보상을 심사합니다" width={800} visible = {props.visible} footer={null}>
-            <Form form={form} layout="vertical" onFinish={handleSubmit}>
-                <Row>
-                    <Col span={12}>
-                        <Form.Item label={"사고접수 ID"}>
-                            <Input  value={props.clickedRecord.id}/>
-                        </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                        <Form.Item label={props.columns.find(d => d.key === 'contractId').title}>
-                            <Input  value={props.clickedRecord.contractId}/>
-                        </Form.Item>
-                    </Col>
-                </Row>
+    function onOk(){
+        form.submit();
+    }
+    function onCancel() {
+        setVisible(false);
+    }
+    const layout = {
+        labelCol: { span: 4 },
+        wrapperCol: { span: 16 },
+    };
+    if(clickedRecord){
+        return (
+            <Modal title = "해당 Claim에 대한 보상을 심사합니다" width={700} visible = {visible} onCancel={onCancel} onOk={onOk}
+                   okText={'Submit'} okButtonProps={{form:'form', key: 'submit', htmlType: 'submit'}}>
                 <Divider style={{fontSize: '1em'}} orientation="center">접수된 사고는 보상심사 단계로 이관됩니다.</Divider>
-                <Row>
-                    <Col span={24}>
+                <Form {...layout} form={form} layout="horizontal" onFinish={handleSubmit}>
+                    <Form.Item label={"사고접수 ID"}>
+                        <Input  value={clickedRecord.id}/>
+                    </Form.Item>
+                    <Form.Item label={columns.find(d => d.key === 'contractId').title}>
+                        <Input  value={clickedRecord.contractId}/>
+                    </Form.Item>
+                    <Form.Item label={'계약 시작 날짜'}>
+                        <Input readOnly={true} name="dateHandled" value={state.dateHandled} onInput={handleChange}/>
+                    </Form.Item>
+                    <Form.Item label={columns.find(d => d.key === 'damageCost').title}>
+                        <Input value={clickedRecord.damageCost}/>
+                    </Form.Item>
+                    <Form.Item label={columns.find(d => d.key === 'claimRate').title}>
+                        <Input value={clickedRecord.claimRate}/>
+                    </Form.Item>
+                    <Form.Item label={columns.find(d => d.key === 'claimDetail').title}>
+                        <Input.TextArea value={clickedRecord.claimDetail}/>
+                    </Form.Item>
+                </Form>
+            </Modal>
+        )
+    }else {return null;}
 
-                        <Form.Item label={'계약 시작 날짜'}>
-                            <Input readOnly={true} name="dateHandled" value={state.dateHandled} onInput={handleChange}/>
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={12}>
-                        <Form.Item label={props.columns.find(d => d.key === 'damageCost').title}>
-                            <Input value={props.clickedRecord.damageCost}/>
-                        </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                        <Form.Item label={props.columns.find(d => d.key === 'claimRate').title}>
-                            <Input value={props.clickedRecord.claimRate}/>
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col span={24}>
-                        <Form.Item label={props.columns.find(d => d.key === 'claimDetail').title}>
-                            <Input.TextArea value={props.clickedRecord.claimDetail}/>
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Form.Item>
-                    <Button type="primary" htmlType="submit" value="Submit">Submit</Button>
-                    <Button onClick={handleCancel}>Cancel</Button>
-                </Form.Item>
-            </Form>
-        </Modal>
-    )
 }
 export default ClaimDetail;

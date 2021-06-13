@@ -10,7 +10,7 @@ async function postInsurance(data, form) {
     const response = await axios({
         method: 'post',
         url: url,
-        // data: data,
+        // data: data, todo: documents to string
         data: {...data,
             target: {
                 startAge: data.startAge,
@@ -22,7 +22,7 @@ async function postInsurance(data, form) {
         notification.open({
             message: 'Notification!',
             description:
-                '협력업체 정보 전송 완료'
+                '보험정보 전송 완료'
         })
         form.resetFields();
         return response.data.data;

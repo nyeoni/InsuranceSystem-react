@@ -11,16 +11,17 @@ import {Route} from "react-router-dom";
 
 async function getAccident() {
     const response = await axios.get(
-        'http://hminsu.net/api/claim'
+        'https://60aba7e95a4de40017cca8e4.mockapi.io/claim'
+        // 'http://hminsu.net/api/claim'
     );
-    return response.data.data;
+    return response.data;
 }
 
 const Claim = ({match, history}) => {
     const title = "사고접수처리";
     const subtitle = "고객의 사고 접수에 따른 보상을 위해 추가적인 정보를 입력하여 사고접수 처리하는 페이지입니다"
     const [visible, setVisible] = React.useState(false);
-    const [clickedRecord, setClickedRecord] = React.useState([]);
+    const [clickedRecord, setClickedRecord] = React.useState(undefined);
 
     const [data, setData] = useState([]);
     const [option, setOption] = useState("고객 성명");
@@ -111,29 +112,28 @@ const Claim = ({match, history}) => {
             title: '접수 상태',
             dataIndex: 'status',
             key: 'status',
-            render: (text, record) => <a onClick={() => onRow(record)} style={{color: 'orangered'}}>{text}(변경하기)</a>,
+            render: text => <a>{text}</a>,
         },
         {
             title: 'Action',
             key: 'action',
             width: '10%',
             render: (text, record) => (
-                <Space size="middle"><a onClick={() => evaluatePartner(record)} style={{color: 'blue'}}>업체 평가하기</a></Space>),
+                <Space size="middle">
+                    {record.status === '보상심사중'?<Button onClick={() => onRow(record)} style={{color: 'blue'}}>보상심사</Button>:
+                        <Button onClick={() => evaluate(record)} style={{color: 'yellowgreen'}}>업체 평가하기</Button>}
+
+                </Space>),
         },
     ];
-    const onRow = (record, rowIndex) => {
-        return {
-            onClick: (record) => {
-                setClickedRecord(searchData.find(r => r.id === record.id))
-                setVisible(true);
-                },
-        };
-    };
-
-    const evaluatePartner = (record) => {
-        let clickedRecord = searchData.find(r => r.id === record.id)
+    const onRow = (record) => {
+        // alert("보상 대기중일때 업체 등록과 평가가 가능합니다.")
         setClickedRecord(searchData.find(r => r.id === record.id))
-        alert("보상 대기중일때 업체 등록과 평가가 가능합니다.")
+        setVisible(true);
+    };
+    const evaluate = (record) => {
+        setClickedRecord(searchData.find(r => r.id === record.id))
+        // setVisible(true);
     }
     const menu = (
         <Menu onClick={handleMenuClick}>

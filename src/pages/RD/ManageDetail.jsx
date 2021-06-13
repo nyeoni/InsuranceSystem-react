@@ -14,25 +14,6 @@ async function getInsurance(id) {
     );
     return response.data.data;
 }
-async function postInsurance(id, data) {
-    const url = `https://hminsu.net/api/insurance/${id}/status`;
-    const response = await axios({
-        method: 'put',
-        url: url,
-        data: { status : "결재완료" },
-        headers: {'content-type': 'application/json'}
-    }).then((response) => {
-        notification.open({
-            message: 'Notification!',
-            description:
-                '보험상태 정보 전송 완료'
-        })
-        return response.data.data;
-    }).catch(err => {
-        console.log(err.message);
-    });
-    return response;
-}
 const StyledDiv = styled.div`
     display: flex;
     flex-direction: row;

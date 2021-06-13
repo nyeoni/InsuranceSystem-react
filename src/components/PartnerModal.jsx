@@ -18,13 +18,13 @@ const PartnerModal = (props) => {
                     <Form.Item label="협력업체 ID">
                         <Input readOnly={true}  value={clickedRecord.id}/>
                     </Form.Item>
-                    <Form.Item label="보상 직원 성명">
+                    <Form.Item label="업체명">
                         <Input readOnly={true}   value={clickedRecord.name}/>
                     </Form.Item>
-                    <Form.Item label={"보상 직원 연락처"}>
+                    <Form.Item label={"업체 주소"}>
                         <Input readOnly={true}  readOnly={true}value={clickedRecord.address}/>
                     </Form.Item>
-                    <Form.Item label={"보상 직원 E-Mail"}>
+                    <Form.Item label={"협력업체 연락처"}>
                         <Input readOnly={true}  readOnly={true}value={clickedRecord.contactNumber}/>
                     </Form.Item>
                     <Divider orientation={"horizontal"}>보상 처리 이력</Divider>

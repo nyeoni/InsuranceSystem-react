@@ -3,7 +3,7 @@ import {Divider, Form, Input, InputNumber, Modal, Button} from 'antd';
 import {useForm} from "antd/es/form/Form";
 import axios from "axios";
 
-async function postCompensation(id, data, setConfirmLoading) {
+async function postCompensation(id, data) {
     const url = `http://hminsu.net/api/compensation/${id}/status`;
     const response = await axios({
         method: 'post',
@@ -11,7 +11,6 @@ async function postCompensation(id, data, setConfirmLoading) {
         data: data,
         headers: {'content-type': 'application/json'}
     }).then((response) => {
-        setConfirmLoading(false);
         return response.data.data;
     }).catch(err => {
         console.log(err.message);
@@ -33,11 +32,6 @@ const CompensationModal = (props) => {
             console.log(data);
         }
         function onOk(){
-            setConfirmLoading(true);
-            setTimeout(() => {
-                setVisible(false);
-                setConfirmLoading(false);
-            }, 2000);
             form.submit();
         }
         function onCancel() {
@@ -50,7 +44,7 @@ const CompensationModal = (props) => {
     if(clickedRecord){
         console.log('real clicked',clickedRecord)
         return(
-            <Modal title={title + "의 추가정보"} confirmLoading={confirmLoading} visible= {visible} width={700} onCancel={onCancel} onOk={onOk}
+            <Modal title={title + "의 추가정보"} visible= {visible} width={700} onCancel={onCancel} onOk={onOk}
                    okText={'Submit'} okButtonProps={{form:'form', key: 'submit', htmlType: 'submit'}}>
                 <Form {...layout} form = {form} layout={"horizontal"} onFinish={handleSubmit}>
                     <Divider style={{fontSize: '1em'}} orientation="center">해당 보상의 상태는 자동으로 '보상완료'로 변경됩니다.</Divider>

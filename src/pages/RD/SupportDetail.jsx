@@ -20,17 +20,17 @@ async function getInsurance(id) {
     return response.data.data;
 }
 async function statusInsurance(id, data) {
+    console.log('status on api call ',data.status)
     const url = `https://hminsu.net/api/insurance/${id}/status`;
     const response = await axios({
         method: 'post',
         url: url,
-        data: { "status" : "결재완료" },
+        data: { status : data.status },
         headers: {'content-type': 'application/json'}
     }).then((response) => {
         notification.open({
             message: 'Notification!',
-            description:
-                '보험상태 정보 전송 완료'
+            description: '보험상태 정보 전송 완료'
         })
         return response.data.data;
     }).catch(err => {
@@ -71,6 +71,8 @@ const SupportDetail = ({match}) => {
         },
         contractList: []
     });
+    useEffect(()=> {console.log(newData)},[newData])
+
     const [state] = useAsync(() => getInsurance(id), setNewData,[id], skip);
     const { loading, data: insurance, error } = state;
 
@@ -82,10 +84,10 @@ const SupportDetail = ({match}) => {
             </Wrapper>
         );
     }
-
-    async function onClick() {
-        const data = await statusInsurance(id, newData);
-        console.log(data)
+    function onClick() {
+        setNewData({...newData, status: '결재완료'});
+        const data = statusInsurance(id, newData);
+        console.log('data after api call', data)
     }
 
     if(newData){
