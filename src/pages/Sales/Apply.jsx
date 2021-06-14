@@ -7,17 +7,23 @@ import moment from 'moment'
 
 async function getInsurance() {
     const response = await axios.get(
-        'http://hminsu.net/api/insurance'
+        '/api/insurance'
     );
     return response.data.data;
 }
 
 async function addContract(data, form) {
-    const url = 'http://hminsu.net/api/contract/sign';
+    const url = '/api/contract/sign';
     const response = await axios({
         method: 'post',
         url: url,
-        data: data,
+        data: {...data,
+            status: '계약신청',
+            information :
+                {
+                    information: data.information,
+                    level: data.level
+                }},
         headers: {'content-type': 'application/json'}
     }).then(() => {
         form.resetFields();
@@ -41,8 +47,10 @@ const Apply = () => {
     const subtitle = "고객의 상품 가입을 요청하는 페이지입니다."
     const [form] = Form.useForm();
     const [state, setState] = useState({
-        status: '계약신청',
-        channel: '온라인',
+        information : "부가정보",
+        level : "",
+        status: '',
+        channel: '',
         registerDate: '',
         startDate: '',
         endDate: '',
@@ -76,8 +84,9 @@ const Apply = () => {
     if(data){
         return (
             <Wrapper title = {title} subtitle={subtitle} underline={true}>
-                <Form labelCol={{span: 10}} wrapperCol={{span: 12}} layout="vertical" size={"large"} onFinish={handleSubmit}
+                <Form form={form} labelCol={{span: 10}} wrapperCol={{span: 12}} layout="vertical" size={"large"} onFinish={handleSubmit}
                       initialValues={{registerDate : new Date().toISOString().split('T')[0]}}>
+
                     <Form.Item rules={[{required: true, message: '고객 ID를 입력해주세요!'}]} name="clientId" label="고객 ID" >
                         <Input style={{width:'95%'}} name="clientId" value={state.clientId} onChange={handleChange} placeholder={"고객의 ID를 입력해주세요"}/>
                     </Form.Item>
@@ -106,13 +115,30 @@ const Apply = () => {
                             <Form.Item wrapperCol={12} name="endDate" label="계약 만기일" rules={[{required: true, message: '계약 만기일을 입력하세요'}]}>
                                 <DatePicker style={{width:'90%'}} disabledDate={(current)=>{
                                     return state.startDate && current && current.valueOf() < moment(state.startDate);
-                                }}
-                                            onChange={(val)=>{if(val !== null){
+                                }} onChange={(val)=>{if(val !== null){
                                     handleChange({target: {name: 'endDate', value: val.toISOString()}})}}}/>
                             </Form.Item>
                         </Col>
                     </Row>
-
+                    <Form.Item rules={[{required: true, message: '가입 경로를 선택해주세요!'}]} name='channel' label="가입 경로">
+                        <Select style={{width:'95%'}} value={state.channel} onChange={(val)=>{handleChange({target: {name: 'channel', value: val}})}}>
+                            <Select.Option value="온라인">온라인</Select.Option>
+                            <Select.Option value="대면">대면</Select.Option>
+                            <Select.Option value="전화">전화</Select.Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item rules={[{required: true, message: '회원 등급을 선택해주세요!'}]} name='level' label="회원 등급">
+                        <Select style={{width:'95%'}} value={state.level} onChange={(val)=>{handleChange({target: {name: 'level', value: val}})}}>
+                            <Select.Option value="A">A</Select.Option>
+                            <Select.Option value="B">B</Select.Option>
+                            <Select.Option value="C">C</Select.Option>
+                            <Select.Option value="D">D</Select.Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item rules={[{required: true, message: '고객 ID를 입력해주세요!'}]} name="information" label="고객 부가정보" >
+                        <Input style={{width:'95%'}} name="information" value={state.information} onChange={handleChange}
+                               placeholder={"고객의 부가정보를 입력해주세요"}/>
+                    </Form.Item>
                     <Form.Item rules={[{required: true, message: '해당 계약 담당 직원의 ID를 입력해주세요!'}]} name="employeeId" label="담당 직원 ID" >
                         <Input style={{width:'95%'}} name="employeeId" value={state.employeeId} onChange={handleChange}placeholder={"계약 담당 직원의 ID를 입력해주세요"}/>
                     </Form.Item>

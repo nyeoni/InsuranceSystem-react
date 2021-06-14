@@ -15,23 +15,24 @@ const SubTitle = ({text}) => {
 
 async function getInsurance(id) {
     const response = await axios.get(
-        `http://hminsu.net/api/insurance/${id}`
+        `/api/insurance/${id}`
     );
     return response.data.data;
 }
 async function statusInsurance(id, data) {
     console.log('status on api call ',data.status)
-    const url = `https://hminsu.net/api/insurance/${id}/status`;
+    const url = `/api/insurance/${id}/status`;
     const response = await axios({
         method: 'post',
         url: url,
-        data: { status : data.status },
+        data: { status : data },
         headers: {'content-type': 'application/json'}
     }).then((response) => {
         notification.open({
             message: 'Notification!',
             description: '보험상태 정보 전송 완료'
         })
+        window.location.reload();
         return response.data.data;
     }).catch(err => {
         console.log(err.message);
@@ -49,8 +50,8 @@ const SupportDetail = ({match}) => {
         category: '',
         status: '',
         target: {creditRating: '', startAge: '', endAge: ''},
-        liablityCoverages: [],
-        accidentDocuments: [],
+        coverage: [],
+        accidentDocument: [],
         createTime: '',
         modifiedTime: '',
         createEmployee: {
@@ -86,8 +87,7 @@ const SupportDetail = ({match}) => {
     }
 
     function onClick() {
-        setNewData({...newData, status: '결재완료'});
-        const data = statusInsurance(id, newData);
+        const data = statusInsurance(id, "결재완료");
         console.log('data after api call', data)
     }
 
@@ -110,12 +110,12 @@ const SupportDetail = ({match}) => {
                         }
                     </Descriptions.Item>
                     <Descriptions.Item label="보상범위" span={3}>
-                        {newData.liablityCoverages?.map((data, i) =>
+                        {newData.coverage?.toString().split(',').map((data, i) =>
                             <span>{data} <Divider type="vertical" /></span>
                         )}
                     </Descriptions.Item>
                     <Descriptions.Item label="사고시 제출서류" span={3}>
-                        {newData.accidentDocuments?.map((data, i) =>
+                        {newData.accidentDocument?.toString().split(',').map((data, i) =>
                             <span>{data} <Divider type="vertical" /></span>
                         )}
                     {/* 빈 어레이도 맵 돌아감, 근데 undefined null은 map 불가능 */}

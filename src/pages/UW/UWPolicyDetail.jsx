@@ -9,7 +9,7 @@ import {Detail} from "../../components/Detail";
 //todo: board.jsx에 url만 갈아 끼워놓도록 해도 될 듯??
 async function getBoard(id) {
     const response = await axios.get(
-        `https://608c26ef9f42b20017c3d801.mockapi.io/api/v1/board/${id}`
+        `/api/board/${id}`
     );
     return response.data;
 }

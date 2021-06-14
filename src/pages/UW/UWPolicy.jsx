@@ -7,7 +7,7 @@ import {Button} from "antd";
 async function getBoards() {
     const response = await axios.get(
         //hminsu.net/api/board/{id}
-        'http://hminsu.net/api/board'
+        '/api/board'
     );
     return response.data.data;
 }

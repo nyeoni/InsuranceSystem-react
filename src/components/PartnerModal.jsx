@@ -1,5 +1,5 @@
 import React from "react";
-import {Divider, Form, Input, Modal} from 'antd';
+import {Divider, Form, Input, Modal, Row, Col} from 'antd';
 import {useForm} from "antd/es/form/Form";
 
 const PartnerModal = (props) => {
@@ -28,11 +28,20 @@ const PartnerModal = (props) => {
                         <Input readOnly={true}  readOnly={true}value={clickedRecord.contactNumber}/>
                     </Form.Item>
                     <Divider orientation={"horizontal"}>보상 처리 이력</Divider>
+                    <Row gutter={[16, 24]}>
+                        <Col span={8}><div>처리한 보상 ID</div></Col>
+                        <Col span={8}><div>사고 발생일</div></Col>
+                        <Col span={8}><div>처리 상태</div></Col>
+                    </Row>
                         {clickedRecord.claimList?.map((data, i) =>
-                            <Form.Item label={data.id}>
-                                <Input readOnly={true}  readOnly={true}value={data.cost}/>
-                            </Form.Item>
-                            // <span>{data} <Divider type="horizontal" /></span>
+                            <>
+                                <hr/>
+                                <Row gutter={[16, 24]}>
+                                    <Col span={8}>{data.id}</Col>
+                                    <Col span={8}>{data.accidentDate.split('T')[0]}</Col>
+                                    <Col span={8}>{data.status}</Col>
+                                </Row>
+                            </>
                         )}
                 </Form>
             </Modal>

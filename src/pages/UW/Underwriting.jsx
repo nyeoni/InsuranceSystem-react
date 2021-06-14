@@ -11,7 +11,7 @@ import Search from "antd/es/input/Search";
 
 async function getContract() {
     const response = await axios.get(
-        'http://hminsu.net/api/contract'
+        '/api/contract'
     );
     return response.data.data;
 }
@@ -50,23 +50,18 @@ const Underwriting = ({match, history}) => {
         },
         {
             title: '고객 성명',
-            width: '10%',
+            width: '15%',
             render: (record) => record.client.name,
         },
         {
-            title: '보험 ID',
-            width: '10%',
-            render: (record) =>record.insurance.id,
-        },
-        {
             title: '보험 이름',
-            width: '10%',
+            width: '15%',
             render: (record) => record.insurance.name,
         },
         {
             title: '계약 신청일',
             width: '10%',
-            render: (record) => record.contractDate.registerDate,
+            render: (record) => record.contractDate.registerDate.split('T')[0],
         },
         {
             title: '보험분류',
@@ -113,13 +108,17 @@ const Underwriting = ({match, history}) => {
                 );
             }
         },
+        {
+            title: 'Action',
+            key: 'action',
+            width: '5%',
+            render: (text, record) =>(<Space size="middle">
+                {record.status === '계약신청'? <Button onClick={() => onRow(record)} style={{color:'blueviolet'}}>인수심사</Button>:
+                    <Button disabled={true}>인수심사 마감</Button>}</Space>)
+        },
     ];
-    const onRow = (record, rowIndex) => {
-        return {
-            onClick: () => {
-                history.push(`${match.url}/${record.id}`);
-            },
-        };
+    const onRow = (record) => {
+        history.push(`${match.url}/${record.id}`);
     };
     function handleMenuClick(e) {
         if (e.key === '1')
@@ -149,7 +148,7 @@ const Underwriting = ({match, history}) => {
                 </Dropdown>
                 <Search placeholder="검색할 내용" allowClear style={{ width: 300 }} />
             </Space>
-            <DataTable2 onRow={onRow} loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
+            <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
         </Wrapper>
     )
 }

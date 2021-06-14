@@ -9,8 +9,8 @@ import axios from "axios";
 
 async function getInsurances() {
     const response = await axios.get(
-        'http://hminsu.net/api/insurance'
-    );
+        '/api/insurance'
+    ).catch(err => {console.log('eerr', err)});
     return response.data.data;
 }
 
@@ -145,7 +145,7 @@ const Support = ({match, history}) => {
             console.log("number");
             console.log(value);
             setSearchData(
-                data.filter(d => d.id === value)
+                data.filter(d => d.id == value)
             )
         }
         else if (option === "보험명")
