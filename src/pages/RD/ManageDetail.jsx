@@ -266,11 +266,11 @@ const ManageDetail = ({match}) => {
                             <Col span={7}>
                                 <Form.Item wrapperCol={12} label="가입 연령대">
                                     <InputNumber style={{ display: 'inline-block', width: '45%', marginInlineEnd:'4px'}} placeholder="가입 최저 연령"
-                                                 min={0} max={100.00} name="startAge" value={newData.target?.startAge}
+                                                 min={0} max={100.00} name="startAge" defalutValue={newData.target?.startAge} value={newData.startAge}
                                                  onChange={(val)=>{handleChange({target: {name: 'startAge', value: val}})}}/>
 
                                     <InputNumber style={{ display: 'inline-block', width: '45%'}} placeholder="가입 최고 연령"
-                                                 min={0} max={100.00} name="endAge" value={newData.target?.endAge}
+                                                 min={0} max={100.00} name="endAge" defalutValue={newData.target?.endAge} value={newData.endAge}
                                                  onChange={(val)=>{handleChange({target: {name: 'endAge', value: val}})}}/>
                                 </Form.Item>
                             </Col>
