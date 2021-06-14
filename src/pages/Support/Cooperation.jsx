@@ -11,7 +11,7 @@ import PartnerModal from "../../components/PartnerModal";
 
 async function getInsurances() {
     const response = await axios.get(
-        'http://hminsu.net/api/partner'
+        '/api/partner'
     );
     return response.data.data;
 }
@@ -22,7 +22,7 @@ const Cooperation = ({match, history}) => {
     const [clickedRecord, setClickedRecord] = React.useState(undefined);
 
     const [data, setData] = useState([]);
-    const [option, setOption] = useState("업체 이름");
+    const [option, setOption] = useState("업체 ID");
     const [searchData, setSearchData] = useState([]);
     const [skip, setSkip] = useState(false);
 
@@ -44,12 +44,14 @@ const Cooperation = ({match, history}) => {
     function handleMenuClick(e) {
         if (e.key === '1')
         {
-            console.log('click', e.key);
-            setOption("업체 이름");
+            setOption("업체 ID");
         }
         else if (e.key === '2')
         {
-            console.log('click', e.key);
+            setOption("업체 이름");
+        }
+        else if (e.key === '3')
+        {
             setOption("업체 주소");
         }
     }
@@ -66,7 +68,7 @@ const Cooperation = ({match, history}) => {
             title: '업체 이름',
             dataIndex: 'name',
             key: 'name',
-            width: '10%',
+            width: '20%',
             render: text => <a>{text}</a>,
         },
         {
@@ -129,7 +131,7 @@ const Cooperation = ({match, history}) => {
         {
             title: 'Action',
             key: 'action',
-            width: '15%',
+            width: '10%',
             render: (text, record) =>(<Space size="middle"><Button onClick={(event) => onRow(record)} style={{color:'blueviolet'}}>담당 처리사고 조회</Button></Space>)
         },
     ];
@@ -140,24 +142,30 @@ const Cooperation = ({match, history}) => {
     };
     const menu = (
         <Menu onClick={handleMenuClick}>
-            <Menu.Item key="1">업체 이름</Menu.Item>
-            <Menu.Item key="2">업체 주소</Menu.Item>
+            <Menu.Item key="1">업체 ID</Menu.Item>
+            <Menu.Item key="2">업체 이름</Menu.Item>
+            <Menu.Item key="3">업체 주소</Menu.Item>
         </Menu>
     );
     const onSearch = value => {
         console.log(typeof(value));
         console.log(value);
-        if (value == "") {setSearchData(data);}
+        if (value === "") {setSearchData(data);}
 
-        else if (option == "업체 이름") {
-            console.log(value);
-            setSearchData(data.filter(d => d.partnerName === value))
+        else if (option === "업체 ID") {
+            setSearchData(data.filter(d => d.id == value))
         }
-
-        else if (option == "업체 주소"){
+        else if (option === "업체 이름") {
             console.log(value);
             let res = [];
-            data.forEach(function (d){if (d.partnerAddress.includes(value)) res.push(d);})
+            data.forEach(function (d){if (d.name.includes(value)) res.push(d);})
+            setSearchData(res);
+        }
+
+        else if (option === "업체 주소"){
+            console.log(value);
+            let res = [];
+            data.forEach(function (d){if (d.address.includes(value)) res.push(d);})
             setSearchData(res);
         }
     };

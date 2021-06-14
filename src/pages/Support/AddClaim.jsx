@@ -5,8 +5,7 @@ import {Wrapper} from "../../components/Wrapper";
 import "../../css/Detail.css";
 
 async function postClaim(data, form) {
-    //http://hminsu.net/api/claim/create
-    const url = 'https://60aba7e95a4de40017cca8e4.mockapi.io/claim';
+    const url = '/api/claim/create';
     const response = await axios({
         method: 'post',
         url: url,
@@ -16,8 +15,7 @@ async function postClaim(data, form) {
         console.log('a', data)
         notification.open({
             message: 'Notification!',
-            description:
-                '사고정보 전송 완료'
+            description: '사고정보 전송 완료'
         })
         form.resetFields();
         return response.data.data;
@@ -39,7 +37,7 @@ const AddClaim = (history) => {
         damageCost: '',
         claimDetail: '',
         claimRate: '',
-        reason: '',
+        claimReason: '',
         accidentDate: '',
         status : '접수완료'
     })
@@ -62,14 +60,15 @@ const AddClaim = (history) => {
 
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>
-            <Form form = {form} labelCol={{span: 10}} wrapperCol={{span: 14}} size={"large"} layout="vertical" onFinish={handleSubmit}>
+            <Form form = {form} labelCol={{span: 10}} wrapperCol={{span: 14}} size={"large"} layout="vertical" onFinish={handleSubmit}
+            initialValues={{damageCost : 1000000}}>
                 <Form.Item rules={[{required: true, message: '담당 직원을 입력해주세요!'}]} name="employeeId" label="사고 접수 담당 직원ID" ><Input name="employeeId" value={state.employeeId} onChange={handleChange} placeholder="사고 접수를 담당하고있는 직원의 ID를 입력해주세요"/></Form.Item>
                 <Form.Item rules={[{required: true, message: '계약 ID를 입력해주세요!'}]} name="contractId" label="계약 번호(ID)"><Input name="contractId" value={state.contractId} onChange={handleChange} placeholder="사고를 접수할 계약건의 ID를 입력해주세요"/></Form.Item>
                 <Row>
                     <Col span={6}>
                         <Form.Item label={'손해액 (KRW)'} name= "damageCost" rules={[{required: true, message: '손해액을 입력해주세요!'}]}>
                             <InputNumber placeholder="손해의 가치(KRW)를 입력해주세요." style={{width : '92%'}}
-                                         defaultValue={1000000} min={0} formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} step={100000}
+                                         min={0} formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} step={100000}
                                          parser={value => value.replace(/\$\s?|(,*)/g, '')}
                                          onChange={(val)=>{if(val > 0){handleChange({target: {name: 'damageCost', value: val}})}}}/>
                         </Form.Item>
@@ -78,13 +77,13 @@ const AddClaim = (history) => {
                         <Form.Item name="accidentDate" label="사고일자" rules={[{required: true, message: '사고가 발생한 날짜를 선택해주세요!'}]}>
                             <DatePicker style={{width : '92%'}} onChange={(val)=>{if(val !== null){
                                 console.log(val);
-                                handleChange({target: {name: 'accidentDate', value: val}})}}}/>
+                                handleChange({target: {name: 'accidentDate', value: val.toISOString()}})}}}/>
                         </Form.Item>
                     </Col>
                 </Row>
 
-                <Form.Item label={'사고 원인'} name="reason" rules={[{required: true, message: '사고의 원인을 기술해주세요'}]}>
-                    <Input style={{width:'100%'}} name="reason" value={state.reason} onChange={handleChange} placeholder="사고 원인과 개괄적인 설명을 입력해주세요"/>
+                <Form.Item label={'사고 원인'} name="claimReason" rules={[{required: true, message: '사고의 원인을 기술해주세요'}]}>
+                    <Input style={{width:'100%'}} name="claimReason" value={state.claimReason} onChange={handleChange} placeholder="사고 원인과 개괄적인 설명을 입력해주세요"/>
                 </Form.Item>
 
                 <Form.Item label={'사고 내용'} name="claimDetail" rules={[{required: true, message: '사고의 정확한 내용을 기술해주세요'}]}>

@@ -1,6 +1,20 @@
 
 import React, {useEffect, useState} from "react";
-import {Drawer, Button, DatePicker, Form, Row, Col, Input, InputNumber, Divider, Select, Modal, Spin} from "antd"
+import {
+    Drawer,
+    Button,
+    DatePicker,
+    Form,
+    Row,
+    Col,
+    Input,
+    InputNumber,
+    Divider,
+    Select,
+    Modal,
+    Spin,
+    notification
+} from "antd"
 import '../../css/Detail.css'
 import axios from "axios";
 import useAsync from "../../customHooks/useAsync";
@@ -8,9 +22,29 @@ import {useForm} from "antd/es/form/Form";
 import {Wrapper} from "../../components/Wrapper";
 async function getContract(id) {
     const response = await axios.get(
-        `https://608c26ef9f42b20017c3d801.mockapi.io/api/v1/contract/${id}`
+        `/api/contract/${id}`
     );
-    return response.data;
+    return response.data.data;
+}
+//hminsu.net/api/contract/{id}/status
+async function contractStatus(id, data) {
+    const url = `/api/contract/${id}/status`;
+    const response = await axios({
+        method: 'post',
+        url: url,
+        data: {status : data},
+        headers: {'content-type': 'application/json'}
+    }).then(() => {
+        notification.open({
+            message: 'Notification!',
+            description: '계약 정보 전송 완료'
+        })
+        return response.data.data;
+    }).catch(err => {
+        console.log(err.message);
+    });
+    console.log(response);
+    return response;
 }
 const UWDetail = (props) => {
     const { id } = props.match.params;
@@ -18,7 +52,7 @@ const UWDetail = (props) => {
     const [newData, setNewData] = useState({});
     const [state] = useAsync(() => getContract(id), setNewData,[id]);
     const { loading, data: contract, error } = state;
-    console.log('newdata', newData);
+    // console.log('newdata', newData);
     if (error) return <div>에러가 발생했습니다</div>;
     if (!contract || loading) {
         return(
@@ -27,34 +61,12 @@ const UWDetail = (props) => {
             </Wrapper>
         );
     }
-    const handleChange = (event) =>{
-        const target = event.target;
-        const name = target.name;
-        const value = target.value;
-        if(Array.isArray(value)){
-            setNewData({
-                ...newData,
-                [name] : [...value]
-            });
-            console.log('array val', value)
-        }else{
-            setNewData({
-                ...newData,
-                [name]: value});
-            console.log('single val', value)
-        }
+    const handleSubmit = async () => {
+        const data = await contractStatus(id, "계약중");
+        console.log(data)
     }
-
-    // useEffect(() => {console.log('useEffect ',state);}, [state])
-
-    const handleSubmit = () => {
-        postCompensation()
-    }
-    const postCompensation = () => {
-
-    }
-    if (newData !== null){
-
+    if (newData){
+        // console.log('data status', newData)
     return(
         <Wrapper title={"해당 고객의 신청을 인수심사합니다."} subtitle={"계약의 status가 인수심사중으로 바뀌게 됩니다."} underline={true}>
             <Form labelCol={{span: 10,}} wrapperCol={{span: 14,}} layout="vertical" size={"large"} onFinish={handleSubmit}>

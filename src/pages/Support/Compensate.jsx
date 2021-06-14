@@ -11,10 +11,9 @@ import CompensationModal from "./CompensationModal";
 
 async function getCompensation() {
     const response = await axios.get(
-        'https://60aba7e95a4de40017cca8e4.mockapi.io/compensation'
-        // 'http://hminsu.net/api/compensation'
+        '/api/compensation'
     );
-    return response.data;
+    return response.data.data;
 }
 
 //status: 보상완료, cost 둘 다 넘겨줄 것, claim은 처리완료로 자동으로 바뀜.
@@ -52,13 +51,13 @@ const Compensate = () => {
         }
         else if (e.key === '2') {
             console.log('click', e.key);
-            setOption("보험번호");
+            setOption("보상 ID");
         }
     }
     const menu = (
         <Menu onClick={handleMenuClick}>
             <Menu.Item key="1">보상 상태</Menu.Item>
-            <Menu.Item key="2">보험 번호</Menu.Item>
+            <Menu.Item key="2">보상 ID</Menu.Item>
         </Menu>
     );
     const columns = [
@@ -97,31 +96,33 @@ const Compensate = () => {
             title: 'Action',
             key: 'action',
             width: '15%',
-            render: (text, record) =>(<Space size="middle"><Button onClick={() => onRow(record)} style={{color:'blueviolet'}}>보상 처리</Button></Space>)
+            render: (text, record) =>(
+                <Space size="middle">
+                {record.status === '보상완료'? <Button disabled={true}>마감된 보상</Button>:
+                    <Button onClick={() => onRow(record)} style={{color: 'blueviolet'}}>보상처리</Button>
+                }</Space>)
+
         },
     ];
     const onRow = (record) => {
         setClickedRecord(searchData.find(r => r.id === record.id))
         setVisible(true);
     };
+    const evaluatePartner = (record) => {
+        setClickedRecord(searchData.find(r => r.id === record.id))
+        // setVisible(true);
+    };
     const onSearch = value => {
         console.log(typeof(value));
         console.log(value);
-        if (value == "") {setSearchData(data);}
+        if (value === "") {setSearchData(data);}
 
-        else if (option == "보상상태") {
-            console.log("number");
-            console.log(value);
-            setSearchData(
-                data.filter(d => d.id === value)
-            )
+        else if (option === "보상 ID") {
+            setSearchData(data.filter(d => d.id == value))
         }
-
-        else if (option == "보험번호"){
-            console.log("name");
-            console.log(value);
+        else if (option === "보상상태"){
             let res = [];
-            data.forEach(function (d){if (d.name.includes(value)) res.push(d);})
+            data.forEach(function (d){if (d.status.includes(value)) res.push(d);})
             setSearchData(res);
         }
     };

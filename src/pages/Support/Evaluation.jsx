@@ -12,11 +12,12 @@ import Search from "antd/es/input/Search";
 import EvaluationModal from "../../components/EvaluationModal";
 
 async function getTables() {
+    //http://hminsu.net/api/employee/compensation
+
     const response = await axios.get(
-        'https://60aba7e95a4de40017cca8e4.mockapi.io/employeeCompensation'
-        // 'http://hminsu.net/api/employee', { params: { department: "보상" } }
+        '/api/employee/compensation'
     );
-    return response.data;
+    return response.data.data;
 }
 const Evaluation = () => {
     const title = "보상평가관리";
@@ -62,7 +63,7 @@ const Evaluation = () => {
             title: '직원 성명',
             dataIndex: 'name',
             key: 'name',
-            width: '10%',
+            width: '20%',
             render: text => <a>{text}</a>,
         },
         {
@@ -72,21 +73,19 @@ const Evaluation = () => {
             width: '10%',
             render: text => <a>{text}</a>,
         },
-        // {
-        //     title: '누적 보상금액',
-        //     dataIndex: 'cost',
-        //     key: 'cost',
-        //     render: text => <a>{text}</a>,
-        // },
+        {
+            title: '누적 보상횟수',
+            width: '10%',
+            render: (record) => record.compensationList.length
+        },
         {
             title: 'Action',
             key: 'action',
-            width: '15%',
+            width: '10%',
             render: (text, record) =>(<Space size="middle"><Button onClick={() => onRow(record)} style={{color:'blueviolet'}}>담당 처리사고 조회</Button></Space>)
         },
     ];
     const onRow = (record) => {
-        console.log('a', record.id)
         setClickedRecord(searchData.find(r => r.id === record.id))
         setVisible(true);
     };
@@ -120,7 +119,7 @@ const Evaluation = () => {
                 <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
             </Space>
             <DataTable2 loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
-            <EvaluationModal title = {title} clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>
+            <EvaluationModal clickedRecord = {clickedRecord} visible = {visible} setVisible = {setVisible}/>
         </Wrapper>
     )
 }

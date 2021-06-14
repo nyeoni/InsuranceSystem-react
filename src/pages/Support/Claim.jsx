@@ -8,23 +8,24 @@ import useAsync from "../../customHooks/useAsync";
 import axios from "axios";
 import ClaimDetail from "./ClaimDetail";
 import {Route} from "react-router-dom";
+import AddPartnerModal from "./AddPartnerModal";
 
 async function getAccident() {
     const response = await axios.get(
-        'https://60aba7e95a4de40017cca8e4.mockapi.io/claim'
-        // 'http://hminsu.net/api/claim'
+        '/api/claim'
     );
-    return response.data;
+    return response.data.data;
 }
 
 const Claim = ({match, history}) => {
     const title = "사고접수처리";
     const subtitle = "고객의 사고 접수에 따른 보상을 위해 추가적인 정보를 입력하여 사고접수 처리하는 페이지입니다"
     const [visible, setVisible] = React.useState(false);
+    const [visiblePartner, setVisiblePartner] = React.useState(false);
     const [clickedRecord, setClickedRecord] = React.useState(undefined);
 
     const [data, setData] = useState([]);
-    const [option, setOption] = useState("고객 성명");
+    const [option, setOption] = useState("사고 ID");
     const [searchData, setSearchData] = useState([]);
     const [skip, setSkip] = useState(false);
     const settingData = (data) => {
@@ -44,10 +45,10 @@ const Claim = ({match, history}) => {
     }
 
     function handleMenuClick(e) {
-        if (e.key === '2') {
+        if (e.key === '1') {
             console.log('click', e.key);
-            setOption("고객 성명");
-        } else if (e.key === '1') {
+            setOption("사고 ID");
+        } else if (e.key === '2') {
             console.log('click', e.key);
             setOption("고객 ID");
         }
@@ -62,18 +63,14 @@ const Claim = ({match, history}) => {
             render: text => <a>{text}</a>,
         },
         {
-            title: '담당 직원 ID',
-            dataIndex: 'employeeId',
-            key: 'employeeId',
-            width: '10%',
-            render: text => <a>{text}</a>,
+            title: '담당 직원 성명',
+            width: '15%',
+            render: (record) => record.employee.name,
         },
         {
             title: '계약 번호',
-            dataIndex: 'contractId',
-            key: 'contractId',
-            width: '10%',
-            render: text => <a>{text}</a>,
+            width: '15%',
+            render: (record) => record.contract.id,
         },
         {
             title: '손해액',
@@ -96,17 +93,17 @@ const Claim = ({match, history}) => {
             width: '10%',
             render: text => <a>{text}</a>,
         },
-        {
-            title: '사고 원인',
-            dataIndex: 'reason',
-            key: 'reason',
-            render: text => <a>{text}</a>,
-        },
+        // {
+        //     title: '사고 원인',
+        //     dataIndex: 'reason',
+        //     key: 'reason',
+        //     render: text => <a>{text}</a>,
+        // },
         {
             title: '사고일자',
             dataIndex: 'accidentDate',
             key: 'accidentDate',
-            render: text => <a>{text}</a>,
+            render: text => <a>{text.split('T')[0]}</a>,
         },
         {
             title: '접수 상태',
@@ -120,25 +117,24 @@ const Claim = ({match, history}) => {
             width: '10%',
             render: (text, record) => (
                 <Space size="middle">
-                    {record.status === '보상심사중'?<Button onClick={() => onRow(record)} style={{color: 'blue'}}>보상심사</Button>:
-                        <Button onClick={() => evaluate(record)} style={{color: 'yellowgreen'}}>업체 평가하기</Button>}
-
+                    {record.status === '보상심사중'? <Button onClick={() => addPartner(record)} style={{color: 'yellowgreen'}}>협력업체 추가</Button> :
+                        record.status === '처리완료'? <Button disabled={true}>마감된 보상</Button>:
+                            <Button onClick={() => onRow(record)} style={{color: 'blueviolet'}}>보상심사</Button>}
                 </Space>),
         },
     ];
     const onRow = (record) => {
-        // alert("보상 대기중일때 업체 등록과 평가가 가능합니다.")
         setClickedRecord(searchData.find(r => r.id === record.id))
         setVisible(true);
     };
-    const evaluate = (record) => {
+    const addPartner = (record) => {
         setClickedRecord(searchData.find(r => r.id === record.id))
-        // setVisible(true);
+        setVisiblePartner(true);
     }
     const menu = (
         <Menu onClick={handleMenuClick}>
-            <Menu.Item key="1">고객 ID</Menu.Item>
-            <Menu.Item key="2">고객 성명</Menu.Item>
+            <Menu.Item key="1">사고 ID</Menu.Item>
+            {/*<Menu.Item key="2">고객 ID</Menu.Item>*/}
         </Menu>
     );
 
@@ -146,20 +142,22 @@ const Claim = ({match, history}) => {
         let name;
         console.log(typeof (value));
         console.log(value);
-        if (value == "") {
+        if (value === "") {
             setSearchData(data);
-        } else if (option == "고객 성명") {
-            console.log("clientName");
-            console.log(value);
-            let res = [];
-            data.forEach(function (d) {
-                if (d.clientName.includes(value)) res.push(d);
-            })
-            setSearchData(res);
-        } else if (option == "고객 ID") {
+        }
+        else if (option === "사고 ID") {
+            // console.log("clientName");
+            // console.log(value);
+            // let res = [];
+            // data.forEach(function (d) {
+            //     if (d.clientName.includes(value)) res.push(d);
+            // })
+            // setSearchData(res);
+            setSearchData(data.filter(d => d.id == value))
+        } else if (option === "고객 ID") {
             console.log("number");
             console.log(value);
-            setSearchData(data.filter(d => d.id === value))
+            setSearchData(data.filter(d => d.clientId == value))
         }
     };
     const onClick = () => {
@@ -179,7 +177,8 @@ const Claim = ({match, history}) => {
             <DataTable2 loading={loading} dataSource={searchData}
                         columns={columns.filter(col => col.dataIndex !== 'claimDetail' && col.dataIndex !== 'damageCost' && col.dataIndex !== 'claimRate')}
                         title={title}/>
-            <ClaimDetail visible={visible} setVisible={setVisible} clickedRecord={clickedRecord} columns={columns}/>
+            <ClaimDetail visible={visible} setVisible={setVisible} clickedRecord={clickedRecord}/>
+            <AddPartnerModal visible={visiblePartner} setVisible={setVisiblePartner} clickedRecord={clickedRecord}/>
         </Wrapper>
     )
 }

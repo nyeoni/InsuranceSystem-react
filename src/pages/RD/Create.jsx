@@ -3,20 +3,19 @@ import {Form, Input, Button, Select, InputNumber, Row, Col, notification} from '
 import axios from "axios";
 import {Wrapper} from "../../components/Wrapper";
 import "../../css/Detail.css";
-import {useSelector} from "react-redux";
 
 async function postInsurance(data, form) {
-    const url = 'http://hminsu.net/api/insurance/create';
+    const url = '/api/insurance/create';
     const response = await axios({
         method: 'post',
         url: url,
-        // data: data, todo: documents to string
         data: {...data,
             target: {
                 startAge: data.startAge,
                 endAge: data.endAge,
                 creditRating: data.creditRating
             },
+
             coverage: (data.coverage).toString(),
             registerDocument: (data.registerDocument).toString(),
             accidentDocument: (data.accidentDocument).toString()
@@ -25,8 +24,7 @@ async function postInsurance(data, form) {
     }).then((response) => {
         notification.open({
             message: 'Notification!',
-            description:
-                '보험정보 전송 완료'
+            description: '보험정보 전송 완료'
         })
         form.resetFields();
         return response.data.data;
@@ -55,7 +53,7 @@ const Create = () => {
         creditRating: '',
         category: '',
         createEmployeeId : '1',
-        managementEmployeeId : '1'
+        managementEmployeeId : ''
     })
 
     const handleChange = (event) =>{
@@ -65,7 +63,7 @@ const Create = () => {
         if(Array.isArray(value)){
             setState({
                 ...state,
-                [name] : [...value] //[target.startAge]
+                [name] : [...value]
             });
             console.log('array val', value)
         } else{
@@ -87,7 +85,9 @@ const Create = () => {
 
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>
-            <Form form={form} labelCol={{span: 10}} wrapperCol={{span: 14}} layout="vertical" size={"large"} onFinish={handleSubmit}>
+            <Form form={form} labelCol={{span: 10}} wrapperCol={{span: 14}} layout="vertical" size={"large"} onFinish={handleSubmit}
+                  initialValues={{basePrice: 100000, createEmployeeId: '1'}}
+            >
                 <Form.Item rules={[{required: true, message: '보험의 이름을 입력해주세요!'}]} name="name" label="보험상품 이름" >
                     <Input name="name" value={state.name} onChange={handleChange} placeholder="예시) XX 자동차 보험"/>
                 </Form.Item>
@@ -97,7 +97,7 @@ const Create = () => {
                         <Select.Option value="자동차">자동차 보험</Select.Option>
                         <Select.Option value="운전자">운전자 보험</Select.Option>
                         <Select.Option value="화재">화재 보험</Select.Option>
-                        <Select.Option value="여행자">여행자 보험</Select.Option>
+                        <Select.Option value="여행">여행자 보험</Select.Option>
                     </Select>
                 </Form.Item>
                 <Row>
@@ -154,7 +154,7 @@ const Create = () => {
 
                 <Form.Item rules={[{required:true, message: '보험의 기초 보험료를 입력해주세요'}]} name="basePrice" label="기초 보험료(KRW)">
                     <InputNumber style={{width : '50%'}}
-                                 defaultValue={100000} min={0} formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} step={1000}
+                                 min={0} formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} step={1000}
                                  parser={value => value.replace(/\$\s?|(,*)/g, '')}
                                  onChange={(val)=>{if(val > 0){handleChange({target: {name: 'basePrice', value: val}})}}}/>
                 </Form.Item>
@@ -163,8 +163,8 @@ const Create = () => {
                     <Input.TextArea name="description" value={state.description} onChange={handleChange}/>
                 </Form.Item>
                 <Form.Item required={true} name="createEmployeeId" label="보험을 생성하는 직원 ID" >
-                    <Input readOnly={true} name="createEmployeeId" defaultValue={state.createEmployeeId} value={state.createEmployeeId} disabled={true}/>
-                           {/*onInput={(val)=>{handleChange({target: {name: 'createEmployeeId', value: val}})}}/>*/}
+                    <Input readOnly={true} name="createEmployeeId" value={state.createEmployeeId} disabled={true}
+                           onInput={(val)=>{handleChange({target: {name: 'createEmployeeId', value: val}})}}/>
                 </Form.Item>
 
                 <Form.Item rules={[{required: true, message: '담당 직원을 입력해주세요!'}]} name="managementEmployeeId" label="보험 담당책임 직원 ID" >

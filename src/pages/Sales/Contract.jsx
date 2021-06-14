@@ -49,7 +49,7 @@ const SmallContainer = styled.div`
 
 async function getInsurances() {
     const response = await axios.get(
-        'http://hminsu.net/api/insurance'
+        '/api/insurance'
     );
     return response.data.data;
 }

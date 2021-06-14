@@ -5,14 +5,13 @@ import {Wrapper} from "../../components/Wrapper";
 import "../../css/Detail.css";
 
 async function addCooperation(data, form) {
-    const url = 'http://hminsu.net/api/partner/create';
+    const url = '/api/partner/create';
     const response = await axios({
         method: 'post',
         url: url,
         data: data,
         headers: {'content-type': 'application/json'}
     }).then((response) => {
-        console.log('a', data)
         notification.open({
             message: 'Notification!',
             description:
@@ -21,10 +20,8 @@ async function addCooperation(data, form) {
             form.resetFields();
         return response.data.data;
     }).catch(err => {
-        console.log('ee', err)
         console.log(err.message);
     });
-    console.log('end func',response);
     return response;
 }
 
