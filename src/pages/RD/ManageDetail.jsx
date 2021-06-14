@@ -8,23 +8,18 @@ import {Line, Bar, Doughnut} from "react-chartjs-2";
 
 async function getInsurance(id) {
     const response = await axios.get(
-        `http://hminsu.net/api/insurance/${id}`
+        `/api/insurance/${id}`
     );
     return response.data.data;
 }
 
 async function updateInsurance(data, form, id) {
-    const url = `http://hminsu.net/api/insurance/${id}`;
+    const url = `/api/insurance/${id}`;
     const response = await axios({
         method: 'post',
         url: url,
         // data: data, todo: documents to string
         data: {...data,
-            target: {
-                startAge: data.startAge,
-                endAge: data.endAge,
-                creditRating: data.creditRating
-            },
             coverage: (data.coverage).toString(),
             registerDocument: (data.registerDocument).toString(),
             accidentDocument: (data.accidentDocument).toString()
@@ -42,6 +37,20 @@ async function updateInsurance(data, form, id) {
         console.log(err.message);
     });
     return response;
+}
+
+const test = (data, form, id) => {
+    const tmp = {...data,
+        target: {
+            startAge: data.startAge,
+            endAge: data.endAge,
+            creditRating: data.creditRating
+        },
+        coverage: (data.coverage).toString(),
+        registerDocument: (data.registerDocument).toString(),
+        accidentDocument: (data.accidentDocument).toString()
+    }
+    console.log(tmp);
 }
 
 const StyledDiv = styled.div`
@@ -63,18 +72,33 @@ const ManageDetail = ({match}) => {
     const [newData, setNewData] = useState({
         name: '',
         description: '',
-        coverage: [],
+        coverage: '',
         registerDocument: '',
         accidentDocument: '',
         basePrice: '',
-        startAge: '',
-        endAge: '',
-        creditRating: '',
+        target: {
+            startAge: '',
+            endAge: '',
+            creditRating: ''
+        },
         category: '',
         createEmployeeId : '1',
         managementEmployeeId : '1'
     });
-    const [state] = useAsync(() => getInsurance(id), setNewData,[id]);
+    const settingNewData = (data) => {
+        if (data) {
+            setNewData({
+                ...data,
+                coverage: data.coverage?.toString().split(',').map((data) => data),
+                registerDocument: data.registerDocument?.toString().split(',').map((data) => data),
+                accidentDocument: data.accidentDocument?.toString().split(',').map((data) => data),
+                managementEmployeeId: data.managementEmployee?.id,
+                createEmployeeId: data.createEmployee?.id
+            });
+            console.log("newData",data);
+        }
+    }
+    const [state] = useAsync(() => getInsurance(id), settingNewData,[id]);
     const { loading, data: insurance, error } = state;
     const { TabPane } = Tabs;
     const [quaterData, setQuaterData] = useState({});
@@ -163,23 +187,36 @@ const ManageDetail = ({match}) => {
         const target = event.target;
         const name = target.name;
         const value = target.value;
+        console.log("event name", name);
         if(Array.isArray(value)){
             setNewData({
                 ...newData,
                 [name] : [...value]
             });
             console.log('array val', value)
-        }else{
+        } else if (typeof value === "string") {
             setNewData({
                 ...newData,
                 [name]: value});
             console.log('single val', value)
+        } else if (name === 'target'){
+            setNewData({
+                ...newData,
+                target: {
+                    ...newData.target,
+                    [Object.keys(value)[0]]: Object.values(value)[0]
+                }
+            });
+            console.log('object val', value);
+            console.log('name', name);
+            console.log('target', newData.target);
         }
         console.log(newData.coverage);
     }
 
     const handleSubmit = async () => {
         const data = await updateInsurance(newData, form, id);
+        // test(newData, form, id);
         console.log(data)
     }
 
@@ -266,25 +303,25 @@ const ManageDetail = ({match}) => {
                             <Col span={7}>
                                 <Form.Item wrapperCol={12} label="가입 연령대">
                                     <InputNumber style={{ display: 'inline-block', width: '45%', marginInlineEnd:'4px'}} placeholder="가입 최저 연령"
-                                                 min={0} max={100.00} name="startAge" defalutValue={newData.target?.startAge} value={newData.startAge}
-                                                 onChange={(val)=>{handleChange({target: {name: 'startAge', value: val}})}}/>
+                                                 min={0} max={100.00} name="startAge" defalutValue={newData.target?.startAge} value={newData.target?.startAge}
+                                                 onChange={(val)=>{handleChange({target: {name: 'target', value: {startAge: val}}})}}/>
 
                                     <InputNumber style={{ display: 'inline-block', width: '45%'}} placeholder="가입 최고 연령"
-                                                 min={0} max={100.00} name="endAge" defalutValue={newData.target?.endAge} value={newData.endAge}
-                                                 onChange={(val)=>{handleChange({target: {name: 'endAge', value: val}})}}/>
+                                                 min={0} max={100.00} name="endAge" defalutValue={newData.target?.endAge} value={newData.target?.endAge}
+                                                 onChange={(val)=>{handleChange({target: {name: 'target', value: {endAge: val}}})}}/>
                                 </Form.Item>
                             </Col>
                             <Col span={7}>
                                 <Form.Item wrapperCol={12} name={"creditRating"} label="최소 신용등급">
                                     <InputNumber style={{ display: 'inline-block', width: '100%'}}
                                                  min={1} max={10} step="1" name="creditRating" placeholder={newData.target?.creditRating} value={newData.target?.creditRating}
-                                                 onChange={(val)=>{handleChange({target: {name: 'creditRating', value: val}})}}/>
+                                                 onChange={(val)=>{handleChange({target: {name: 'target', value: {creditRating: val}}})}}/>
                                 </Form.Item>
                             </Col>
                         </Row>
 
-                        <Form.Item label="보험 상품의 보장내용" name={'coverages'} rules={[{required:true, message: '하나 이상의 보장내용을 선택해주세요', type:'array'}]}>
-                            <Select mode="multiple" value={newData.coverage} defaultValue={newData.coverage?.toString().split(',').map((data) => data)} onChange={(val)=>{handleChange({target: {name: 'coverage', value: val}})}}
+                        <Form.Item label="보험 상품의 보장내용" name={'coverage'} rules={[{required:true, message: '하나 이상의 보장내용을 선택해주세요', type:'array'}]}>
+                            <Select mode="multiple" value={newData.coverage} defaultValue={newData.coverage} onChange={(val)=>{handleChange({target: {name: 'coverage', value: val}})}}
                                     placeholder="보험 상품의 사고 보장내용을 선택해주세요">
                                 <Select.Option value="대인배상">대인배상</Select.Option>
                                 <Select.Option value="대물배상">대물배상</Select.Option>
@@ -292,8 +329,8 @@ const ManageDetail = ({match}) => {
                             </Select>
                         </Form.Item>
 
-                        <Form.Item label="보험 가입시 요구 제출 서류" name={'registerDocuments'} rules={[{required: true, message: '하나 이상의 제출 서류를 선택해주세요', type:'array' }]}>
-                            <Select mode="multiple" value={newData.registerDocument} defaultValue={newData.registerDocument?.toString().split(',').map((data) => data)} onChange={(val)=>{handleChange({target: {name: 'registerDocument', value: val}})}}
+                        <Form.Item label="보험 가입시 요구 제출 서류" name={'registerDocument'} rules={[{required: true, message: '하나 이상의 제출 서류를 선택해주세요', type:'array' }]}>
+                            <Select mode="multiple" value={newData.registerDocument} defaultValue={newData.registerDocument} onChange={(val)=>{handleChange({target: {name: 'registerDocument', value: val}})}}
                                     placeholder="보험 가입시 필요한 제출 서류를 선택해주세요">
                                 <Select.Option value="운전면허">운전면허</Select.Option>
                                 <Select.Option value="운전자 사고 이력">운전자 사고 이력</Select.Option>{/*option??*/}
@@ -304,8 +341,8 @@ const ManageDetail = ({match}) => {
                             </Select>
                         </Form.Item>
 
-                        <Form.Item rules={[{required: true, message: '하나 이상의 제출 서류를 선택해주세요', type:'array' }]} name={'accidentDocuments'} label="사고 보상청구시 요구 제출 서류">
-                            <Select mode="multiple" value={newData.accidentDocument} defaultValue={newData.accidentDocument?.toString().split(',').map((data) => data)} onChange={(val)=>{handleChange({target: {name: 'accidentDocument', value: val}})}}
+                        <Form.Item rules={[{required: true, message: '하나 이상의 제출 서류를 선택해주세요', type:'array' }]} name={'accidentDocument'} label="사고 보상청구시 요구 제출 서류">
+                            <Select mode="multiple" value={newData.accidentDocument} defaultValue={newData.accidentDocument} onChange={(val)=>{handleChange({target: {name: 'accidentDocument', value: val}})}}
                                     placeholder="보험 가입시 필요한 제출 서류를 선택해주세요">
                                 <Select.Option value="사고 처리 협력업체 영수증">사고 처리 협력업체 영수증</Select.Option>
                                 <Select.Option value="자동차 정비 영수증">자동차 정비 영수증</Select.Option>

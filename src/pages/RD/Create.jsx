@@ -15,7 +15,6 @@ async function postInsurance(data, form) {
                 endAge: data.endAge,
                 creditRating: data.creditRating
             },
-
             coverage: (data.coverage).toString(),
             registerDocument: (data.registerDocument).toString(),
             accidentDocument: (data.accidentDocument).toString()
