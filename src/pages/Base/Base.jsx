@@ -72,62 +72,65 @@ const Base = () => {
                                     <li>
                                         <MyLink to="/sales/apply">상품가입</MyLink>
                                     </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <MyLink to="#">인수심사</MyLink>
-                                <ul className="nav-flyout">
                                     <li>
-                                        <MyLink to="/uw/underwriting">인수심사</MyLink>
-                                    </li>
-                                    <li>
-                                        <MyLink to="/uw/policy">인수정책</MyLink>
-                                    </li>
-                                    <li>
-                                        <MyLink to="/uw/lossmanage">손해율관리</MyLink>
+                                        <MyLink to="/sales/register">고객가입</MyLink>
                                     </li>
                                 </ul>
                             </li>
-                            <li>
-                                <MyLink to="#">보상지원</MyLink>
-                                <ul className="nav-flyout">
-                                    <li>
-                                        <MyLink to="/support/accident">사고접수</MyLink>
-                                    </li>
-                                    <li>
-                                        <MyLink to="/support/compensate">보상처리</MyLink>
-                                    </li>
-                                    <li>
-                                        <MyLink to="/support/cooperation">협력업체관리</MyLink>
-                                    </li>
-                                    <li>
-                                        <MyLink to="/support/evalution">보상평가관리</MyLink>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <MyLink to="#">통합관리</MyLink>
-                                <ul className="nav-flyout">
-                                    <li>
-                                        <MyLink to="/manage/payment">수금관리</MyLink>
-                                    </li>
-                                    <li>
-                                        <MyLink to="/manage/expiration">만기계약관리</MyLink>
-                                    </li>
-                                    <li>
-                                        <MyLink to="/manage/reimbursement">제지급관리</MyLink>
-                                    </li>
-                                    <li>
-                                        <MyLink to="/manage/termination">부활관리</MyLink>
-                                    </li>
-                                    <li>
-                                        <MyLink to="/manage/terms">배서관리</MyLink>
-                                    </li>
-                                   <li>
-                                        <MyLink to="/manage/policy">관리지침수립</MyLink>
-                                    </li>
-                                </ul>
-                            </li>
+                            {/*<li>*/}
+                            {/*    <MyLink to="#">인수심사</MyLink>*/}
+                            {/*    <ul className="nav-flyout">*/}
+                            {/*        <li>*/}
+                            {/*            <MyLink to="/uw/underwriting">인수심사</MyLink>*/}
+                            {/*        </li>*/}
+                            {/*        <li>*/}
+                            {/*            <MyLink to="/uw/policy">인수정책</MyLink>*/}
+                            {/*        </li>*/}
+                            {/*        <li>*/}
+                            {/*            <MyLink to="/uw/lossmanage">손해율관리</MyLink>*/}
+                            {/*        </li>*/}
+                            {/*    </ul>*/}
+                            {/*</li>*/}
+                            {/*<li>*/}
+                            {/*    <MyLink to="#">보상지원</MyLink>*/}
+                            {/*    <ul className="nav-flyout">*/}
+                            {/*        <li>*/}
+                            {/*            <MyLink to="/support/accident">사고접수</MyLink>*/}
+                            {/*        </li>*/}
+                            {/*        <li>*/}
+                            {/*            <MyLink to="/support/compensate">보상처리</MyLink>*/}
+                            {/*        </li>*/}
+                            {/*        <li>*/}
+                            {/*            <MyLink to="/support/cooperation">협력업체관리</MyLink>*/}
+                            {/*        </li>*/}
+                            {/*        <li>*/}
+                            {/*            <MyLink to="/support/evalution">보상평가관리</MyLink>*/}
+                            {/*        </li>*/}
+                            {/*    </ul>*/}
+                            {/*</li>*/}
+                            {/*<li>*/}
+                            {/*    <MyLink to="#">통합관리</MyLink>*/}
+                            {/*    <ul className="nav-flyout">*/}
+                            {/*        <li>*/}
+                            {/*            <MyLink to="/manage/payment">수금관리</MyLink>*/}
+                            {/*        </li>*/}
+                            {/*        <li>*/}
+                            {/*            <MyLink to="/manage/expiration">만기계약관리</MyLink>*/}
+                            {/*        </li>*/}
+                            {/*        <li>*/}
+                            {/*            <MyLink to="/manage/reimbursement">제지급관리</MyLink>*/}
+                            {/*        </li>*/}
+                            {/*        <li>*/}
+                            {/*            <MyLink to="/manage/termination">부활관리</MyLink>*/}
+                            {/*        </li>*/}
+                            {/*        <li>*/}
+                            {/*            <MyLink to="/manage/terms">배서관리</MyLink>*/}
+                            {/*        </li>*/}
+                            {/*       <li>*/}
+                            {/*            <MyLink to="/manage/policy">관리지침수립</MyLink>*/}
+                            {/*        </li>*/}
+                            {/*    </ul>*/}
+                            {/*</li>*/}
                         </ul>
                     </nav>
                 </aside>

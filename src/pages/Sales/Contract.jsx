@@ -49,7 +49,7 @@ const SmallContainer = styled.div`
 
 async function getInsurances() {
     const response = await axios.get(
-        '/api/insurance'
+        '/insurance'
     );
     return response.data.data;
 }
@@ -86,92 +86,92 @@ const Contract = () => {
         const fetchEvent = async () => {
             const data = await getInsurances();
             console.log(data[insu-1].contractList);
-            makeQuaterData(data[insu-1].contractList);
+            // makeQuaterData(data[insu-1].contractList);
             console.log("whatthe");
         }
         fetchEvent();
     }, [insu])
 
-    const makeQuaterData = (items) => {
-        console.log(items);
-        let quater = [0, 0, 0, 0];
-        let channel = [0, 0, 0];
-        let age = [0,0,0,0,0];
-        items.forEach(d => {
-            const currentDate = new Date(d.contractDate.registerDate);
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
-            const date = currentDate.getDate();
-
-            if (month >= 1 && month < 4) {
-                quater[0] += 1;
-            } else if (month >= 4 && month < 7) {
-                quater[1] += 1;
-            } else if (month >= 7 && month < 10) {
-                quater[2] += 1;
-            } else {
-                quater[3] += 1;
-            }
-            console.log(quater);
-        });
-        items.forEach(d => {
-            const ch = d.channel;
-            if (ch === "온라인")
-                channel[0] += 1;
-            else if (ch === "전화")
-                channel[1] += 1;
-            else 
-                channel[2] += 1;
-            console.log(channel);
-        });
-        items.forEach(d => {
-            const age = d.clientAge;
-            if (age === "온라인")
-                channel[0] += 1;
-            else if (age === "전화")
-                channel[1] += 1;
-            else
-                channel[2] += 1;
-            console.log(channel);
-        });
-
-        setQuaterData({
-            labels: ["1분기", "2분기", "3분기", "4분기"],
-            datasets: [
-                {
-                    label : "계약 고객",
-                    backgroundColor : "#A0CBED",
-                    barThickness: 40,
-                    fill : true,
-                    data : quater
-                }
-            ]
-        });
-        setChannelData({
-            labels: ["온라인", "전화", "대면"],
-            datasets: [
-                {
-                    label : "온라인, 전화, 대면",
-                    backgroundColor : ["#ff3d67", "#059bff", "#ffc233"],
-                    cutout : '50%',
-                    fill : false,
-                    data : channel
-                }
-            ]
-        });
-        setAgeData({
-            labels: ["20대", "30대", "40대", "50대", "60대 이상"],
-            datasets: [
-                {
-                    label : "온라인, 전화, 대면",
-                    backgroundColor : ["#ff3d67", "#059bff", "#ffc233", "#F7E7D6", "#F29D9D"],
-                    cutout : '50%',
-                    fill : false,
-                    data : [5, 10, 15, 10, 5]
-                }
-            ]
-        });
-    }
+    // const makeQuaterData = (items) => {
+    //     console.log(items);
+    //     let quater = [0, 0, 0, 0];
+    //     let channel = [0, 0, 0];
+    //     let age = [0,0,0,0,0];
+    //     items.forEach(d => {
+    //         const currentDate = new Date(d.contractDate.registerDate);
+    //         const year = currentDate.getFullYear();
+    //         const month = currentDate.getMonth();
+    //         const date = currentDate.getDate();
+    //
+    //         if (month >= 1 && month < 4) {
+    //             quater[0] += 1;
+    //         } else if (month >= 4 && month < 7) {
+    //             quater[1] += 1;
+    //         } else if (month >= 7 && month < 10) {
+    //             quater[2] += 1;
+    //         } else {
+    //             quater[3] += 1;
+    //         }
+    //         console.log(quater);
+    //     });
+    //     items.forEach(d => {
+    //         const ch = d.channel;
+    //         if (ch === "온라인")
+    //             channel[0] += 1;
+    //         else if (ch === "전화")
+    //             channel[1] += 1;
+    //         else
+    //             channel[2] += 1;
+    //         console.log(channel);
+    //     });
+    //     items.forEach(d => {
+    //         const age = d.clientAge;
+    //         if (age === "온라인")
+    //             channel[0] += 1;
+    //         else if (age === "전화")
+    //             channel[1] += 1;
+    //         else
+    //             channel[2] += 1;
+    //         console.log(channel);
+    //     });
+    //
+    //     setQuaterData({
+    //         labels: ["1분기", "2분기", "3분기", "4분기"],
+    //         datasets: [
+    //             {
+    //                 label : "계약 고객",
+    //                 backgroundColor : "#A0CBED",
+    //                 barThickness: 40,
+    //                 fill : true,
+    //                 data : quater
+    //             }
+    //         ]
+    //     });
+    //     setChannelData({
+    //         labels: ["온라인", "전화", "대면"],
+    //         datasets: [
+    //             {
+    //                 label : "온라인, 전화, 대면",
+    //                 backgroundColor : ["#ff3d67", "#059bff", "#ffc233"],
+    //                 cutout : '50%',
+    //                 fill : false,
+    //                 data : channel
+    //             }
+    //         ]
+    //     });
+    //     setAgeData({
+    //         labels: ["20대", "30대", "40대", "50대", "60대 이상"],
+    //         datasets: [
+    //             {
+    //                 label : "온라인, 전화, 대면",
+    //                 backgroundColor : ["#ff3d67", "#059bff", "#ffc233", "#F7E7D6", "#F29D9D"],
+    //                 cutout : '50%',
+    //                 fill : false,
+    //                 data : [5, 10, 15, 10, 5]
+    //             }
+    //         ]
+    //     });
+    // }
 
     // Handler
     const handleCategoryChange = useCallback((value, info) => {

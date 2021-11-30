@@ -12,8 +12,6 @@ import Search from "antd/es/input/Search";
 import EvaluationModal from "../../components/EvaluationModal";
 
 async function getTables() {
-    //http://hminsu.net/api/employee/compensation
-
     const response = await axios.get(
         '/api/employee/compensation'
     );

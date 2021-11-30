@@ -7,7 +7,7 @@ import moment from 'moment'
 
 async function getInsurance() {
     const response = await axios.get(
-        '/api/insurance'
+        '/insurance'
     );
     return response.data.data;
 }
