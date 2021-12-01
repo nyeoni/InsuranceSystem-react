@@ -36,7 +36,6 @@ export const useAsync = (callback, setData, deps = [], skip = false) => {
         dispatch({ type: 'LOADING' });
         try {
             const data = await callback();
-            console.log('coverage, documents 가 null', data)
             dispatch({ type: 'SUCCESS', data });
             if (setData != null)
                 setData(data);

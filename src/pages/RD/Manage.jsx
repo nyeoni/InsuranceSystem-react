@@ -11,7 +11,7 @@ import '../../css/Detail.css'
 
 async function getInsurances() {
     const response = await axios.get(
-        'http://hminsu.net/api/insurance'
+        '/insurance'
     );
     return response.data.data;
 }
@@ -64,9 +64,9 @@ const Manage = ({match, history}) => {
         },
         {
             title: '보험분류',
-            key: 'category',
+            key: 'insuranceCategory',
             width: '15%',
-            dataIndex: 'category',
+            dataIndex: 'insuranceCategory',
             filters: [
                 {
                     text: '자동차보험',
@@ -85,28 +85,16 @@ const Manage = ({match, history}) => {
                     value: 'Traveller',
                 }
             ],
-            onFilter: (value, record) => record.category.indexOf(value) === 0,
-            render: category => {
-                let color;
-                let value;
-                if (category === "자동차") {
-                    value = "자동차보험";
-                    color = 'geekblue';
-                } else if (category === "운전자") {
-                    value = "운전자보험";
-                    color = 'green';
-                } else if (category === "화재") {
-                    value = "화재보험";
-                    color = 'volcano';
-                } else {
-                    value = "여행보험";
-                    color = 'yellow';
+            onFilter: (value, record) => record.insuranceCategory.indexOf(value) === 0,
+            render: insuranceCategory => {
+                let color, value;
+                switch (insuranceCategory){
+                    case '자동차': value = '자동차보험'; color = 'geekblue'; break;
+                    case '운전자': value = '운전자보험'; color = 'green'; break;
+                    case '화재': value = '화재보험'; color = 'volcano'; break;
+                    case '여행': value = '여행보험'; color = 'yellow'; break;
                 }
-                return (
-                    <Tag color={color} key={category}>
-                        {value}
-                    </Tag>
-                );
+                return (<Tag color={color} key={insuranceCategory}>{value}</Tag>);
             }
         },
         {

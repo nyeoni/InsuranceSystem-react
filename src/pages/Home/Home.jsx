@@ -8,7 +8,6 @@ import MyCalendar from "../../components/Calendar";
 import {Link} from "react-router-dom";
 import img from "../../images/company.jpeg";
 
-
 const HomeWrapper = styled.div`
     width: 100%;
     height: 100%;
@@ -87,11 +86,12 @@ const contentStyle = {
 };
 
 const Home = () => {
-    // const userName = useSelector(state => (state.user.data.name));
+    // const userID = useSelector(state => (state.user.data.name));
     return (
         <HomeWrapper>
             <Welcome>
-                Welcome, 김나연님 !
+                {/*Welcome, {userID}님 !*/}
+                Welcome, 사용자님 !
             </Welcome>
             <LargeContainer>
                 <SmallContainer>
@@ -106,8 +106,6 @@ const Home = () => {
                     <hr/>
                 </SmallContainer>
             </LargeContainer>
-
-
         </HomeWrapper>
     )
 }
