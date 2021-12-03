@@ -1,25 +1,11 @@
-import React, {useEffect, useRef, useState} from "react";
-import {Button, Form, Modal} from "react-bootstrap";
-import axios from "axios";
-
-async function postSignUp(signUpData) {
-    const url = '/join';
-    const response = await axios({
-        method: 'post',
-        url: url,
-        data: {...signUpData,},
-        headers: {'content-type': 'application/json'}
-    }).then((response) => {
-        return response.data.data;
-    }).catch(err => {
-        console.log(err.message);
-    });
-    return response;
-}
+import React, {useEffect, useRef, useState} from 'react';
+import {Form, Input, Modal, Button} from 'antd';
+import {SelectOptions} from '../../components/SelectOptions';
+import {post} from "../../library/apiPost";
 
 const SignUp = (props) => {
-    const formRef = useRef(null);
-    const [signUpData, setSignUpData] = useState({
+    const {visible, setVisible} = props;
+    const [state, setState] = useState({
         loginId: '',
         password: '',
         name: '',
@@ -29,93 +15,83 @@ const SignUp = (props) => {
         phoneNumber: ''
     })
 
+    const departmentOptions = [
+        {label: '개발', value: '개발'},
+        {label: '영업', value: '영업'},
+        {label: 'UW', value: 'UW'},
+        {label: '보상', value: '보상'},
+        {label: '관리', value: '관리'},
+    ]
+    const positionOptions = [
+        {label: '사장', value: '사장'},
+        {label: '상무', value: '상무'},
+        {label: '부장', value: '부장'},
+        {label: '차장', value: '차장'},
+        {label: '과장', value: '과장'},
+        {label: '대리', value: '대리'},
+        {label: '사원', value: '사원'},
+        {label: '인턴', value: '인턴'},
+
+    ]
 
     const handleChange = (event) => {
-        setSignUpData((signUpData) => ({
-            ...signUpData,
-            [event.target.name]: event.target.value,
-        }));
+        const {name, value} = event.target;
+        setState({...state, [name]: value});
+
     }
     useEffect(() => {
-        console.log('useEffect ',signUpData);
-    }, [signUpData])
+        console.log('useEffect ',state);
+    }, [state])
 
-
-    async function handleSubmit(event) {
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        } else {
-            const data = await postSignUp(signUpData);
-            formRef.current.reset();
-        }
+    const handleSubmit = async () =>{
+        const url = '/join';
+        const payload = {...state}
+        const data = await post(url, payload);
+        console.log(data)
     }
 
-    const closeModal = () => {props.setVisible(false);}
+    const closeModal = () => {setVisible(false);}
     return(
-            <Modal show={props.visible} onHide={closeModal} backdrop="static" keyboard={false} size={"lg"}>
-                <Modal.Header closeButton>
-                    <Modal.Title>회원가입</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                   <Form ref={formRef} id="signUpForm" onSubmit={handleSubmit}>
-                       <Form.Group className="mb-3" controlId="formId">
-                           <Form.Label>Login ID</Form.Label>
-                           <Form.Control name={'loginId'} value={signUpData.loginId} onChange={handleChange} required
-                                         type="text" placeholder="Login에 사용할 ID" />
-                       </Form.Group>
+            <Modal title={'회원정보 입력'} centered
+                   width={'600px'}
+                   visible={visible}
+                   onCancel={closeModal}
 
-                       <Form.Group className="mb-3" controlId="formPassword">
-                           <Form.Label>Password</Form.Label>
-                           <Form.Control name={'password'} value={signUpData.password} onChange={handleChange} required
-                               type="password" placeholder="Password" />
-                       </Form.Group>
+                   footer={[
+                       <Button key={'close'} onClick={closeModal}>닫기</Button>,
+                       <Button key={'submit'} type={'primary'} onClick={handleSubmit}>회원가입 신청</Button>
+                   ]}
+            >
+                <Form id={'signUpForm'} onFinish={handleSubmit}
+                      labelCol={{span: 4}} wrapperCol={{span: 20}} layout="horizontal"
+                >
+                    <Form.Item label={'Login ID'} labelAlign={"right"} required={true}>
+                        <Input name='loginId' value={state.loginId} onChange={handleChange} placeholder='로그인에 사용할 아이디를 입력하세요.'/>
+                    </Form.Item>
 
-                       <Form.Group className="mb-3" controlId="formName">
-                           <Form.Label>Username</Form.Label>
-                           <Form.Control name={'name'} value={signUpData.name} onChange={handleChange} required
-                               type="text" placeholder="성명" />
-                       </Form.Group>
+                    <Form.Item label={'password'} labelAlign={"right"}>
+                        <Input type={'password'} value={state.password} onChange={handleChange} placeholder={'비밀번호를 설정하세요.'}/>
+                    </Form.Item>
 
-                       <Form.Group className="mb-3" controlId="formDepartmentSelect">
-                           <Form.Label>Department</Form.Label>
-                           <Form.Control name={'department'} value={signUpData.department} onChange={handleChange} required
-                               as={"select"}>
-                               <option>소속 부서를 선택하세요</option>
-                               <option value="개발">개발</option>
-                               <option value="영업">영업</option>
-                               <option value="보상">보상</option>
-                           </Form.Control>
-                       </Form.Group>
+                    <Form.Item label={'Username'} labelAlign={"right"}>
+                        <Input name='name' value={state.name} onChange={handleChange} placeholder='사용자의 성명을 입력하세요.'/>
+                    </Form.Item>
 
-                       <Form.Group className="mb-3" controlId="formPositionSelect">
-                           <Form.Label>Position</Form.Label>
-                           <Form.Control name={'companyPosition'} value={signUpData.companyPosition} onChange={handleChange} required
-                                         as={"select"}>
-                               <option>직급을 선택하세요</option>
-                               <option value="사장">사장</option>
-                               <option value="상무">상무</option>
-                               <option value="인턴">인턴</option>
-                           </Form.Control>
-                       </Form.Group>
-                       <Form.Group className="mb-3" controlId="formEmail">
-                           <Form.Label>Email Address</Form.Label>
-                           <Form.Control name={'email'} value={signUpData.email} onChange={handleChange} required
-                                         type="email" placeholder="example12@xmail.com" />
-                       </Form.Group>
+                    <SelectOptions onChangeMethod={handleChange} selectedName='department' selectValue={state.department} required={false}
+                                   label={'소속 부서'} selectPlaceholder={'소속된 부서를 선택하세요'} optionList={departmentOptions}/>
 
-                       <Form.Group className="mb-3" controlId="formPhoneNumber">
-                           <Form.Label>연락처</Form.Label>
-                           <Form.Control name={'phoneNumber'} value={signUpData.phoneNumber} onChange={handleChange} required
-                                         type="text" placeholder="개인 연락처를 입력하세요" />
-                       </Form.Group>
-                   </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={closeModal}>취소</Button>
-                    <Button type={"submit"} form={"signUpForm"} variant="primary">회원가입 신청</Button>
-                </Modal.Footer>
+                    <SelectOptions onChangeMethod={handleChange} selectedName='companyPosition' selectValue={state.companyPosition} required={false}
+                                   label={'직급'} selectPlaceholder={'직급을 선택하세요'} optionList={positionOptions}/>
+
+                    <Form.Item label={'Email'} labelAlign={"right"}>
+                        <Input type={'email'} name='email' value={state.email} onChange={handleChange} placeholder='사용자의 Email 입력하세요.'/>
+                    </Form.Item>
+
+                    <Form.Item label={'연락처'} labelAlign={"right"}>
+                        <Input name='phoneNumber' value={state.phoneNumber} onChange={handleChange} placeholder='사용자의 연락처를 입력하세요.'/>
+                    </Form.Item>
+                </Form>
+
             </Modal>
     )
 }

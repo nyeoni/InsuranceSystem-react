@@ -35,11 +35,8 @@ const Create = () => {
         const {name, value} = event.target;
         if(Array.isArray(value)){
             setState({...state, [name] : [...value]});
-            console.log('array val', value)
         } else{
             setState({...state, [name]: value});
-            console.log('single val', name)
-            console.log('single val', value)
         }
     }
 
@@ -62,7 +59,7 @@ const Create = () => {
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>
             <Form form={form} labelCol={{span: 10}} wrapperCol={{span: 14}} layout="vertical" size={"large"} onFinish={handleSubmit}
-                  initialValues={{basePrice: 100000, createEmployeeId: '1'}}
+                  // initialValues={{basePrice: 100000, createEmployeeId: '1'}}
             >
                 <Form.Item rules={[{required: true, message: '보험의 이름을 입력해주세요!'}]} name="name" label="보험상품 이름" >
                     <Input name="name" value={state.name} onChange={handleChange} placeholder="예시) XX 자동차 보험"/>
