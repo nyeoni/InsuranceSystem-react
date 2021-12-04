@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import '../../css/Login.css';
-import {message} from "antd";
+import { notification} from "antd";
 import {Link, useHistory} from "react-router-dom";
 import apiAxios from "../../apiAxios";
 import {Wrapper} from "../../components/Wrapper";
@@ -55,7 +55,8 @@ const Login = ({onSetUser}) => {
                 data: null,
                 result: 'FAIL'
             })
-            message.error(error.message);
+            notification["error"]({message: 'Error!', description: error.response.message});
+            // message.error(error.response.message);
             // alert("아이디 혹은 비밀번호를 잘못입력하셨습니다.");
             setInfo({
                 loginId: '',

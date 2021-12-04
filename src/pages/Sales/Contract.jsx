@@ -53,13 +53,14 @@ async function getInsurances() {
     );
     return response.data.data;
 }
-
+// ID, 보험이름, 고객이름, 관리인아이디, 채널
+// 분기는 안하는걸로
 const Contract = () => {
     const title = "계약관리"
     const subtitle = "보험상품의 대시보드를 통해 잠재적 가치 창출을 할 수 있는 페이지입니다."
     const [data, setData] = useState([]);
     const [searchData, setSearchData] = useState({});
-    const [option, setOption] = useState("전체");
+    const [option, setOption] = useState('전체');
     const [category, setCategory] = useState("HM 운전자 보험");
     const [skip, setSkip] = useState(false);
     const settingData = (data) => {
@@ -86,8 +87,6 @@ const Contract = () => {
         const fetchEvent = async () => {
             const data = await getInsurances();
             console.log(data[insu-1].contractList);
-            // makeQuaterData(data[insu-1].contractList);
-            console.log("whatthe");
         }
         fetchEvent();
     }, [insu])
@@ -135,18 +134,6 @@ const Contract = () => {
     //         console.log(channel);
     //     });
     //
-    //     setQuaterData({
-    //         labels: ["1분기", "2분기", "3분기", "4분기"],
-    //         datasets: [
-    //             {
-    //                 label : "계약 고객",
-    //                 backgroundColor : "#A0CBED",
-    //                 barThickness: 40,
-    //                 fill : true,
-    //                 data : quater
-    //             }
-    //         ]
-    //     });
     //     setChannelData({
     //         labels: ["온라인", "전화", "대면"],
     //         datasets: [
@@ -178,21 +165,13 @@ const Contract = () => {
         setCategory(value);
         setInsu(info.key);
         console.log(info.key);
-        // makeQuaterData(targetData.contractList);
     }, [])
 
     const handleEmployeeClick = useCallback((e) => {
-        if (e.key === '1')
-        {
-            console.log('click', e.key);
-            setOption("전체");
-        }
-        else if (e.key === '2')
-        {
-            console.log('click', e.key);
-            setOption("사원ID");
-        }
-    }, [])
+        switch (e.key){
+            case '전체조회': setOption('전체'); break;
+            case '직원ID': setOption('사원ID'); break;
+        }}, [])
 
     const handleDateChange = useCallback((date, dateString) => {
             console.log(date, dateString);
@@ -200,11 +179,11 @@ const Contract = () => {
 
     const menu = (
         <Menu onClick={handleEmployeeClick}>
-            <Menu.Item key="1">
-                전체
+            <Menu.Item key='전체조회'>
+                전체 조회
             </Menu.Item>
-            <Menu.Item key="2">
-                사원ID
+            <Menu.Item key='직원ID'>
+                관리 직원ID
             </Menu.Item>
         </Menu>
     );
@@ -246,7 +225,7 @@ const Contract = () => {
         <Wrapper title={title} subtitle={subtitle}>
             <FilterPannel>
                 <Space>
-                    <DatePicker placeholder="2020" onChange={handleDateChange} picker="year" />
+                    <DatePicker placeholder="2021" onChange={handleDateChange} picker="year" />
                     <Select defaultValue={category} style={{ width: 150, alignContent: 'space-between' }} onChange={handleCategoryChange}>
                         {data.map(data =>
                             <Option key={data.id} value={data.name}>{data.name}</Option>
@@ -318,7 +297,6 @@ const Contract = () => {
                                     text: '연령대 비율',
                                     fontSize: 16
                                 },
-
                             }}} />
                     </div>
                 </SmallContainer>

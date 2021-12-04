@@ -25,7 +25,6 @@ const ClientDetail = (props) =>{
                 <Descriptions.Item label="주민번호" span={2}>
                     {clickedRecord.privacy?.rrn.rrnFront} - {clickedRecord.privacy?.rrn.rrnBack}
                 </Descriptions.Item>
-                {/*todo: optional rendering in map loop*/}
                 <Descriptions.Item label="건물번호" span={3}>
                     {clickedRecord.additionalInfo?.buildingNumber}
                 </Descriptions.Item>

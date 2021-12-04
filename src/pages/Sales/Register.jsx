@@ -7,7 +7,7 @@ import {InputGroup} from "react-bootstrap";
 import {post} from "../../library/apiPost";
 
 
-const AddClient = () => {
+const Register = () => {
     const title = "고객가입"
     const subtitle = "HM 손해보험의 고객을 등록하기 위한 페이지입니다."
     const [form] = Form.useForm();
@@ -106,29 +106,29 @@ const AddClient = () => {
                     </Col>
                 </Row>
 
-                <Form.Item requiredMark={"optional"} rules={[{required: false,}]} name="address" label="주소" >
+                <Form.Item rules={[{required: false,}]} name="address" label="주소 (optional)" >
                     <Input name="address" value={state.address} onChange={handleChange} placeholder="고객의 주소를 입력하세요"/>
                 </Form.Item>
 
-                <Form.Item requiredMark={"optional"} rules={[{required: false, type: 'email'}]} name="email" label="Email" >
+                <Form.Item rules={[{required: false, type: 'email'}]} name="email" label="Email (optional)" >
                     <Input name="email" value={state.email} onChange={handleChange} placeholder="고객의 email 주소를 입력하세요"/>
                 </Form.Item>
 
-                <Form.Item requiredMark={"optional"} rules={[{required: false, }]} name="phoneNumber" label="전화번호" >
+                <Form.Item rules={[{required: false, }]} name="phoneNumber" label="전화번호 (optional)" >
                     <Input name="phoneNumber" value={state.phoneNumber} onChange={handleChange} placeholder="고객의 연락처를 입력하세요"/>
                 </Form.Item>
 
-                <Form.Item requiredMark={"optional"} rules={[{required: false, }]} label="거래 은행">
+                <Form.Item rules={[{required: false, }]} label="거래 은행 (optional)">
                 <Row>
                     <Col span={6}>
-                        <SelectOptions selectedName={"bank"} selectValue={state.bank}
+                        <SelectOptions selectName={"bank"} selectValue={state.bank}
                                        onChangeMethod={handleChange} optionList = {bankCategory} required={false}/>
                     </Col>
                     <Col span={18}><Input style={{ display: 'inline-block', width: '100%'}} placeholder={`'-'를 포함한 계좌번호를 입력해주세요`}/></Col>
                 </Row>
                 </Form.Item>
                 {additionalInfo?.map((data) =>
-                    <Form.Item key={data.name} requiredMark={"optional"} rules={[{required: false, }]} name={data.name} label={data.label} >
+                    <Form.Item key={data.name} rules={[{required: false, }]} name={data.name} label={data.label + ' (optional)'}>
                         <Input name={data.name} value={data.value} onChange={handleChange}/>
                     </Form.Item>
                 )}
@@ -137,4 +137,4 @@ const AddClient = () => {
         </Wrapper>
     )
 }
-export default AddClient;
+export default Register;

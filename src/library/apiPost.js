@@ -8,15 +8,13 @@ export const post = async (url, payload, form) => {
         headers: {'content-type': 'application/json'},
         data: payload,
     }).then((response) => {
-        notification.open({message: 'Notification!', description: '전송 완료'});
+        notification["success"]({message: 'Success!', description: '전송에 성공하였습니다.'});
         form.resetFields();
         return response.data.data;
-    }).catch(err =>
-    {console.log(err.message);});
+    }).catch(err => {
+        console.log(err.message);
+        notification["error"]({message: 'Error!', description: err.response.message});
+    });
 }
-//분리된 함수에서 페이로드 이거 된거임
-// {"name":"분리한 보험",
-// "category":"자동차",
-// "description":"ㅇㅇ",
-// "conditions":{"startAge":11,"endAge":16,"rating":3}}
 // todo: 가끔씩 400뜨는거 무섭다...
+// todo: error message: 상황별 디버그, message 띄우기
