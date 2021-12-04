@@ -43,10 +43,10 @@ const SignUp = (props) => {
     }, [state])
 
     const handleSubmit = async () =>{
-        // const url = '/join';
+        const url = '/join';
         const payload = {...state}
-        // const data = await post(url, payload);
-        console.log(payload)
+        const data = await post(url, payload);
+        console.log(data)
         closeModal();
     }
 

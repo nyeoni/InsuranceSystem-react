@@ -21,6 +21,7 @@ const Underwriting = ({match, history}) => {
     const subtitle = "각 계약에 따른 인수심사로 조건을 평가하여 계약을 인수하는 페이지";
     const [visible, setVisible] = React.useState(false);
     const [clickedRecord, setClickedRecord] = React.useState([]);
+
     //contract
     const [data, setData] = useState([]);
     const [option, setOption] = useState("보험번호");
@@ -33,7 +34,6 @@ const Underwriting = ({match, history}) => {
     const [initialState, refetch] = useAsync(getContract, settingData, [getContract], skip);
     const { loading, error } = initialState;
     if (error) {return (<div>에러가 발생하였습니다.</div>);}
-    //
 
     const columns = [
         {

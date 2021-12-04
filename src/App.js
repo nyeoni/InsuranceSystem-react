@@ -12,8 +12,8 @@ function App() {
         <BrowserRouter>
             <Switch>
                 <Route path="/login" exact={true} render={() => <LoginContainer />} />
-                {/*<AuthRoute path="/" authenticated={authenticated} render={() => <Base />} />*/}
-                <Route path="/" render={() => <Base />} />
+                <AuthRoute path="/" authenticated={authenticated} render={() => <Base />} />
+                {/*<Route path="/" render={() => <Base />} />*/}
             </Switch>
         </BrowserRouter>
     );
