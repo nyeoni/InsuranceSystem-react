@@ -11,7 +11,7 @@ import Search from "antd/es/input/Search";
 
 async function getContract() {
     const response = await axios.get(
-        '/api/contract'
+        '/contract'
     );
     return response.data.data;
 }

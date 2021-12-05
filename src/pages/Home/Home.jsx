@@ -2,7 +2,7 @@ import React from "react";
 import {Wrapper} from "../../components/Wrapper";
 import styled from "styled-components";
 import {useSelector} from "react-redux";
-import {Carousel, Typography} from "antd";
+import {Carousel, Typography, List} from "antd";
 import Calendar from "../../components/Calendar";
 import MyCalendar from "../../components/Calendar";
 import {Link} from "react-router-dom";
@@ -70,6 +70,11 @@ const SmallContainer = styled.div`
     padding-left: 3px;
     background-color: white;
 `
+const MiddleContainer = styled(SmallContainer)`
+    width: 60%;
+    padding-left: 15px;
+    padding-right: 15px;
+`
 
 const Plus = styled.span`
    font-family: 'Noto Sans KR', sans-serif;
@@ -87,6 +92,7 @@ const contentStyle = {
 
 const Home = () => {
     const username = useSelector(state => (state.user.data.name));
+    const listItems=['dddd','aaaa']
     return (
         <HomeWrapper>
             <Welcome>
@@ -96,14 +102,13 @@ const Home = () => {
                 <SmallContainer>
                     <MyCalendar/>
                 </SmallContainer>
-                <SmallContainer>
-                    <Typography.Title style={{fontFamily: "'NanumSquare','Noto Sans KR', sans-serif"}} level={4}>공지사항 <Plus><Link to="/board">더보기</Link></Plus></Typography.Title>
+                <MiddleContainer>
+                    <Typography.Title level={4} style={{fontFamily: "'NanumSquare','Noto Sans KR', sans-serif"}}> 공지사항 <Plus><Link to="/board">더보기</Link></Plus></Typography.Title>
                     <hr/>
-                </SmallContainer>
-                <SmallContainer>
-                    <Typography.Title style={{fontFamily: "'NanumSquare','Noto Sans KR', sans-serif"}} level={4}>공지사항 <Plus><Link to="/board">더보기</Link></Plus></Typography.Title>
-                    <hr/>
-                </SmallContainer>
+                    <List
+                        dataSource={listItems}
+                        renderItem={item => <List.Item>{item}</List.Item>}/>
+                </MiddleContainer>
             </LargeContainer>
         </HomeWrapper>
     )

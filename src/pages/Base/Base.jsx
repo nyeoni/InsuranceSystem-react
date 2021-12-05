@@ -77,20 +77,20 @@ const Base = () => {
                                     </li>
                                 </ul>
                             </li>
-                            {/*<li>*/}
-                            {/*    <MyLink to="#">인수심사</MyLink>*/}
-                            {/*    <ul className="nav-flyout">*/}
-                            {/*        <li>*/}
-                            {/*            <MyLink to="/uw/underwriting">인수심사</MyLink>*/}
-                            {/*        </li>*/}
-                            {/*        <li>*/}
-                            {/*            <MyLink to="/uw/policy">인수정책</MyLink>*/}
-                            {/*        </li>*/}
-                            {/*        <li>*/}
-                            {/*            <MyLink to="/uw/lossmanage">손해율관리</MyLink>*/}
-                            {/*        </li>*/}
-                            {/*    </ul>*/}
-                            {/*</li>*/}
+                            <li>
+                                <MyLink to="#">인수심사</MyLink>
+                                <ul className="nav-flyout">
+                                    <li>
+                                        <MyLink to="/uw/underwriting">인수심사</MyLink>
+                                    </li>
+                                    <li>
+                                        <MyLink to="/uw/policy">인수정책</MyLink>
+                                    </li>
+                                    <li>
+                                        <MyLink to="/uw/lossmanage">손해율관리</MyLink>
+                                    </li>
+                                </ul>
+                            </li>
                             {/*<li>*/}
                             {/*    <MyLink to="#">보상지원</MyLink>*/}
                             {/*    <ul className="nav-flyout">*/}
