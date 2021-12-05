@@ -5,7 +5,7 @@ import {Row, Col, DatePicker, Form, Input, InputNumber, notification, Select, Bu
 import useAsync from "../../customHooks/useAsync";
 import moment from 'moment'
 import {SelectOptions} from "../../components/SelectOptions";
-import {post} from "../../library/apiPost";
+import {apiCall} from "../../library/ApiCall";
 
 async function getInsurance() {
     const response = await axios.get(
@@ -71,7 +71,7 @@ const Apply = () => {
             channel: state.channel,
             contractStatus: '계약신청'
         };
-        const data = await post(url, payload, form);
+        const data = await apiCall(url, 'post', payload, form);
         console.log(data);
     }
         return (

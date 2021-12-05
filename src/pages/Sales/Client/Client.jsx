@@ -123,18 +123,16 @@ const Client = ({ match, history }) => {
 
   // search utils
   function handleMenuClick(e) {
-    if (e.key === "1") {
-      console.log("click", e.key);
-      setOption("고객명");
-    } else if (e.key === "2") {
-      console.log("click", e.key);
-      setOption("전화번호");
+    switch(e.key){
+      case "고객명": setOption("고객명"); break;
+      case "전화번호": setOption("전화번호"); break;
+      default : setOption("고객명"); break;
     }
   }
   const menu = (
     <Menu onClick={handleMenuClick}>
-      <Menu.Item key="1">고객명</Menu.Item>
-      <Menu.Item key="2">전화번호</Menu.Item>
+      <Menu.Item key="고객명">고객명</Menu.Item>
+      <Menu.Item key="전화번호">전화번호</Menu.Item>
     </Menu>
   );
   const onSearch = (value) => {
@@ -145,7 +143,7 @@ const Client = ({ match, history }) => {
       console.log(value);
       let res = [];
       clients.forEach(function (d) {
-        if (d.phoneNumber.includes(value)) res.push(d);
+        if (d.privacy.phoneNumber.includes(value)) res.push(d);
       });
       setSearchData(res);
     } else if (option === "고객명") {

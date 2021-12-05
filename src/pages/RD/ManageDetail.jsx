@@ -1,44 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
-import useAsync from "../../customHooks/useAsync";
-import axios from "axios";
 import {Button, Row, Col, Form, Input, InputNumber, Select, Spin, Statistic, Tabs, Progress, notification} from "antd";
 import styled from "styled-components";
-import {Line, Bar, Doughnut} from "react-chartjs-2";
-import ManageUpdate from "./ManageUpdate";
-import {post} from "../../library/apiPost";
-
-async function getInsurance(id) {
-    const response = await axios.get(
-        `/insurance/${id}`
-    );
-    return response.data.data;
-}
-
-// async function updateInsurance(data, form, id) {
-//     const url = `/insurance/${id}`;
-//     const response = await axios({
-//         method: 'post',
-//         url: url,
-//         // data: data, todo: documents to string
-//         data: {
-//             ...data,
-//         },
-//         headers: {'content-type': 'application/json'}
-//     }).then((response) => {
-//         notification.open({
-//             message: 'Notification!',
-//             description:
-//                 '보험정보 전송 완료'
-//         })
-//         form.resetFields();
-//         return response.data.data;
-//     }).catch(err => {
-//         console.log(err.message);
-//     });
-//     return response;
-// }
-
+import {apiCall} from "../../library/ApiCall";
+import useAxios from "../../swr/useAxios";
+import {SelectOptions} from "../../components/SelectOptions";
 
 const StyledDiv = styled.div`
     display: flex;
@@ -57,173 +23,83 @@ const StyledDiv = styled.div`
 const ManageDetail = ({match}) => {
     const { id } = match.params;
     const [form] = Form.useForm();
-    const { TabPane } = Tabs;
+    const url = `/insurance/${id}`;
+    const insuranceCategory = [
+        {label: '자동차보험', value: '자동차'},
+        {label: '운전자보험 ', value: '운전자'},
+        {label: '화재보험', value: '화재'},
+        {label: '여행자보험', value: '여행'}
+    ];
 
-    const [newData, setNewData] = useState({
-        name: '',
-        category: '',
-        description: '',
-        conditions: {
-            startAge: '',
-            endAge: '',
-            rating: ''
-        },
-    });
-    const settingNewData = (data) => {
-        if (data) {
-            setNewData({...data,});
-            console.log("newData",data);
-        }
-    }
-    const [state] = useAsync(() => getInsurance(id), settingNewData,[id]);
-    const { loading, data: insurance, error } = state;
+    const { data: insurance, isLoading, isError } = useAxios(url, "get");
+    const [updateData, setUpdateData] = useState(insurance);
 
-    const [quaterData, setQuaterData] = useState({});
-    const [channelData, setChannelData] = useState({});
-    const makeQuaterData = (items) => {
-        console.log(items);
-        let quater = [0, 0, 0, 0];
-        let channel = [0, 0, 0];
-        items?.forEach(d => {
-            const currentDate = new Date(d.contractDate.registerDate);
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
-            const date = currentDate.getDate();
+    useEffect(() => {console.log(updateData)}, [updateData]);
 
-            if (month >= 1 && month < 4) {
-                quater[0] += 1;
-            } else if (month >= 4 && month < 7) {
-                quater[1] += 1;
-            } else if (month >= 7 && month < 10) {
-                quater[2] += 1;
-            } else {
-                quater[3] += 1;
-            }
-        });
-        items?.forEach(d => {
-            const ch = d.channel;
-            if (ch === "온라인")
-                channel[0] += 1;
-            else if (ch === "전화")
-                channel[1] += 1;
-            else
-                channel[2] += 1;
-        })
-
-        setQuaterData({
-            labels: ["1분기", "2분기", "3분기", "4분기"],
-            datasets: [
-                {
-                    label : "계약 고객",
-                    backgroundColor : "#A0CBED",
-                    barThickness: 40,
-                    fill : false,
-                    data : quater
-                }
-            ]
-        });
-        setChannelData({
-            labels: ["온라인", "전화", "대면"],
-            datasets: [
-                {
-                    label : "온라인, 전화, 대면",
-                    backgroundColor : ["#ff3d67", "#059bff", "#ffc233"],
-                    cutout : '50%',
-                    fill : false,
-                    data : channel
-                }
-            ]
-        });
-    }
-    useEffect(() => {
-        console.log(newData);
-        if (newData != {}) {
-            makeQuaterData(newData.contractList);
-        }
-    }, [newData]);
-
-    console.log(newData);
-    if (error) return <div>에러가 발생했습니다</div>;
-    if (!insurance || loading) {
-        return(
-            <Wrapper>
+    if (isError) return <div>에러가 발생했습니다</div>;
+    if (!insurance || isLoading) {
+        return(<Wrapper>
                 <Spin style={{textAlign: "center", width: "100%", height: "100%", marginTop: "200px"}}/>
-            </Wrapper>
-        );
+            </Wrapper>);
     }
-
-    function callback(key) {
-        console.log(key);
+    const handleChange = (event) =>{
+        const {name, value} = event.target;
+        if(typeof value === 'string'){
+            setUpdateData({...updateData, [name]: value});
+        } else if(name === 'conditions') {
+            setUpdateData({
+                ...updateData,
+                conditions: {...updateData.conditions,
+                [Object.keys(value)[0]]: Object.values(value)[0]}
+            })
+        }
     }
-
-    const options = {
-        plugins: {
-            legend: {
-                position: 'bottom',
-            },
-            title: {
-                display: true,
-                text: '분기별 계약 추세',
-            }
-        },
-
+    const handleSubmit = async () =>{
+        const payload = {...updateData};
+        const data = apiCall(url, 'put', {...updateData}, form);
+        console.log(data);
     }
+//exception
+    if (isError) {return <div>에러가 발생하였습니다.</div>;}
+    if (isLoading) {return <div>Loading</div>;}
+
     return(
         <Wrapper title={insurance.name} underline={false}>
-            {/*<div style={{marginTop: '1rem'}}>{insurance.description}</div>*/}
-            <Tabs style={{marginTop: '1rem'}} defaultActiveKey="1" onChange={callback}>
-                <TabPane tab="상품분석" key="1">
-                    <div style={{marginTop: '1rem'}}>
-                        <Row gutter={8}>
-                            <Col span={8}>
-                                <Statistic title="계약 수" value={112893} />
-                            </Col>
-                            <Col span={8}>
-                                <Statistic title="보상지급 계약 수" value={112893} />
-                            </Col>
-                            <Col span={8}>
-                                <Statistic title="중도해지 계약 수" value={112893} />
-                            </Col>
-                        </Row>
-                        <Row style={{marginTop:'1rem'}} gutter={8}>
-                            <Col span={8}>
-                                <Statistic title="위험률" value="13%" />
-                            </Col>
-                            <Col span={8}>
-                                <Statistic title="전체 차지 비율" value="15%" precision={2} />
-                            </Col>
-                            <Col span={8}>
-                                <Statistic title="이윤" value={111223000000} precision={2} />
-                            </Col>
-                        </Row>
-                        <StyledDiv>
-                            <div style={{width: '60%'}}>
-                                <Line data={quaterData} width={30} height={15} options={options}/>
-                            </div>
+            <Form form={form} initialValues={insurance} labelCol={{span: 10}} wrapperCol={{span: 14}} layout="vertical" size={"large"} onFinish={handleSubmit}>
+                <Form.Item rules={[{required: true, message: '보험의 이름을 입력해주세요!'}]} name="name" label="보험상품 이름" >
+                    <Input name="name" value={updateData.name} onChange={handleChange} placeholder="예시) XX 자동차 보험"/>
+                </Form.Item>
 
-                            <div style={{height: '300px', width: '40%', marginTop: '15px'}}>
-                                <Doughnut width={7} height={7} className="doughnut" data={channelData} options={{
-                                    maintainAspectRatio: false,
-                                    plugins: {
-                                        legend: {
-                                            position: 'bottom',
-                                        },
-                                        title: {
-                                            display: true,
-                                            text: '채널별 비율',
-                                            fontSize: 16
-                                        },
+                <SelectOptions onChangeMethod={handleChange} selectName='category' selectValue={updateData.category} selectRequired={true}
+                               selectLabel={'상품 항목'} selectPlaceholder={'상품의 종류를 선택하세요'} optionList={insuranceCategory}/>
 
-                                    }}} />
-                            </div>
-                        </StyledDiv>
+                <Row>
+                    <Col span={7}>
+                        <Form.Item wrapperCol={12} label="가입 연령대">
+                            <InputNumber style={{ display: 'inline-block', width: '45%', marginInlineEnd:'4px'}} placeholder="가입 최저 연령"
+                                         min={0} max={100.00} name="startAge" value={updateData.conditions.startAge}
+                                         onChange={(val)=>{handleChange({target: {name: 'conditions', value: {startAge: val}}});}}/>
 
-                    </div>
-                </TabPane>
-                <TabPane tab="상품수정" key="2">
-                    <ManageUpdate id = {id} form={form} newData={newData} setNewData={setNewData}/>
-                </TabPane>
-            </Tabs>
+                            <InputNumber style={{ display: 'inline-block', width: '45%'}} placeholder="가입 최고 연령"
+                                         min={0} max={100.00} name="endAge" value={updateData.conditions.endAge}
+                                         onChange={(val)=>{handleChange({target: {name: 'conditions', value: {endAge: val}}});}}/>
+                        </Form.Item>
+                    </Col>
+                    <Col span={7}>
+                        <Form.Item wrapperCol={12} name={"rating"} label="최소 신용등급">
+                            <InputNumber style={{ display: 'inline-block', width: '100%'}}
+                                         min={1} max={10} step="1" name="rating" value={updateData.conditions.rating}
+                                         onChange={(val)=>{handleChange({target: {name: 'conditions', value: {rating: val}}});}}/>
+                        </Form.Item>
+                    </Col>
+                </Row>
+
+                <Form.Item rules={[{required:true, message: '보험의 개괄적인 설명을 입력해주세요'}]} name={"description"} label="보험상품 개요">
+                    <Input.TextArea name="description" value={updateData.description} onChange={handleChange}/>
+                </Form.Item>
+
+                <Form.Item><Button style={{marginBottom : '10px'}} type="primary" htmlType="submit" value="Submit">Submit</Button></Form.Item>
+            </Form>
         </Wrapper>
     )
 }

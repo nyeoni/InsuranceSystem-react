@@ -9,6 +9,13 @@ const getFetcher = async (url) => {
   return res.data;
 };
 
+const putFetcher = async (url, body) => {
+  const res = await axios
+      .put(url, body, { withCredentials: true })
+      .then((res) => res.data);
+  return res.data;
+};
+
 const postFetcher = async (url, body) => {
   const res = await axios
     .post(url, body, { withCredentials: true })
@@ -18,11 +25,12 @@ const postFetcher = async (url, body) => {
 
 const useAxios = (url, method, body = null) => {
   const fetcher =
-    method === "get"
-      ? () => getFetcher(url)
+    method === "get" ? () => getFetcher(url)
       : method === "post"
-      ? () => postFetcher(url, body)
-      : console.log("fuckyou");
+            ? () => postFetcher(url, body)
+            : method === "put"
+                ? () => putFetcher(url, body)
+                : console.log("axios fetcher error");
   const { data, error } = useSWR(url, fetcher);
 
   console.log("useSWR DATA", data);

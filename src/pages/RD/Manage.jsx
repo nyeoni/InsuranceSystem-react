@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
 import {DataTable2} from "../../components/DataTable2";
 import {Button, Dropdown, Input, Menu, message, Space, Tag} from "antd";
@@ -8,43 +8,21 @@ import {DownOutlined} from "@ant-design/icons";
 import Search from "antd/es/input/Search";
 import 'antd/dist/antd.css';
 import '../../css/Detail.css'
-
-async function getInsurances() {
-    const response = await axios.get(
-        '/insurance'
-    );
-    return response.data.data;
-}
+import useAxios from "../../swr/useAxios";
 
 const Manage = ({match, history}) => {
     const title = "상품관리"
     const subtitle = "HM 보험회사의 상품들을 수정하고 삭제할 수 있는 페이지 입니다"
-    const [data, setData] = useState([]);
+    const { data: insurance, isLoading, isError } = useAxios("/insurance", "get")
     const [option, setOption] = useState("보험명");
     const [searchData, setSearchData] = useState([]);
-    const [skip, setSkip] = useState(false);
-    const settingData = (data) => {
-        if (data) {
-            setData(data);
-            setSearchData(data);
-            setSkip(true);
-        } else {
-            console.log("데이터 설정 실패");
-        }
-    }
-    const [initialState, refetch] = useAsync(getInsurances, settingData, [getInsurances], skip);
-    const { loading, error } = initialState;
 
-    function handleMenuClick(e) {
-        if (e.key === '1')
-        {
-            console.log('click', e.key);
-            setOption("보험명");
-        }
-        else if (e.key === '2')
-        {
-            console.log('click', e.key);
-            setOption("보험번호");
+    useEffect(() => {setSearchData(insurance);},[insurance]);
+
+    function handleMenuClick(event) {
+        switch (event.key){
+            case "보험명": setOption("보험명"); break;
+            case "보험번호": setOption("보험번호"); break;
         }
     }
 
@@ -86,15 +64,15 @@ const Manage = ({match, history}) => {
                 }
             ],
             onFilter: (value, record) => record.insuranceCategory.indexOf(value) === 0,
-            render: insuranceCategory => {
+            render: category => {
                 let color, value;
-                switch (insuranceCategory){
+                switch (category){
                     case '자동차': value = '자동차보험'; color = 'geekblue'; break;
                     case '운전자': value = '운전자보험'; color = 'green'; break;
                     case '화재': value = '화재보험'; color = 'volcano'; break;
                     case '여행': value = '여행보험'; color = 'yellow'; break;
                 }
-                return (<Tag color={color} key={insuranceCategory}>{value}</Tag>);
+                return (<Tag color={color} key={category}>{value}</Tag>);
             }
         },
         {
@@ -110,47 +88,32 @@ const Manage = ({match, history}) => {
     ];
     const menu = (
         <Menu onClick={handleMenuClick}>
-            <Menu.Item key="1">
+            <Menu.Item key="보험명">
                 보험명
             </Menu.Item>
-            <Menu.Item key="2">
+            <Menu.Item key="보험번호">
                 보험번호
             </Menu.Item>
         </Menu>
     );
 
-    if (error) {
-        return (<div>에러가 발생하였습니다.</div>
-        );
-    }
+    if (isError) {return (<div>에러가 발생하였습니다.</div>);}
+    if (isLoading) {return (<div>에러가 발생하였습니다.</div>);}
 
     const onRow = (record, rowIndex) => {
-        return {
-            onClick: () => {
-                history.push(`${match.url}/${record.id}`);
-            },
-        };
+        return {onClick: () => {history.push(`${match.url}/${record.id}`);},};
     };
 
     const onSearch = value => {
-        if (value === "")
-        {
-            setSearchData(data);
+        if (value === "") {
+            setSearchData(insurance);
         }
-        else if (option === "보험번호")
-        {
-            console.log("number");
-            console.log(value);
-            setSearchData(
-                data.filter(d => d.id === value)
-            )
+        else if (option === "보험번호") {
+            setSearchData(insurance.filter(d => d.id === value))
         }
-        else if (option === "보험명")
-        {
-            console.log("name");
-            console.log(value);
+        else if (option === "보험명") {
             let res = [];
-            data.forEach(function (d){
+            insurance.forEach(function (d){
                 if (d.name.includes(value))
                     res.push(d);
             })
@@ -166,9 +129,9 @@ const Manage = ({match, history}) => {
                         {option} <DownOutlined />
                     </Button>
                 </Dropdown>
-                <Search placeholder="검색할 내용" allowClear onSearch={onSearch} style={{ width: 300 }} />
+                <Search placeholder="검색할 내용" allowClear style={{ width: 300 }} />
             </Space>
-            <DataTable2 onRow={onRow} loading={loading} dataSource={searchData} columns = {columns} title = {title}/>
+            <DataTable2 onRow={onRow} loading={isLoading} dataSource={searchData} columns = {columns} title = {title}/>
         </Wrapper>
     )
 }

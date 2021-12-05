@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {SelectOptions} from "../../components/SelectOptions";
 import {InputGroup} from "react-bootstrap";
-import {post} from "../../library/apiPost";
+import {apiCall} from "../../library/ApiCall";
 
 
 const Register = () => {
@@ -69,7 +69,7 @@ const Register = () => {
                 }
             };
         console.log("핸들써밋 페이로드" + JSON.stringify(payload));
-        const data = await post(url, payload, form);
+        const data = await apiCall(url, 'post', payload, form);
         console.log(data);
     }
     const bankCategory = [
@@ -89,6 +89,10 @@ const Register = () => {
                         <Radio name={'gender'} value="MALE">Male</Radio>
                         <Radio name={'gender'} value="FEMALE">Female</Radio>
                     </Radio.Group>
+                </Form.Item>
+
+                <Form.Item rules={[{required: true, message: '고객의 나이를 입력해주세요!'}]} name="age" label="가입고객 나이" >
+                    <Input name="age" value={state.age} onChange={handleChange} placeholder="고객의 나이을 입력하세요"/>
                 </Form.Item>
 
                 <Row>
