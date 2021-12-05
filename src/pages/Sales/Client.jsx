@@ -101,7 +101,7 @@ const Client = ({match, history}) => {
         },
         {
             title: '전화번호',
-            dataIndex: 'phoneNumber',
+            dataIndex: ['privacy', 'phoneNumber'],
             key: 'phoneNumber',
             width: '20%',
             render: text => <a>{text}</a>,

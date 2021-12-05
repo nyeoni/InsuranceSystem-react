@@ -58,16 +58,13 @@ const Create = () => {
 
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>
-            <Form form={form} labelCol={{span: 10}} wrapperCol={{span: 14}} layout="vertical" size={"large"} onFinish={handleSubmit}
-                  // initialValues={{basePrice: 100000, createEmployeeId: '1'}}
-            >
+            <Form form={form} labelCol={{span: 10}} wrapperCol={{span: 14}} layout="vertical" size={"large"} onFinish={handleSubmit}>
                 <Form.Item rules={[{required: true, message: '보험의 이름을 입력해주세요!'}]} name="name" label="보험상품 이름" >
                     <Input name="name" value={state.name} onChange={handleChange} placeholder="예시) XX 자동차 보험"/>
                 </Form.Item>
 
-                <SelectOptions onChangeMethod={handleChange} selectedName='category' selectValue={state.category} required={true}
-                               label={'상품 항목'} selectPlaceholder={'상품의 종류를 선택하세요'} optionList={insuranceCategory}/>
-
+                <SelectOptions onChangeMethod={handleChange} selectName='category' selectValue={state.category} selectRequired={true}
+                               selectLabel={'상품 항목'} selectPlaceholder={'상품의 종류를 선택하세요'} optionList={insuranceCategory}/>
 
                 <Row>
                     <Col span={7}>

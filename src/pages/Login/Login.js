@@ -1,13 +1,13 @@
 import React, {useState} from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import '../../css/Login.css';
-import {message} from "antd";
+import { notification} from "antd";
 import {Link, useHistory} from "react-router-dom";
 import apiAxios from "../../apiAxios";
 import {Wrapper} from "../../components/Wrapper";
 import axios from "axios";
 import SignUp from "./SignUp";
-
+import user from "../../redux/modules/user";
 
 const Login = ({onSetUser}) => {
     //state & variables
@@ -47,16 +47,22 @@ const Login = ({onSetUser}) => {
             const data = await getUser(info);
             console.log("login method");
             onSetUser(data);
+            console.log(data);
             history.replace("/");
         } catch (error) {
-            console.log('error', error.response);
+            if (error.response) {
+                console.error('Failed with response', error.response.data);
+                notification["error"]({message: 'Error!', description: error.response.data.message});
+            } else if (error.request) {
+                console.error('Failed request', error)
+            } else {
+                console.error('Failed in general', error)
+            }
             onSetUser({
                 status: 500,
                 data: null,
                 result: 'FAIL'
             })
-            message.error(error.message);
-            // alert("아이디 혹은 비밀번호를 잘못입력하셨습니다.");
             setInfo({
                 loginId: '',
                 password: ''

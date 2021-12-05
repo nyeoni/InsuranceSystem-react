@@ -4,21 +4,21 @@ import PropTypes from "prop-types";
 
 export const SelectOptions = (props) => {
     useEffect(() => {
-        console.log('useEffect in select ',value);
+        console.log('useEffect in select ', options);
     })
     const {
-        selectedName: name,
+        selectName: name,
         selectValue: value,
         selectPlaceholder: placeholder,
         onChangeMethod: handleChange,
-        label,
-        optionList,
-        required} = props;
+        selectLabel: label,
+        optionList: options,
+        selectRequired: required} = props;
     return (
         <Form.Item rules={[{required: required, message: {placeholder}}]} name={name} label={label}>
             <Select value={value||undefined} placeholder={placeholder}
                     onChange={val => handleChange({target: {name: name, value: val}})}>
-                {optionList?.map(option => {
+                {options?.map(option => {
                     return(
                         <Select.Option key={option.value} value={option.value}>{option.label}</Select.Option>
                     )
@@ -29,9 +29,11 @@ export const SelectOptions = (props) => {
 }
 
 SelectOptions.propTypes = {
-    selectedName: PropTypes.string,
+    selectName: PropTypes.string,
     selectValue: PropTypes.any,
     selectPlaceholder: PropTypes.string,
+    selectLabel: PropTypes.string,
+    selectRequired: PropTypes.bool,
+    optionList : PropTypes.array,
     onChangeMethod: () => {},
-    // optionList : PropTypes.arrayOf(PropTypes.string)
 }

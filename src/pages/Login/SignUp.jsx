@@ -37,10 +37,9 @@ const SignUp = (props) => {
     const handleChange = (event) => {
         const {name, value} = event.target;
         setState({...state, [name]: value});
-
     }
     useEffect(() => {
-        console.log('useEffect ',state);
+        // console.log('useEffect ',state);
     }, [state])
 
     const handleSubmit = async () =>{
@@ -48,6 +47,7 @@ const SignUp = (props) => {
         const payload = {...state}
         const data = await post(url, payload);
         console.log(data)
+        closeModal();
     }
 
     const closeModal = () => {setVisible(false);}
@@ -70,18 +70,18 @@ const SignUp = (props) => {
                     </Form.Item>
 
                     <Form.Item label={'password'} labelAlign={"right"}>
-                        <Input type={'password'} value={state.password} onChange={handleChange} placeholder={'비밀번호를 설정하세요.'}/>
+                        <Input.Password name={'password'} value={state.password} onChange={handleChange} placeholder={'비밀번호를 설정하세요.'}/>
                     </Form.Item>
 
                     <Form.Item label={'Username'} labelAlign={"right"}>
                         <Input name='name' value={state.name} onChange={handleChange} placeholder='사용자의 성명을 입력하세요.'/>
                     </Form.Item>
 
-                    <SelectOptions onChangeMethod={handleChange} selectedName='department' selectValue={state.department} required={false}
-                                   label={'소속 부서'} selectPlaceholder={'소속된 부서를 선택하세요'} optionList={departmentOptions}/>
+                    <SelectOptions onChangeMethod={handleChange} selectName='department' selectValue={state.department} selectRequired={false}
+                                   selectLabel={'소속 부서'} selectPlaceholder={'소속된 부서를 선택하세요'} optionList={departmentOptions}/>
 
-                    <SelectOptions onChangeMethod={handleChange} selectedName='companyPosition' selectValue={state.companyPosition} required={false}
-                                   label={'직급'} selectPlaceholder={'직급을 선택하세요'} optionList={positionOptions}/>
+                    <SelectOptions onChangeMethod={handleChange} selectName='companyPosition' selectValue={state.companyPosition} selectRequired={false}
+                                   selectLabel={'직급'} selectPlaceholder={'직급을 선택하세요'} optionList={positionOptions}/>
 
                     <Form.Item label={'Email'} labelAlign={"right"}>
                         <Input type={'email'} name='email' value={state.email} onChange={handleChange} placeholder='사용자의 Email 입력하세요.'/>

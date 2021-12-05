@@ -48,7 +48,7 @@ const SupportDetail = ({match}) => {
         name: '',
         description: '',
         category: '',
-        insuranceConditions: {rating: '', startAge: '', endAge: ''},
+        conditions: {rating: '', startAge: '', endAge: ''},
     });
     useEffect(()=> {console.log(newData)},[newData])
 
@@ -75,10 +75,10 @@ const SupportDetail = ({match}) => {
                 <SubTitle text="상품개요" />
                 <Descriptions bordered>
                     <Descriptions.Item label="상품명" span={2}>{newData.name}</Descriptions.Item>
-                    <Descriptions.Item label="보험분류">{newData.insuranceCategory}</Descriptions.Item>
-                    <Descriptions.Item label="가입최소나이">{newData.insuranceConditions?.startAge}세</Descriptions.Item>
-                    <Descriptions.Item label="가입최대나이">{newData.insuranceConditions?.endAge}세</Descriptions.Item>
-                    <Descriptions.Item label="최소신용등급">{newData.insuranceConditions?.rating}등급</Descriptions.Item>
+                    <Descriptions.Item label="보험분류">{newData.category}</Descriptions.Item>
+                    <Descriptions.Item label="가입최소나이">{newData.conditions?.startAge}세</Descriptions.Item>
+                    <Descriptions.Item label="가입최대나이">{newData.conditions?.endAge}세</Descriptions.Item>
+                    <Descriptions.Item label="최소신용등급">{newData.conditions?.rating}등급</Descriptions.Item>
                     <Descriptions.Item label="보험상태" span={3}>
                         <Badge status="processing" text="상품 운영중" />
                     </Descriptions.Item>

@@ -8,15 +8,22 @@ export const post = async (url, payload, form) => {
         headers: {'content-type': 'application/json'},
         data: payload,
     }).then((response) => {
-        notification.open({message: 'Notification!', description: '전송 완료'});
+        notification["success"]({message: 'Success!', description: '전송에 성공하였습니다.'});
         form.resetFields();
         return response.data.data;
-    }).catch(err =>
-    {console.log(err.message);});
+    }).catch(error => {
+        if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.error('Failed with response', error.response.data);
+            notification["error"]({message: 'Error!', description: error.response.data.message});
+        } else if (error.request) {
+            // The request was made but no response was received
+            console.error('Failed request', error)
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            console.error('Failed in general', error)
+        }
+    });
 }
-//분리된 함수에서 페이로드 이거 된거임
-// {"name":"분리한 보험",
-// "category":"자동차",
-// "description":"ㅇㅇ",
-// "conditions":{"startAge":11,"endAge":16,"rating":3}}
 // todo: 가끔씩 400뜨는거 무섭다...

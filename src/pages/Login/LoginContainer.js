@@ -6,7 +6,6 @@ import {loginUser} from "../../redux/modules/user";
 function LoginContainer() {
     const dispatch = useDispatch();
     const onSetUser = user => dispatch(loginUser(user));
-
     return (
         <Login onSetUser={onSetUser}/>
     );

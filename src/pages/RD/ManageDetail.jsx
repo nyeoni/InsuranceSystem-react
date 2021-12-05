@@ -221,7 +221,7 @@ const ManageDetail = ({match}) => {
                     </div>
                 </TabPane>
                 <TabPane tab="상품수정" key="2">
-                    <ManageUpdate form={form} newData={newData}/>
+                    <ManageUpdate id = {id} form={form} newData={newData} setNewData={setNewData}/>
                 </TabPane>
             </Tabs>
         </Wrapper>
