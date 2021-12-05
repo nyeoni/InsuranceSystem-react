@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 export const SelectOptions = (props) => {
     useEffect(() => {
-        console.log('useEffect in select ',value);
+        console.log('useEffect in select ', options);
     })
     const {
         selectName: name,

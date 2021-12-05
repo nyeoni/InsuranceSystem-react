@@ -46,7 +46,7 @@ const ManageUpdate = (props) => {
         {console.log(err.message);});
     }
     return(
-        <Form form={form} initialValues={newData} labelCol={{span: 10}} wrapperCol={{span: 14}} layout="vertical" size={"large"} onFinish={handleSubmit}>
+        <Form form={form} initialValues={newData} labelCol={{span: 10}} wrapperCol={{span: 14}} layout="vertical" size={"large"} onFinish={handleSubmit}        >
             <Form.Item rules={[{required: true, message: '보험의 이름을 입력해주세요!'}]} name="name" label="보험상품 이름" >
                 <Input name="name" value={newData.name} onChange={handleChange} placeholder="예시) XX 자동차 보험"/>
             </Form.Item>
@@ -58,19 +58,19 @@ const ManageUpdate = (props) => {
                 <Col span={7}>
                     <Form.Item wrapperCol={12} label="가입 연령대">
                         <InputNumber style={{ display: 'inline-block', width: '45%', marginInlineEnd:'4px'}} placeholder="가입 최저 연령"
-                                     min={0} max={100.00} name="startAge" defaultValue={newData.insuranceConditions?.startAge} value={newData.conditions?.startAge}
-                                     onChange={(val)=>{handleChange({target: {name: 'conditions', value: {startAge: val}}})}}/>
+                                     min={0} max={100.00} name="startAge" value={newData.conditions?.startAge}
+                                     onChange={(val)=>{handleChange({target: {name: 'startAge', value: val}});}}/>
 
                         <InputNumber style={{ display: 'inline-block', width: '45%'}} placeholder="가입 최고 연령"
-                                     min={0} max={100.00} name="endAge" defaultValue={newData.insuranceConditions?.endAge} value={newData.conditions?.endAge}
-                                     onChange={(val)=>{handleChange({target: {name: 'conditions', value: {endAge: val}}})}}/>
+                                     min={0} max={100.00} name="endAge" value={newData.conditions?.endAge}
+                                     onChange={(val)=>{handleChange({target: {name: 'endAge', value: val}});}}/>
                     </Form.Item>
                 </Col>
                 <Col span={7}>
                     <Form.Item wrapperCol={12} name={"rating"} label="최소 신용등급">
                         <InputNumber style={{ display: 'inline-block', width: '100%'}}
-                                     min={1} max={10} step="1" name="rating"  defaultValue={newData.insuranceConditions?.rating} value={newData.conditions?.rating}
-                                     onChange={(val)=>{handleChange({target: {name: 'conditions', value: {rating: val}}})}}/>
+                                     min={1} max={10} step="1" name="rating" value={newData.conditions?.rating}
+                                     onChange={(val)=>{handleChange({target: {name: 'rating', value: val}});}}/>
                     </Form.Item>
                 </Col>
             </Row>

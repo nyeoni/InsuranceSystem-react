@@ -21,21 +21,21 @@ const ClientDetail = (props) =>{
                 <Descriptions.Item label="Status" span={2}>
                     {clickedRecord.privacy?.address}
                 </Descriptions.Item>
-                <Descriptions.Item label="거래 은행">{clickedRecord.additionalInfo?.bank}은행</Descriptions.Item>
+                <Descriptions.Item label="거래 은행">{clickedRecord.info?.bank}은행</Descriptions.Item>
                 <Descriptions.Item label="주민번호" span={2}>
                     {clickedRecord.privacy?.rrn.rrnFront} - {clickedRecord.privacy?.rrn.rrnBack}
                 </Descriptions.Item>
                 <Descriptions.Item label="건물번호" span={3}>
-                    {clickedRecord.additionalInfo?.buildingNumber}
+                    {clickedRecord.info?.buildingNumber}
                 </Descriptions.Item>
                 <Descriptions.Item label="여권번호" span={3}>
-                    {clickedRecord.additionalInfo?.passportNumber}
+                    {clickedRecord.info?.passportNumber}
                 </Descriptions.Item>
                 <Descriptions.Item label="운전면허 번호" span={3}>
-                    {clickedRecord.additionalInfo?.driverLicenseNumber}
+                    {clickedRecord.info?.driverLicenseNumber}
                 </Descriptions.Item>
                 <Descriptions.Item label="자동차 등록번호" span={3}>
-                    {clickedRecord.additionalInfo?.carNumber}
+                    {clickedRecord.info?.carNumber}
                 </Descriptions.Item>
             </Descriptions>
         </Modal>

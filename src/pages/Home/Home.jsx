@@ -86,12 +86,11 @@ const contentStyle = {
 };
 
 const Home = () => {
-    // const userID = useSelector(state => (state.user.data.name));
+    const username = useSelector(state => (state.user.data.name));
     return (
         <HomeWrapper>
             <Welcome>
-                {/*Welcome, {userID}님 !*/}
-                Welcome, 사용자님 !
+                Welcome, {username}님 !
             </Welcome>
             <LargeContainer>
                 <SmallContainer>

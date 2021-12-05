@@ -62,9 +62,9 @@ const Support = ({match, history}) => {
         },
         {
             title: '보험분류',
-            key: 'insuranceCategory',
+            key: 'category',
             width: '15%',
-            dataIndex: 'insuranceCategory',
+            dataIndex: 'category',
             filters: [
                 {
                     text: '자동차보험',

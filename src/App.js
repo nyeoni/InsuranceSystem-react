@@ -7,7 +7,7 @@ import LoginContainer from "./pages/Login/LoginContainer";
 
 function App() {
     const user = useSelector(state => (state.user.status));
-    const authenticated = user === 200 ? true : false;
+    const authenticated = user === "OK" ? true : false;
     return (
         <BrowserRouter>
             <Switch>

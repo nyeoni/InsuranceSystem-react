@@ -13,55 +13,27 @@ async function getInsurance() {
     return response.data.data;
 }
 //todo: 계약신청으로 요청하고, 나중에 인수심사에서 계약 승인으로 상태변경
-async function addContract(data, form) {
-    const url = '/api/contract/sign';
-    const response = await axios({
-        method: 'post',
-        url: url,
-        data: {...data,
-            status: '계약신청',
-            information :
-                {
-                    information: data.information,
-                    level: data.level
-                }},
-        headers: {'content-type': 'application/json'}
-    }).then(() => {
-        form.resetFields();
-        notification.open({
-            message: 'Notification!',
-            description:
-                '계약 정보 전송 완료'
-        })
-        return response.data;
-    }).catch(err => {
-        console.log(err.message);
-    });
-}
 
 const Apply = () => {
     useEffect(() =>{
         const today = new Date().toISOString();
-        setState({registerDate: today})
+        setState({registerDate: today});
     }, [])
 
     const title = "상품가입"
     const subtitle = "고객의 상품 가입을 요청하는 페이지입니다."
     const [form] = Form.useForm();
     const [state, setState] = useState({
-        information : "부가정보",
-        level : "",
-        status: '',
-        channel: '',
-        registerDate: '',
+        insuranceId: '',
+        clientId: '',
+        employeeId: '',
         startDate: '',
         endDate: '',
-        clientId: '',
-        insuranceId: '',
-        employeeId: '',
+        channel: '',
+        contractStatus: ''
     })
     useEffect(() => {
-        console.log('useEffect ',state);
+        // console.log('useEffect ',state);
     }, [state])
     const customerLevel = [
         {label: 'A', value: 'A'},
@@ -73,25 +45,41 @@ const Apply = () => {
         {label: '온라인', value: '온라인'},
         {label: '대면', value: '대면'},
         {label: '전화', value: '전화'},
-
     ];
 //insurance
-//     const [data, setData] = useState([]);
-//     const settingData = (data) => {
-//         if (data) {setData(data);}
-//         else {console.log("데이터 설정 실패");}
-//     }
-//     const [initialState, refetch] = useAsync(getInsurance, settingData, [getInsurance]);
-//     const { loading, error } = initialState;
-//     if (error) {return (<div>에러가 발생하였습니다.</div>);}
+    const [insuranceData, setInsuranceData] = useState([]);
+    // const insuranceData = [];
+    const settingInsurance = (data) => {
+        if (data) {setInsuranceData(data);}
+        // if (data) {
+        //     data.map(v => {insuranceData.push({'label': v.name, 'value': v.id});});
+        //     console.log(insuranceData);
+        // }
+        else {console.log("데이터 설정 실패");}
+    }
+    const [initialState, refetch] = useAsync(getInsurance, settingInsurance, [getInsurance]);
+    const { loading, error } = initialState;
+    if (error) {return (<div>에러가 발생하였습니다.</div>);}
 //
     const handleChange = (event) =>{
         const {name, value} = event.target;
         setState({...state, [name]: value});
     }
     const handleSubmit = async () => {
-        const data = await addContract(state, form);
-        console.log(data);
+        const url = '/constract';
+        const payload = {
+            insuranceId: state.insuranceId,
+            clientId: state.clientId,
+            employeeId: state.employeeId,
+            contractDate: {
+                startDate: state.startDate,
+                endDate: state.endDate
+            },
+            channel: state.channel,
+            contractStatus: '계약신청'
+        };
+        // const data = await addContract(state, form);
+        // console.log(data);
     }
 
         return (
