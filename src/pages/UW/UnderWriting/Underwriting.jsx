@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Wrapper } from "../../components/Wrapper";
-import { DataTable2 } from "../../components/DataTable2";
+import { Wrapper } from "../../../components/Wrapper";
+import { DataTable2 } from "../../../components/DataTable2";
 import axios from "axios";
-import useAsync from "../../customHooks/useAsync";
+import useAsync from "../../../customHooks/useAsync";
 import { Button, Dropdown, Menu, Space, Tag } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import Search from "antd/es/input/Search";
 
 async function getContract() {
-  const response = await axios.get("/api/contract");
+  const response = await axios.get("/contract");
   return response.data.data;
 }
 

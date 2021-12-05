@@ -15,7 +15,7 @@ import {
 } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import Search from "antd/es/input/Search";
-import ClientDetail from "../ClientDetail";
+import ClientDetail from "./ClientDetail";
 import { StyledSpan, FilterDiv, FlexDiv } from "./style";
 import useAxios from "../../../swr/useAxios";
 
