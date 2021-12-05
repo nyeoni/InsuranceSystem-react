@@ -20,7 +20,7 @@ const StyledDiv = styled.div`
     background-color: white;
 `;
 
-const ManageDetail = ({match}) => {
+const ManageModify = ({match}) => {
     const { id } = match.params;
     const [form] = Form.useForm();
     const url = `/insurance/${id}`;
@@ -32,7 +32,7 @@ const ManageDetail = ({match}) => {
     ];
 
     const { data: insurance, isLoading, isError } = useAxios(url, "get");
-    const [updateData, setUpdateData] = useState(insurance);
+    const [updateData, setUpdateData] = useState({...insurance});
 
     useEffect(() => {console.log(updateData)}, [updateData]);
 
@@ -65,7 +65,7 @@ const ManageDetail = ({match}) => {
 
     return(
         <Wrapper title={insurance.name} underline={false}>
-            <Form form={form} initialValues={insurance} labelCol={{span: 10}} wrapperCol={{span: 14}} layout="vertical" size={"large"} onFinish={handleSubmit}>
+            <Form form={form} initialValues={updateData} labelCol={{span: 10}} wrapperCol={{span: 14}} layout="vertical" size={"large"} onFinish={handleSubmit}>
                 <Form.Item rules={[{required: true, message: '보험의 이름을 입력해주세요!'}]} name="name" label="보험상품 이름" >
                     <Input name="name" value={updateData.name} onChange={handleChange} placeholder="예시) XX 자동차 보험"/>
                 </Form.Item>
@@ -104,4 +104,4 @@ const ManageDetail = ({match}) => {
     )
 }
 
-export default ManageDetail;
+export default ManageModify;
