@@ -1,6 +1,7 @@
 import useSWR from "swr";
-// import apiManager from "./apiManager";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../redux/modules/user";
 
 const getFetcher = async (url) => {
   const res = await axios
@@ -24,7 +25,18 @@ const useAxios = (url, method, body = null) => {
       ? () => postFetcher(url, body)
       : console.log("fuckyou");
   const { data, error } = useSWR(url, fetcher);
+  const dispatch = useDispatch();
 
+  if (error) {
+    console.log("hihi");
+    dispatch(
+      loginUser({
+        status: false,
+        data: null,
+        result: false,
+      })
+    );
+  }
   console.log("useSWR DATA", data);
   console.log("useSWR error", error);
   return {

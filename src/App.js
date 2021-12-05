@@ -2,12 +2,14 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Base from "./pages/Base/Base";
 import AuthRoute from "./pages/AuthRoute";
-import { useSelector } from "react-redux";
 import LoginContainer from "./pages/Login/LoginContainer";
+import { Cookies } from "react-cookie";
+
+const cookies = new Cookies();
 
 function App() {
-  const user = useSelector((state) => state.user.status);
-  const authenticated = user === "OK" ? true : false;
+  const token = cookies.get("token");
+  const authenticated = token ? true : false;
   return (
     <BrowserRouter>
       <Switch>
