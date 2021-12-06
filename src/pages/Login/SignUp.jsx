@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Form, Input, Modal, Button} from 'antd';
 import {SelectOptions} from '../../components/SelectOptions';
-import {post} from "../../library/apiPost";
+import {apiCall} from "../../library/ApiCall";
 
 const SignUp = (props) => {
     const {visible, setVisible} = props;
@@ -45,7 +45,7 @@ const SignUp = (props) => {
     const handleSubmit = async () =>{
         const url = '/join';
         const payload = {...state}
-        const data = await post(url, payload);
+        const data = await apiCall(url, 'post', payload);
         console.log(data)
         closeModal();
     }

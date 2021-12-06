@@ -1,15 +1,16 @@
 import axios from "axios";
 import {notification} from "antd";
 
-export const post = async (url, payload, form) => {
+export const apiCall = async (url, method, payload, form) => {
     console.log('분리된 함수에서 페이로드 ' + JSON.stringify(payload));
     return await axios( url,{
-        method: 'post',
+        method: method,
+        // method: 'post',
         headers: {'content-type': 'application/json'},
         data: payload,
     }).then((response) => {
         notification["success"]({message: 'Success!', description: '전송에 성공하였습니다.'});
-        form.resetFields();
+        form?.resetFields();
         return response.data.data;
     }).catch(error => {
         if (error.response) {

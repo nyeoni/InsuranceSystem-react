@@ -5,11 +5,11 @@ import axios from "axios";
 import useAsync from "../../customHooks/useAsync";
 import {Button} from "antd";
 async function getBoards() {
-    const response = await axios.get(
-        //hminsu.net/api/board/{id}
-        '/api/board'
-    );
-    return response.data.data;
+    // const response = await axios.get(
+    //     //hminsu.net/api/board/{id}
+    //     // '/api/board'
+    // );
+    // return response.data.data;
 }
 const UWPolicy = ({match, history}) => {
     const [state, refetch] = useAsync(getBoards, null, [getBoards]);

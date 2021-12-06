@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Wrapper } from "../../components/Wrapper";
 import styled from "styled-components";
+
 import { useSelector } from "react-redux";
 import { Carousel, Typography } from "antd";
 import Calendar from "../../components/Calendar";
@@ -77,5 +78,4 @@ const Home = () => {
     </HomeWrapper>
   );
 };
-
 export default Home;

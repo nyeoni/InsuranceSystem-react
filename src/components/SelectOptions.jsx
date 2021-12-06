@@ -3,9 +3,6 @@ import {Form, Select} from "antd";
 import PropTypes from "prop-types";
 
 export const SelectOptions = (props) => {
-    useEffect(() => {
-        console.log('useEffect in select ', options);
-    })
     const {
         selectName: name,
         selectValue: value,

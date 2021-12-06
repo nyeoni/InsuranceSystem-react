@@ -4,7 +4,7 @@ import axios from "axios";
 import {Wrapper} from "../../components/Wrapper";
 import "../../css/Detail.css";
 import {SelectOptions} from "../../components/SelectOptions";
-import {post} from "../../library/apiPost";
+import {apiCall} from "../../library/ApiCall";
 
 const Create = () => {
     const title = "상품개발"
@@ -15,13 +15,15 @@ const Create = () => {
         name: '',
         category: '',
         description: '',
-        rating: '',
-        startAge: '',
-        endAge: '',
+        conditions: {
+            startAge: '',
+            endAge: '',
+            rating: ''
+        }
     })
 
     useEffect(() => {
-        console.log('useEffect ',state);
+        // console.log('useEffect ',state);
     }, [state])//debug sync
 
     const insuranceCategory = [
@@ -52,7 +54,7 @@ const Create = () => {
                 rating: state.rating
             }
         };
-        const data = await post(url, payload, form);
+        const data = await apiCall(url, 'post', payload, form);
         console.log(data);
     }
 
@@ -70,18 +72,18 @@ const Create = () => {
                     <Col span={7}>
                         <Form.Item wrapperCol={12} label="가입 연령대">
                             <InputNumber style={{ display: 'inline-block', width: '45%', marginInlineEnd:'4px'}} placeholder="가입 최저 연령"
-                                         min={0} max={100.00} name="startAge" value={state.startAge}
+                                         min={0} max={100.00} name="startAge" value={state.conditions.startAge}
                                          onChange={(val)=>{handleChange({target: {name: 'startAge', value: val}})}}/>
 
                             <InputNumber style={{ display: 'inline-block', width: '45%'}} placeholder="가입 최고 연령"
-                                         min={0} max={100.00} name="endAge" value={state.endAge}
+                                         min={0} max={100.00} name="endAge" value={state.conditions.endAge}
                                          onChange={(val)=>{handleChange({target: {name: 'endAge', value: val}})}}/>
                         </Form.Item>
                     </Col>
                     <Col span={7}>
                         <Form.Item wrapperCol={12} name={"rating"} label="최소 신용등급">
                             <InputNumber style={{ display: 'inline-block', width: '100%'}}
-                                   min={1} max={10} step="1" name="rating" placeholder="1~10등급" value={state.rating}
+                                   min={1} max={10} step="1" name="rating" placeholder="1~10등급" value={state.conditions.rating}
                                    onChange={(val)=>{handleChange({target: {name: 'rating', value: val}})}}/>
                         </Form.Item>
                     </Col>
