@@ -1,25 +1,9 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import Base from "./Base/Base";
 
 function AuthRoute({ authenticated, component: Component, render, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        authenticated ? (
-          render ? (
-            render(props)
-          ) : (
-            <Component {...props} />
-          )
-        ) : (
-          <Redirect
-            to={{ pathname: "/login", state: { from: props.location } }}
-          />
-        )
-      }
-    />
-  );
+  return authenticated ? <Base /> : <Navigate to="/login" />;
 }
 
 export default AuthRoute;

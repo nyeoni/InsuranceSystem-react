@@ -2,22 +2,23 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import "../../css/Login.css";
 import { notification } from "antd";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { loginUser } from "../../redux/modules/user";
 import SignUp from "./SignUp";
+import { useDispatch } from "react-redux";
 
-const Login = ({ onSetUser }) => {
+const Login = () => {
   //state & variables
   const [info, setInfo] = useState({
     loginId: "",
     password: "",
   });
   const { loginId, password } = info;
-
   const [visible, setVisible] = useState(false);
-  const history = useHistory();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  //functions
   const onChange = (e) => {
     const { name, value } = e.target;
     setInfo({
@@ -25,6 +26,7 @@ const Login = ({ onSetUser }) => {
       [name]: value,
     });
   };
+
   async function getUser(info) {
     const response = await axios({
       url: "/login",
@@ -37,13 +39,14 @@ const Login = ({ onSetUser }) => {
     });
     return response.data;
   }
+
   const login = async () => {
     try {
       const data = await getUser(info);
       console.log("login method");
-      onSetUser(data);
-      console.log(data);
-      history.replace("/");
+      dispatch(loginUser(data));
+      //   console.log(data);
+      navigate("/");
     } catch (error) {
       if (error.response) {
         console.error("Failed with response", error.response.data);
@@ -56,23 +59,19 @@ const Login = ({ onSetUser }) => {
       } else {
         console.error("Failed in general", error);
       }
-      onSetUser({
-        status: 500,
-        data: null,
-        result: "FAIL",
-      });
+      dispatch(
+        loginUser({
+          status: 500,
+          data: null,
+          result: "FAIL",
+        })
+      );
       setInfo({
         loginId: "",
         password: "",
       });
     }
   };
-  const logout = () =>
-    onSetUser({
-      status: false,
-      data: null,
-      result: null,
-    });
 
   return (
     <div className="wrap">

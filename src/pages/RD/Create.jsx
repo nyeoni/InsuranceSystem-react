@@ -10,7 +10,6 @@ const Create = () => {
     const title = "상품개발"
     const subtitle = "HM 손해보험의 보험상품을 개발하기 위한 페이지입니다."
     const [form] = Form.useForm();
-
     const [state, setState] = useState({
         name: '',
         category: '',
@@ -84,11 +83,9 @@ const Create = () => {
 
                     </Col>
                 </Row>
-
                 <Form.Item rules={[{required:true, message: '보험의 설명을 입력해주세요'}]} name={"description"} label="보험상품 개요">
                     <Input.TextArea name="description" value={state.description} onChange={handleChange} placeholder={'보험의 정보를 적어주세요'}/>
                 </Form.Item>
-
                 <Form.Item><Button style={{marginBottom : '10px'}} type="primary" htmlType="submit" value="Submit">Submit</Button></Form.Item>
             </Form>
         </Wrapper>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Contract from "../Sales/Contract/Contract";
 import Client from "../Sales/Client/Client";
 import Apply from "../Sales/Apply";
@@ -8,7 +8,7 @@ import Register from "../Sales/Register";
 // TODO : props 뭐 받을지 생각
 const SalesRouter = (props) => {
   return (
-    <>
+    <Routes>
       <Route
         path="/sales/contract"
         exact={true}
@@ -21,7 +21,7 @@ const SalesRouter = (props) => {
         exact={true}
         render={(props) => <Register />}
       />
-    </>
+    </Routes>
   );
 };
 

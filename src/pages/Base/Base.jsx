@@ -1,6 +1,6 @@
 import React from "react";
 import "../../css/Base.scss";
-import { Link } from "react-router-dom";
+import { Routes, Route, Link, Outlet } from "react-router-dom";
 import HomeRouter from "../Router/HomeRouter";
 import RdRouter from "../Router/RdRouter";
 import SalesRouter from "../Router/SalesRouter";
@@ -13,8 +13,11 @@ import { IconButton } from "@material-ui/core";
 import Badge from "@material-ui/core/Badge";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import Board from "../Home/Board.jsx";
+import Home from "../Home/Home.jsx";
+import BoardDetail from "../Home/BoardDetail.jsx";
 
-const Base = () => {
+const Base = ({ children }) => {
   return (
     <>
       <div className="userbar shadow-sm">
@@ -84,69 +87,13 @@ const Base = () => {
                 </ul>
               </li>
               <li>
-                <MyLink to="#">인수심사</MyLink>
-                <ul className="nav-flyout">
-                  <li>
-                    <MyLink to="/uw/underwriting">인수심사</MyLink>
-                  </li>
-                  <li>
-                    <MyLink to="/uw/policy">인수정책</MyLink>
-                  </li>
-                  <li>
-                    <MyLink to="/uw/lossmanage">손해율관리</MyLink>
-                  </li>
-                </ul>
+                <MyLink to="/uw/underwriting">인수심사</MyLink>
               </li>
-              {/* {/*<li> */}
-              {/*    <MyLink to="#">보상지원</MyLink>*/}
-              {/*    <ul className="nav-flyout">*/}
-              {/*        <li>*/}
-              {/*            <MyLink to="/support/accident">사고접수</MyLink>*/}
-              {/*        </li>*/}
-              {/*        <li>*/}
-              {/*            <MyLink to="/support/compensate">보상처리</MyLink>*/}
-              {/*        </li>*/}
-              {/*        <li>*/}
-              {/*            <MyLink to="/support/cooperation">협력업체관리</MyLink>*/}
-              {/*        </li>*/}
-              {/*        <li>*/}
-              {/*            <MyLink to="/support/evalution">보상평가관리</MyLink>*/}
-              {/*        </li>*/}
-              {/*    </ul>*/}
-              {/*</li>*/}
-              {/*<li>*/}
-              {/*    <MyLink to="#">통합관리</MyLink>*/}
-              {/*    <ul className="nav-flyout">*/}
-              {/*        <li>*/}
-              {/*            <MyLink to="/manage/payment">수금관리</MyLink>*/}
-              {/*        </li>*/}
-              {/*        <li>*/}
-              {/*            <MyLink to="/manage/expiration">만기계약관리</MyLink>*/}
-              {/*        </li>*/}
-              {/*        <li>*/}
-              {/*            <MyLink to="/manage/reimbursement">제지급관리</MyLink>*/}
-              {/*        </li>*/}
-              {/*        <li>*/}
-              {/*            <MyLink to="/manage/termination">부활관리</MyLink>*/}
-              {/*        </li>*/}
-              {/*        <li>*/}
-              {/*            <MyLink to="/manage/terms">배서관리</MyLink>*/}
-              {/*        </li>*/}
-              {/*       <li>*/}
-              {/*            <MyLink to="/manage/policy">관리지침수립</MyLink>*/}
-              {/*        </li>*/}
-              {/*    </ul>*/}
-              {/*</li>*/}
             </ul>
           </nav>
         </aside>
         <div className="router">
-          <HomeRouter />
-          <RdRouter />
-          <SalesRouter />
-          <UWRouter />
-          <SupportRouter />
-          <ManageRouter />
+          <Outlet />
         </div>
       </section>
     </>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom"
+import { Routes, Route } from "react-router-dom";
 
 import AddClaim from "../Support/AddClaim";
 import Claim from "../Support/Claim";
@@ -9,16 +9,40 @@ import Evalution from "../Support/Evaluation";
 import AddCooperation from "../Support/AddCooperation";
 // TODO : props 뭐 받을지 생각
 const SupportRouter = (props) => {
-    return (
-        <>
-            <Route path="/support/accident" exact={true} render={props => <Claim {...props}/>} />
-            <Route path="/support/accident/addclaim" exact={true} render={props => <AddClaim {...props}/>} />
-            <Route path="/support/compensate" exact={true} render={props => <Compensate {...props}/>} />
-            <Route path="/support/cooperation" exact={true} render={props => <Cooperation {...props}/>} />
-            <Route path="/support/cooperation/addpartner" exact={true} render={props => <AddCooperation {...props}/>} />
-            <Route path="/support/evalution" exact={true} render={props => <Evalution {...props} />} />
-        </>
-    )
-}
+  return (
+    <Routes>
+      <Route
+        path="/support/accident"
+        exact={true}
+        render={(props) => <Claim {...props} />}
+      />
+      <Route
+        path="/support/accident/addclaim"
+        exact={true}
+        render={(props) => <AddClaim {...props} />}
+      />
+      <Route
+        path="/support/compensate"
+        exact={true}
+        render={(props) => <Compensate {...props} />}
+      />
+      <Route
+        path="/support/cooperation"
+        exact={true}
+        render={(props) => <Cooperation {...props} />}
+      />
+      <Route
+        path="/support/cooperation/addpartner"
+        exact={true}
+        render={(props) => <AddCooperation {...props} />}
+      />
+      <Route
+        path="/support/evalution"
+        exact={true}
+        render={(props) => <Evalution {...props} />}
+      />
+    </Routes>
+  );
+};
 
 export default SupportRouter;

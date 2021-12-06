@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import UWPolicy from "../UW/UWPolicy";
 import AddUWPolicy from "../UW/AddUWPolicy";
 import UWPolicyDetail from "../UW/UWPolicyDetail";
@@ -10,7 +10,7 @@ import UWDetail from "../UW/UWDetail";
 // TODO : props 뭐 받을지 생각
 const UWRouter = (props) => {
   return (
-    <>
+    <Routes>
       <Route
         path="/uw/underwriting"
         exact={true}
@@ -41,7 +41,7 @@ const UWRouter = (props) => {
         exact={true}
         render={(props) => <Lossmanage />}
       />
-    </>
+    </Routes>
   );
 };
 

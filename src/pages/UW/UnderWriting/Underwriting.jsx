@@ -1,17 +1,49 @@
 import React, {useEffect, useState} from "react";
 import { Wrapper } from "../../../components/Wrapper";
 import { DataTable2 } from "../../../components/DataTable2";
-import {Radio, Space} from "antd";
+import axios from "axios";
+import useAsync from "../../../customHooks/useAsync";
+import { Button, Dropdown, Menu, Space, Tag } from "antd";
+import { DownOutlined } from "@ant-design/icons";
+import Search from "antd/es/input/Search";
+import { useNavigate } from "react-router-dom";
 
-import useAxios from "../../../swr/useAxios";
+async function getContract() {
+  const response = await axios.get("/contract");
+  console.log("contract", response.data.data);
+  return response.data.data;
+}
 
 const Underwriting = ({ match, history }) => {
   const title = "인수심사";
-  const subtitle = "각 계약에 따른 인수심사로 조건을 평가하여 계약을 인수하는 페이지";
-  const { data: contracts, isLoading, isError } = useAxios('/contract', "get");
-  const [searchData, setSearchData] = useState(contracts);
-
-  const [statueFilter, setStatueFilter] = useState('전체');
+  const subtitle =
+    "각 계약에 따른 인수심사로 조건을 평가하여 계약을 인수하는 페이지";
+  const navigate = useNavigate();
+  const [visible, setVisible] = React.useState(false);
+  const [clickedRecord, setClickedRecord] = React.useState([]);
+  //contract
+  const [data, setData] = useState([]);
+  const [option, setOption] = useState("보험번호");
+  const [searchData, setSearchData] = useState([]);
+  const [skip, setSkip] = useState(false);
+  const settingData = (data) => {
+    if (data) {
+      setData(data);
+      setSearchData(data);
+    } else {
+      console.log("데이터 설정 실패");
+    }
+  };
+  const [initialState, refetch] = useAsync(
+    getContract,
+    settingData,
+    [getContract],
+    skip
+  );
+  const { loading, error } = initialState;
+  if (error) {
+    return <div>에러가 발생하였습니다.</div>;
+  }
 
   useEffect(() => {
     setSearchData(contracts);
@@ -28,32 +60,47 @@ const Underwriting = ({ match, history }) => {
     },
     {
       title: "고객 ID",
-      width: "20%",
+      width: "10%",
+      render: (record) => record.clientId,
+    },
+    {
+      title: "고객 성명",
+      width: "15%",
       render: (record) => record.clientId,
     },
     {
       title: "보험 이름",
-      width: "20%",
+      width: "15%",
       render: (record) => record.insuranceName,
     },
     {
       title: "계약 채널",
       width: "10%",
-      render: (record) => record.channel,
+      render: (record) => record.contractDate.startDate,
     },
     {
-      title: "계약 상태",
-      width: "10%",
-      render: (record) => record.contractStatus,
+      title: "Action",
+      key: "action",
+      width: "5%",
+      render: (text, record) => (
+        <Space size="middle">
+          {record.contractStatus === "계약신청" ? (
+            <Button
+              onClick={() => onRow(record)}
+              style={{ color: "blueviolet" }}
+            >
+              인수심사
+            </Button>
+          ) : (
+            <Button disabled={true}>인수심사 마감</Button>
+          )}
+        </Space>
+      ),
     },
   ];
 
   const onRow = (record) => {
-    return{
-        onClick: () => {
-          history.push(`${match.url}/${record.id}`);
-        },
-    }
+    navigate(`/uw/underwriting/${record.id}`);
   };
 
   const statueFilterChange = (event) => {
