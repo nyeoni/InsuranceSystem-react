@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from "react";
 import { Wrapper } from "../../../components/Wrapper";
 import { DataTable2 } from "../../../components/DataTable2";
-import {Button, Dropdown, Menu, Radio, Space, Spin, Tag} from "antd";
-import { DownOutlined } from "@ant-design/icons";
-import Search from "antd/es/input/Search";
+import {Radio, Space} from "antd";
+
 import useAxios from "../../../swr/useAxios";
 
 const Underwriting = ({ match, history }) => {
@@ -12,14 +11,13 @@ const Underwriting = ({ match, history }) => {
   const { data: contracts, isLoading, isError } = useAxios('/contract', "get");
   const [searchData, setSearchData] = useState(contracts);
 
-  const {statueFilter, setStatueFilter} = useState('전체');
+  const [statueFilter, setStatueFilter] = useState('전체');
 
   useEffect(() => {
     setSearchData(contracts);
   },[contracts])
 
   //contract
-  const [option, setOption] = useState("보험번호");
   const columns = [
     {
       title: "No",
@@ -58,30 +56,16 @@ const Underwriting = ({ match, history }) => {
     }
   };
 
-  function handleMenuClick(e) {
-    if (e.key === "1") {
-      setOption("고객번호");
-    } else if (e.key === "2") {
-      setOption("보험번호");
-    }
-  }
-
-  const menu = (
-    <Menu onClick={handleMenuClick}>
-      <Menu.Item key="1">고객번호</Menu.Item>
-      <Menu.Item key="2">보험번호</Menu.Item>
-    </Menu>
-  );
-
-  function statueFilterChange(event) {
-    let res = [];
+  const statueFilterChange = (event) => {
+    setStatueFilter(event.target.value);
+    let temp = [];
     switch (event.target.value){
       case '계약신청':
-        contracts.forEach(function (d){if(d.contractStatus === '계약신청') res.push(d);});
-        setSearchData(res);break;
+        contracts.forEach(function (d){if(d.contractStatus === '계약신청') temp.push(d);});
+        setSearchData(temp);break;
       case '계약중':
-        contracts.forEach(function (d){if(d.contractStatus === '계약중') res.push(d);});
-        setSearchData(res);break;
+        contracts.forEach(function (d){if(d.contractStatus === '계약중') temp.push(d);});
+        setSearchData(temp);break;
       default :
         setSearchData(contracts); break;
     }
@@ -89,8 +73,7 @@ const Underwriting = ({ match, history }) => {
 
   //exception
   if (isError) {return <div>에러가 발생하였습니다.</div>;}
-  if (isLoading) {return (<Wrapper><Spin style={{textAlign: "center", width: "100%", height: "100%", marginTop: "200px"}}/></Wrapper>);}
-
+  if (isLoading) {return <div>로딩 중 입니다.</div>;}
 
   return (
     <Wrapper title={title} subtitle={subtitle} underline={true}>

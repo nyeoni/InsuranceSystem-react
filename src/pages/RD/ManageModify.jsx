@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
-import {Button, Row, Col, Form, Input, InputNumber, Select, Spin, Statistic, Tabs, Progress, notification} from "antd";
+import {Button, Row, Col, Form, Input, InputNumber} from "antd";
 import styled from "styled-components";
 import {apiCall} from "../../library/ApiCall";
 import useAxios from "../../swr/useAxios";
@@ -118,7 +118,7 @@ const ManageModify = ({match}) => {
                 </Form>
             </Wrapper>
         )
-
+// todo: 이니셜 밸류에 컨디션 넣기. 그리고 isLoading에서 useEffecte로 스테이트 설정.
 }
 
 export default ManageModify;

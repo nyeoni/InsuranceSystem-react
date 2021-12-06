@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Form, Input, Button, Select, InputNumber, Row, Col, notification} from 'antd';
+import {Form, Input, Button, InputNumber, Row, Col} from 'antd';
 import axios from "axios";
 import {Wrapper} from "../../components/Wrapper";
 import "../../css/Detail.css";
