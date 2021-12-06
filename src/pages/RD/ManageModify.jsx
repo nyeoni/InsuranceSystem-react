@@ -32,10 +32,6 @@ const ManageModify = ({match}) => {
         setUpdateData({...insurance});
     }, [isLoading])
 
-    useEffect(() => {
-        console.log(updateData)
-    }, [updateData])
-
     const insuranceCategory = [
         {label: '자동차보험', value: '자동차'},
         {label: '운전자보험 ', value: '운전자'},
@@ -113,8 +109,10 @@ const ManageModify = ({match}) => {
                         <Input.TextArea name="description" value={updateData.description} onChange={handleChange}/>
                     </Form.Item>
 
-                    <Form.Item><Button style={{marginBottom: '10px'}} type="primary" htmlType="submit"
-                                       value="Submit">Submit</Button></Form.Item>
+                    <Form.Item>
+                        <Button style={{marginBottom: '10px'}} type="primary" htmlType="submit"
+                                       value="Submit">Submit</Button>
+                    </Form.Item>
                 </Form>
             </Wrapper>
         )

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
 import {DataTable2} from "../../components/DataTable2";
-import {Button, Dropdown, Input, Menu, message, Space, Tag} from "antd";
+import {Button, Dropdown, Input, Menu, message, Popconfirm, Space, Tag} from "antd";
 import {DownOutlined} from "@ant-design/icons";
 import Search from "antd/es/input/Search";
 import 'antd/dist/antd.css';
@@ -24,12 +24,16 @@ const Manage = ({match, history}) => {
         }
     }
 
+    function confirmDelete() {
+
+    }
+
     const columns = [
         {
             title: 'No',
             dataIndex: 'id',
             key: 'id',
-            width: '10%',
+            width: '15%',
             render: text => <a>{text}</a>,
         },
         {
@@ -41,7 +45,7 @@ const Manage = ({match, history}) => {
         {
             title: '보험분류',
             key: 'category',
-            width: '15%',
+            width: '20%',
             dataIndex: 'category',
             filters: [
                 {

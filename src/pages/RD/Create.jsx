@@ -33,28 +33,23 @@ const Create = () => {
         {label: '여행자보험', value: '여행'}
     ];
 
-    const handleChange = (event) =>{
+    const handleChange = (event) => {
         const {name, value} = event.target;
-        if(Array.isArray(value)){
-            setState({...state, [name] : [...value]});
-        } else{
+        if (typeof value === 'string') {
             setState({...state, [name]: value});
+        } else if (name === 'conditions') {
+            setState({
+                ...state,
+                conditions: {...state.conditions,
+                    [Object.keys(value)[0]]: Object.values(value)[0]
+                }
+            })
         }
     }
 
     const handleSubmit = async () => {
         const url = '/insurance';
-        const payload = {
-            name: state.name,
-            category: state.category,
-            description: state.description,
-            conditions: {
-                startAge: state.startAge,
-                endAge: state.endAge,
-                rating: state.rating
-            }
-        };
-        const data = await apiCall(url, 'post', payload, form);
+        const data = await apiCall(url, 'post', {...state}, form);
         console.log(data);
     }
 
@@ -73,19 +68,20 @@ const Create = () => {
                         <Form.Item wrapperCol={12} label="가입 연령대">
                             <InputNumber style={{ display: 'inline-block', width: '45%', marginInlineEnd:'4px'}} placeholder="가입 최저 연령"
                                          min={0} max={100.00} name="startAge" value={state.conditions.startAge}
-                                         onChange={(val)=>{handleChange({target: {name: 'startAge', value: val}})}}/>
+                                         onChange={(val)=>{handleChange({target: {name: 'conditions', value: {startAge: val}}})}}/>
 
                             <InputNumber style={{ display: 'inline-block', width: '45%'}} placeholder="가입 최고 연령"
                                          min={0} max={100.00} name="endAge" value={state.conditions.endAge}
-                                         onChange={(val)=>{handleChange({target: {name: 'endAge', value: val}})}}/>
+                                         onChange={(val)=>{handleChange({target: {name: 'conditions', value: {endAge: val}}})}}/>
                         </Form.Item>
                     </Col>
                     <Col span={7}>
                         <Form.Item wrapperCol={12} name={"rating"} label="최소 신용등급">
                             <InputNumber style={{ display: 'inline-block', width: '100%'}}
                                    min={1} max={10} step="1" name="rating" placeholder="1~10등급" value={state.conditions.rating}
-                                   onChange={(val)=>{handleChange({target: {name: 'rating', value: val}})}}/>
+                                   onChange={(val)=>{handleChange({target: {name: 'conditions', value: {rating: val}}})}}/>
                         </Form.Item>
+
                     </Col>
                 </Row>
 

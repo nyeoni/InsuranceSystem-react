@@ -16,12 +16,8 @@ const Support = ({match, history}) => {
     const [option, setOption] = useState("보험명");
 
     function handleMenuClick(e) {
-        if (e.key === '1') {
-            setOption("보험명");
-        }
-        else if (e.key === '2') {
-            setOption("보험번호");
-        }
+        if (e.key === '1') {setOption("보험명");}
+        else if (e.key === '2') {setOption("보험번호");}
     }
 
     const columns = [
@@ -36,6 +32,13 @@ const Support = ({match, history}) => {
             title: '보험명',
             dataIndex: 'name',
             key: 'name',
+            render: text => <a>{text}</a>,
+        },
+        {
+            title: '신용제한',
+            width: '10%',
+            dataIndex: ['conditions', 'rating'],
+            key: ['conditions', 'rating'],
             render: text => <a>{text}</a>,
         },
         {
