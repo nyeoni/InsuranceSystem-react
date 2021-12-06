@@ -2,48 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Wrapper } from "../../components/Wrapper";
 import useAsync from "../../customHooks/useAsync";
 import axios from "axios";
-import {
-  Row,
-  Col,
-  Form,
-  Spin,
-  Statistic,
-  Tabs,
-} from "antd";
+import { Row, Col, Form, Spin, Statistic, Tabs } from "antd";
 import styled from "styled-components";
 import { Line, Bar, Doughnut } from "react-chartjs-2";
-import ManageUpdate from "./ManageUpdate";
+import ManageUpdate from "./ManageModify";
 import { useParams } from "react-router-dom";
-import { post } from "../../library/apiPost";
+import useContracts from "../../swr/useContracts";
+import useAxios from "../../swr/useAxios";
 
 async function getInsurance(id) {
   const response = await axios.get(`/insurance/${id}`);
   return response.data.data;
 }
-
-// async function updateInsurance(data, form, id) {
-//     const url = `/insurance/${id}`;
-//     const response = await axios({
-//         method: 'post',
-//         url: url,
-//         // data: data, todo: documents to string
-//         data: {
-//             ...data,
-//         },
-//         headers: {'content-type': 'application/json'}
-//     }).then((response) => {
-//         notification.open({
-//             message: 'Notification!',
-//             description:
-//                 '보험정보 전송 완료'
-//         })
-//         form.resetFields();
-//         return response.data.data;
-//     }).catch(err => {
-//         console.log(err.message);
-//     });
-//     return response;
-// }
 
 const StyledDiv = styled.div`
   display: flex;
@@ -62,31 +32,15 @@ const StyledDiv = styled.div`
 const ManageDetail = () => {
   const params = useParams();
   const { id } = params;
-  console.log("params", params);
   const [form] = Form.useForm();
   const { TabPane } = Tabs;
+  const [quaterData, setQuaterData] = useState([]);
+  const [channelData, setChannelData] = useState([]);
+  const { data: insurance } = useAxios(`/insurance/${id}`, "get");
+  const { contracts, isLoading, isError } = useContracts();
+  const [data, setData] = useState();
 
-  const [newData, setNewData] = useState({
-    name: "",
-    category: "",
-    description: "",
-    conditions: {
-      startAge: "",
-      endAge: "",
-      rating: "",
-    },
-  });
-  const settingNewData = (data) => {
-    if (data) {
-      setNewData({ ...data });
-      console.log("newData", data);
-    }
-  };
-  const [state] = useAsync(() => getInsurance(id), settingNewData, [id]);
-  const { loading, data: insurance, error } = state;
-
-  const [quaterData, setQuaterData] = useState({});
-  const [channelData, setChannelData] = useState({});
+  console.log("insurance", insurance);
   const makeQuaterData = (items) => {
     console.log(items);
     let quater = [0, 0, 0, 0];
@@ -107,6 +61,7 @@ const ManageDetail = () => {
         quater[3] += 1;
       }
     });
+
     items?.forEach((d) => {
       const ch = d.channel;
       if (ch === "온라인") channel[0] += 1;
@@ -139,16 +94,20 @@ const ManageDetail = () => {
       ],
     });
   };
-  useEffect(() => {
-    console.log(newData);
-    if (newData != {}) {
-      makeQuaterData(newData.contractList);
-    }
-  }, [newData]);
 
-  console.log(newData);
-  if (error) return <div>에러가 발생했습니다</div>;
-  if (!insurance || loading) {
+  useEffect(() => {
+    console.log(contracts);
+    const filterData = contracts?.filter(
+      (contract) => contract.insuranceId === id
+    );
+    // contracts.forEach((c) => console.log(c));
+    console.log(filterData);
+    setData(filterData);
+    makeQuaterData(filterData);
+  }, [isLoading]);
+
+  if (isError) return <div>에러가 발생했습니다</div>;
+  if (!contracts || isLoading) {
     return (
       <Wrapper>
         <Spin
@@ -179,7 +138,7 @@ const ManageDetail = () => {
     },
   };
   return (
-    <Wrapper title={insurance.name} underline={false}>
+    <Wrapper title={insurance?.name} underline={false}>
       {/*<div style={{marginTop: '1rem'}}>{insurance.description}</div>*/}
       <Tabs
         style={{ marginTop: "1rem" }}
@@ -193,21 +152,7 @@ const ManageDetail = () => {
                 <Statistic title="계약 수" value={112893} />
               </Col>
               <Col span={8}>
-                <Statistic title="보상지급 계약 수" value={112893} />
-              </Col>
-              <Col span={8}>
-                <Statistic title="중도해지 계약 수" value={112893} />
-              </Col>
-            </Row>
-            <Row style={{ marginTop: "1rem" }} gutter={8}>
-              <Col span={8}>
-                <Statistic title="위험률" value="13%" />
-              </Col>
-              <Col span={8}>
                 <Statistic title="전체 차지 비율" value="15%" precision={2} />
-              </Col>
-              <Col span={8}>
-                <Statistic title="이윤" value={111223000000} precision={2} />
               </Col>
             </Row>
             <StyledDiv>
@@ -245,12 +190,7 @@ const ManageDetail = () => {
           </div>
         </TabPane>
         <TabPane tab="상품수정" key="2">
-          <ManageUpdate
-            id={id}
-            form={form}
-            newData={newData}
-            setNewData={setNewData}
-          />
+          <ManageUpdate />
         </TabPane>
       </Tabs>
     </Wrapper>
