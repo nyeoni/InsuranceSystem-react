@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Wrapper} from "../../components/Wrapper";
-import {Button, Row, Col, Form, Input, InputNumber, Select, Spin, Statistic, Tabs, Progress, notification} from "antd";
+import {Button, Row, Col, Form, Input, InputNumber} from "antd";
 import styled from "styled-components";
 import {apiCall} from "../../library/ApiCall";
 import useAxios from "../../swr/useAxios";
@@ -31,10 +31,6 @@ const ManageModify = ({match}) => {
     useEffect(() => {
         setUpdateData({...insurance});
     }, [isLoading])
-
-    useEffect(() => {
-        console.log(updateData)
-    }, [updateData])
 
     const insuranceCategory = [
         {label: '자동차보험', value: '자동차'},
@@ -113,12 +109,14 @@ const ManageModify = ({match}) => {
                         <Input.TextArea name="description" value={updateData.description} onChange={handleChange}/>
                     </Form.Item>
 
-                    <Form.Item><Button style={{marginBottom: '10px'}} type="primary" htmlType="submit"
-                                       value="Submit">Submit</Button></Form.Item>
+                    <Form.Item>
+                        <Button style={{marginBottom: '10px'}} type="primary" htmlType="submit"
+                                       value="Submit">Submit</Button>
+                    </Form.Item>
                 </Form>
             </Wrapper>
         )
-
+// todo: 이니셜 밸류에 컨디션 넣기. 그리고 isLoading에서 useEffecte로 스테이트 설정.
 }
 
 export default ManageModify;
