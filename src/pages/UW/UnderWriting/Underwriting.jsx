@@ -1,13 +1,10 @@
 import React, {useEffect, useState} from "react";
-import { Wrapper } from "../../components/Wrapper";
-import { DataTable2 } from "../../components/DataTable2";
-import axios from "axios";
-import useAsync from "../../customHooks/useAsync";
+import { Wrapper } from "../../../components/Wrapper";
+import { DataTable2 } from "../../../components/DataTable2";
 import {Button, Dropdown, Menu, Space, Spin, Tag} from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import Search from "antd/es/input/Search";
-import useAxios from "../../swr/useAxios";
-import * as constants from "constants";
+import useAxios from "../../../swr/useAxios";
 
 
 const Underwriting = ({ match, history }) => {

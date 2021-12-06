@@ -3,11 +3,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import "../../css/Login.css";
 import { notification } from "antd";
 import { Link, useHistory } from "react-router-dom";
-import apiAxios from "../../apiAxios";
-import { Wrapper } from "../../components/Wrapper";
 import axios from "axios";
 import SignUp from "./SignUp";
-import user from "../../redux/modules/user";
 
 const Login = ({ onSetUser }) => {
   //state & variables
