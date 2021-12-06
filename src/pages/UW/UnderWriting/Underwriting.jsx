@@ -34,7 +34,7 @@ const Underwriting = ({ match, history }) => {
     {
       title: "보험 이름",
       width: "20%",
-      render: (record) => record.insuranceId,
+      render: (record) => record.insuranceName,
     },
     {
       title: "계약 채널",
