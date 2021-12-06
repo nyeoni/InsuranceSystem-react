@@ -97,8 +97,6 @@ const Manage = ({match, history}) => {
         </Menu>
     );
 
-    if (isError) {return (<div>에러가 발생하였습니다.</div>);}
-    if (isLoading) {return (<div>에러가 발생하였습니다.</div>);}
 
     const onRow = (record, rowIndex) => {
         return {onClick: () => {history.push(`${match.url}/${record.id}`);},};
@@ -120,6 +118,8 @@ const Manage = ({match, history}) => {
             setSearchData(res);
         }
     };
+    if (isError) {return (<div>에러가 발생하였습니다.</div>);}
+    if (isLoading) {return (<div>로딩 중 입니다.</div>);}
 
     return (
         <Wrapper title={title} subtitle={subtitle} underline={true}>

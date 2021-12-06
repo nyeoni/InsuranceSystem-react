@@ -21,7 +21,7 @@ import useAxios from "../../../swr/useAxios";
 
 const { RangePicker } = DatePicker;
 
-// todo: 유저 스키마 확인하기. 수정하기
+// todo: 유저 스키마 확인하기. 수정하
 const Client = ({ match, history }) => {
   const title = "고객관리";
   const subtitle = "잠재 고객 및 계약 고객을 분석하여 추가 영업기회 확보";
