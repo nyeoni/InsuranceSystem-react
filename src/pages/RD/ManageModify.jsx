@@ -30,7 +30,11 @@ const ManageModify = ({match}) => {
 
     useEffect(() => {
         setUpdateData({...insurance});
-    }, [])
+    }, [isLoading])
+
+    useEffect(() => {
+        console.log(updateData)
+    }, [updateData])
 
     const insuranceCategory = [
         {label: '자동차보험', value: '자동차'},
