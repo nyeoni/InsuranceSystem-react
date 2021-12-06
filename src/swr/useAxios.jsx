@@ -24,7 +24,7 @@ const useAxios = (url, method, body = null) => {
           ? () => getFetcher(url)
           : method === "post"
               ? () => postFetcher(url, body)
-              : console.log("fuckyou");
+              : console.log("check your fetcher");
   const { data, error } = useSWR(url, fetcher);
   const dispatch = useDispatch();
 
@@ -45,6 +45,8 @@ const useAxios = (url, method, body = null) => {
     isLoading: !error && !data,
     isError: error,
   };
+
+
 };
 
 export default useAxios;

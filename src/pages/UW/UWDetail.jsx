@@ -28,14 +28,13 @@ const UWDetail = ({ match }) => {
     const { id } = match.params;
     const url = `/contract/${id}`;
     const { data: contract, isLoading, isError } = useAxios(url, "get");
-    // const {updateData, setUpdateData} = useState(contract);
-
     //exception
     if (isError) {return <div>에러가 발생하였습니다.</div>;}
     if (isLoading) {return (<Wrapper><Spin style={{textAlign: "center", width: "100%", height: "100%", marginTop: "200px"}}/></Wrapper>);}
 
     const onClickUWButton = () => {
-        const data = apiCall(url, 'put',{...contract});
+        const data = apiCall(url, 'put',{...contract, contractStatus: '계약중'});
+        console.log(data);
     }
 
     return(
@@ -48,11 +47,17 @@ const UWDetail = ({ match }) => {
                 <Descriptions.Item label="가입보험 이름" span={2}>{contract.insuranceName}</Descriptions.Item>
                 <Descriptions.Item label="계약기간" span={2}>{contract.contractDate.startDate.split('T')[0]} ~ {contract.contractDate.endDate.split('T')[0]}</Descriptions.Item>
                 <Descriptions.Item label="계약상태">
-                    <Badge status="processing" text={contract.contractStatus} />
+                    {contract.contractStatus == '계약중' ?
+                        <Badge status="processing" text={contract.contractStatus} /> :
+                        <Badge status="success" text={contract.contractStatus} />
+                    }
                 </Descriptions.Item>
             </Descriptions>
             <hr/>
-            <Button onClick={onClickUWButton}>인수심사</Button>
+            {contract.contractStatus == '계약중' ?
+                <Button disabled={true}>인수심사</Button> :
+                <Button onClick={onClickUWButton}>인수심사</Button>
+            }
         </Wrapper>
     )
 
