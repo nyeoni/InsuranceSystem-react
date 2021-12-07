@@ -1,21 +1,12 @@
 import React from "react";
 import "../../css/Base.scss";
-import { Routes, Route, Link, Outlet } from "react-router-dom";
-import HomeRouter from "../Router/HomeRouter";
-import RdRouter from "../Router/RdRouter";
-import SalesRouter from "../Router/SalesRouter";
-import SupportRouter from "../Router/SupportRouter";
-import UWRouter from "../Router/UWRouter";
-import ManageRouter from "../Router/ManageRouter";
+import { Link, Outlet } from "react-router-dom";
 import { MyLink } from "../../components/MyLink";
 import { AccountCircle } from "@material-ui/icons";
 import { IconButton } from "@material-ui/core";
 import Badge from "@material-ui/core/Badge";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import Board from "../Home/Board.jsx";
-import Home from "../Home/Home.jsx";
-import BoardDetail from "../Home/BoardDetail.jsx";
 
 const Base = ({ children }) => {
   return (
