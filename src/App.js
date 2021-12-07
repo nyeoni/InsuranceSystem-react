@@ -23,21 +23,16 @@ import Underwriting from "./pages/UW/UnderWriting/Underwriting";
 import UWDetail from "./pages/UW/UWDetail";
 import ManageModify from "./pages/RD/ManageModify";
 
-const cookies = new Cookies();
-
 function App() {
-  const token = cookies.get("token");
-  const authenticated = token ? true : false;
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" exact={true} element={<Login />} />
-        <Route path="/*" element={<AuthRoute authenticated={authenticated} />}>
+        <Route path="/*" element={<AuthRoute />}>
           <Route path="" element={<Home />} />
           <Route path="board" element={<Board />} />
           <Route path="board/:id" exact element={<BoardDetail />} />
           <Route path="rd/create" element={<Create />} />
-          {/* support 문제야 */}
           <Route path="rd/support" element={<Support />} />
           <Route path="rd/support/:id" element={<SupportDetail />} />
           <Route path="rd/manage" element={<Manage />} />
@@ -48,10 +43,6 @@ function App() {
           <Route path="sales/register" element={<Register />} />
           <Route path="uw/underwriting" element={<Underwriting />} />
           <Route path="uw/underwriting/:id" element={<UWDetail />} />
-          {/* <Route path="uw/policy" element={<UWPolicy />} />
-          <Route path="uw/policy/addpolicy" element={<AddUWPolicy />} />
-          <Route path="uw/policy/:id" element={<UWPolicyDetail />} /> */}
-          {/* <Route path="uw/lossmanage" element={<Lossmanage />} /> */}
         </Route>
       </Routes>
     </BrowserRouter>

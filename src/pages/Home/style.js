@@ -14,7 +14,7 @@ export const HomeWrapper = styled.div`
 export const Welcome = styled.div`
   font-family: "NanumSquare", "Noto Sans KR", sans-serif;
   width: 97%;
-  height: 30%;
+  height: 15%;
   border-radius: 1em;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
   margin: 0 auto;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../../css/Base.scss";
 import { Link, Outlet } from "react-router-dom";
 import { MyLink } from "../../components/MyLink";
@@ -7,8 +7,19 @@ import { IconButton } from "@material-ui/core";
 import Badge from "@material-ui/core/Badge";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import { Cookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Base = ({ children }) => {
+  //   const navigate = useNavigate();
+
+  //   useEffect(() => {
+  //     const cookies = new Cookies();
+  //     const token = cookies.get("token");
+  //     const authenticated = token ? true : false;
+  //     if (!authenticated) navigate("/login");
+  //   }, [navigate]);
+
   return (
     <>
       <div className="userbar shadow-sm">
