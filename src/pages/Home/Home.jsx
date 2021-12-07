@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Wrapper } from "../../components/Wrapper";
-import styled from "styled-components";
-
 import { useSelector } from "react-redux";
 import { Carousel, Typography } from "antd";
 import Calendar from "../../components/Calendar";
@@ -47,7 +45,7 @@ const Home = () => {
         <span>{time.format("YYYY-MM-DD")}</span>
       </Welcome>
       <LargeContainer>
-        {/* <SmallContainer>
+        <SmallContainer>
           <MyCalendar />
         </SmallContainer>
         <SmallContainer>
@@ -73,7 +71,7 @@ const Home = () => {
             </Plus>
           </Typography.Title>
           <hr />
-        </SmallContainer> */}
+        </SmallContainer>
       </LargeContainer>
     </HomeWrapper>
   );
