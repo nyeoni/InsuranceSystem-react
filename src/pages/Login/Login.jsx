@@ -29,7 +29,7 @@ const Login = () => {
 
   async function getUser(info) {
     const response = await axios({
-      url: "/login",
+      url: "http://hminsu.net:8000/login",
       method: "post",
       data: {
         loginId: info.loginId,
