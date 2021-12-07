@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Wrapper } from "../../../components/Wrapper";
 import { DataTable2 } from "../../../components/DataTable2";
-import axios from "axios";
-import useAsync from "../../../customHooks/useAsync";
 import { Button, Dropdown, Menu, Space, Tag, Radio } from "antd";
-import { DownOutlined } from "@ant-design/icons";
-import Search from "antd/es/input/Search";
 import { useNavigate } from "react-router-dom";
 
 import useAxios from "../../../swr/useAxios";

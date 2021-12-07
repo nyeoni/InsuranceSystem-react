@@ -4,6 +4,7 @@ import { apiCall } from "../../library/ApiCall";
 import useAxios from "../../swr/useAxios";
 import { SelectOptions } from "../../components/SelectOptions";
 import { useParams } from "react-router-dom";
+import {Wrapper} from "../../components/Wrapper";
 
 const ManageModify = () => {
   const params = useParams();
@@ -51,120 +52,123 @@ const ManageModify = () => {
   }
 
   return (
-    <Form
-      form={form}
-      labelCol={{ span: 10 }}
-      wrapperCol={{ span: 14 }}
-      layout="vertical"
-      size={"large"}
-      onFinish={handleSubmit}
-      initialValues={{ ...insurance }}
-    >
-      {console.log("in rendering insu", insurance)}
-      {console.log("in rendering upda", updateData)}
-      <Form.Item
-        rules={[{ required: true, message: "보험의 이름을 입력해주세요!" }]}
-        name="name"
-        label="보험상품 이름"
-      >
-        <Input
-          name="name"
-          value={updateData.name}
-          onChange={handleChange}
-          placeholder="예시) XX 자동차 보험"
-        />
-      </Form.Item>
-
-      <SelectOptions
-        onChangeMethod={handleChange}
-        selectName="category"
-        selectValue={updateData.category}
-        selectRequired={true}
-        selectLabel={"상품 항목"}
-        selectPlaceholder={"상품의 종류를 선택하세요"}
-        optionList={insuranceCategory}
-      />
-
-      <Row>
-        <Col span={7}>
-          <Form.Item wrapperCol={12} label="가입 연령대">
-            <InputNumber
-              style={{
-                display: "inline-block",
-                width: "45%",
-                marginInlineEnd: "4px",
-              }}
-              placeholder="가입 최저 연령"
-              min={0}
-              max={100.0}
-              name="startAge"
-              value={updateData.conditions?.startAge}
-              onChange={(val) => {
-                handleChange({
-                  target: { name: "conditions", value: { startAge: val } },
-                });
-              }}
-            />
-
-            <InputNumber
-              style={{ display: "inline-block", width: "45%" }}
-              placeholder="가입 최고 연령"
-              min={0}
-              max={100.0}
-              name="endAge"
-              value={updateData.conditions?.endAge}
-              onChange={(val) => {
-                handleChange({
-                  target: { name: "conditions", value: { endAge: val } },
-                });
-              }}
-            />
-          </Form.Item>
-        </Col>
-        <Col span={7}>
-          <Form.Item wrapperCol={12} name={"rating"} label="최소 신용등급">
-            <InputNumber
-              style={{ display: "inline-block", width: "100%" }}
-              min={1}
-              max={10}
-              step="1"
-              name="rating"
-              value={updateData.conditions?.rating}
-              onChange={(val) => {
-                handleChange({
-                  target: { name: "conditions", value: { rating: val } },
-                });
-              }}
-            />
-          </Form.Item>
-        </Col>
-      </Row>
-
-      <Form.Item
-        rules={[
-          { required: true, message: "보험의 개괄적인 설명을 입력해주세요" },
-        ]}
-        name={"description"}
-        label="보험상품 개요"
-      >
-        <Input.TextArea
-          name="description"
-          value={updateData.description}
-          onChange={handleChange}
-        />
-      </Form.Item>
-
-      <Form.Item>
-        <Button
-          style={{ marginBottom: "10px" }}
-          type="primary"
-          htmlType="submit"
-          value="Submit"
+      <Wrapper title={insurance?.name} underline={true}>
+        <Form
+            form={form}
+            labelCol={{ span: 10 }}
+            wrapperCol={{ span: 14 }}
+            layout="vertical"
+            size={"large"}
+            onFinish={handleSubmit}
+            initialValues={{ ...insurance }}
         >
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+          {console.log("in rendering insu", insurance)}
+          {console.log("in rendering upda", updateData)}
+          <Form.Item
+              rules={[{ required: true, message: "보험의 이름을 입력해주세요!" }]}
+              name="name"
+              label="보험상품 이름"
+          >
+            <Input
+                name="name"
+                value={updateData.name}
+                onChange={handleChange}
+                placeholder="예시) XX 자동차 보험"
+            />
+          </Form.Item>
+
+          <SelectOptions
+              onChangeMethod={handleChange}
+              selectName="category"
+              selectValue={updateData.category}
+              selectRequired={true}
+              selectLabel={"상품 항목"}
+              selectPlaceholder={"상품의 종류를 선택하세요"}
+              optionList={insuranceCategory}
+          />
+
+          <Row>
+            <Col span={7}>
+              <Form.Item wrapperCol={12} label="가입 연령대">
+                <InputNumber
+                    style={{
+                      display: "inline-block",
+                      width: "45%",
+                      marginInlineEnd: "4px",
+                    }}
+                    placeholder="가입 최저 연령"
+                    min={0}
+                    max={100.0}
+                    name="startAge"
+                    value={updateData.conditions?.startAge}
+                    onChange={(val) => {
+                      handleChange({
+                        target: { name: "conditions", value: { startAge: val } },
+                      });
+                    }}
+                />
+
+                <InputNumber
+                    style={{ display: "inline-block", width: "45%" }}
+                    placeholder="가입 최고 연령"
+                    min={0}
+                    max={100.0}
+                    name="endAge"
+                    value={updateData.conditions?.endAge}
+                    onChange={(val) => {
+                      handleChange({
+                        target: { name: "conditions", value: { endAge: val } },
+                      });
+                    }}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={7}>
+              <Form.Item wrapperCol={12} name={"rating"} label="최소 신용등급">
+                <InputNumber
+                    style={{ display: "inline-block", width: "100%" }}
+                    min={1}
+                    max={10}
+                    step="1"
+                    name="rating"
+                    value={updateData.conditions?.rating}
+                    onChange={(val) => {
+                      handleChange({
+                        target: { name: "conditions", value: { rating: val } },
+                      });
+                    }}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Form.Item
+              rules={[
+                { required: true, message: "보험의 개괄적인 설명을 입력해주세요" },
+              ]}
+              name={"description"}
+              label="보험상품 개요"
+          >
+            <Input.TextArea
+                name="description"
+                value={updateData.description}
+                onChange={handleChange}
+            />
+          </Form.Item>
+
+          <Form.Item>
+            <Button
+                style={{ marginBottom: "10px" }}
+                type="primary"
+                htmlType="submit"
+                value="Submit"
+            >
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      </Wrapper>
+
   );
   // todo: 이니셜 밸류에 컨디션 넣기. 그리고 isLoading에서 useEffecte로 스테이트 설정.
 };

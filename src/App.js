@@ -21,6 +21,7 @@ import UWPolicyDetail from "./pages/UW/UWPolicyDetail";
 import Lossmanage from "./pages/UW/Lossmanage";
 import Underwriting from "./pages/UW/UnderWriting/Underwriting";
 import UWDetail from "./pages/UW/UWDetail";
+import ManageModify from "./pages/RD/ManageModify";
 
 const cookies = new Cookies();
 
@@ -40,7 +41,7 @@ function App() {
           <Route path="rd/support" element={<Support />} />
           <Route path="rd/support/:id" element={<SupportDetail />} />
           <Route path="rd/manage" element={<Manage />} />
-          <Route path="rd/manage/:id" element={<ManageDetail />} />
+          <Route path="rd/manage/:id" element={<ManageModify />} />
           <Route path="sales/contract" element={<Contract />} />
           <Route path="sales/client" element={<Client />} />
           <Route path="sales/apply" element={<Apply />} />
