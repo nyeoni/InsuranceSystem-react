@@ -25,7 +25,7 @@ import Search from "antd/es/input/Search";
 const { Option } = Select;
 
 async function getInsurances() {
-  const response = await axios.get("http://hminsu.net:8000/insurance");
+  const response = await axios.get("/insurance");
   console.log("response Fuck you!", response);
   return response.data.data;
 }

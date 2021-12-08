@@ -1,15 +1,14 @@
 import axios from "axios";
 import { notification } from "antd";
 
-const baseURL = "http://hminsu.net:8000";
-
 export const apiCall = async (url, method, payload, form) => {
   console.log("분리된 함수에서 페이로드 " + JSON.stringify(payload));
-  return await axios(baseURL + url, {
+  return await axios(url, {
     method: method,
     // method: 'post',
     headers: { "content-type": "application/json" },
     data: payload,
+    withCredentials: true,
   })
     .then((response) => {
       notification["success"]({

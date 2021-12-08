@@ -3,18 +3,17 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../redux/modules/user";
 
-const baseURL = "http://hminsu.net:8000";
 
 const getFetcher = async (url) => {
   const res = await axios
-    .get(baseURL + url, { withCredentials: true })
+    .get(url, { withCredentials: true })
     .then((res) => res.data);
   return res.data;
 };
 
 const postFetcher = async (url, body) => {
   const res = await axios
-    .post(baseURL + url, body, { withCredentials: true })
+    .post(url, body, { withCredentials: true })
     .then((res) => res.data);
   return res.data;
 };

@@ -43,6 +43,7 @@ const ManageModify = () => {
     const data = apiCall(url, "put", { ...updateData }, form);
     console.log(data);
   };
+
   //exception
   if (isError) {
     return <div>에러가 발생했습니다</div>;
